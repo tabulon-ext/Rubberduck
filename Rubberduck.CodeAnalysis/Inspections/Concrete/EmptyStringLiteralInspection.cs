@@ -10,7 +10,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// Flags uses of an empty string literal ("").
     /// </summary>
     /// <remarks>
-    /// Treating an empty string literal as equal to the 'vbNullString' constant
+    /// In the context of a unit test, treating an empty string literal as equal to the 'vbNullString' constant
     /// requires using the PermissiveAssertClass. The default AssertClass is more strict about data types, and tells them apart.
     /// </remarks>
     /// <why>
