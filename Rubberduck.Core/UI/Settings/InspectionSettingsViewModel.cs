@@ -1,23 +1,23 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Data;
-using NLog;
+﻿using NLog;
+using Rubberduck.CodeAnalysis.Inspections;
+using Rubberduck.CodeAnalysis.Settings;
+using Rubberduck.Resources.Inspections;
+using Rubberduck.Resources.Settings;
 using Rubberduck.Settings;
 using Rubberduck.SettingsProvider;
 using Rubberduck.UI.Command;
-using Rubberduck.Resources.Inspections;
-using System.Globalization;
 using System;
-using Rubberduck.CodeAnalysis.Inspections;
-using Rubberduck.Resources.Settings;
-using Rubberduck.CodeAnalysis.Settings;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
+using System.Windows.Data;
 
 namespace Rubberduck.UI.Settings
 {
     public sealed class InspectionSettingsViewModel : SettingsViewModelBase<CodeInspectionSettings>, ISettingsViewModel<CodeInspectionSettings>
     {
-        public InspectionSettingsViewModel(Configuration config, IConfigurationService<CodeInspectionSettings> service) 
+        public InspectionSettingsViewModel(Configuration config, IConfigurationService<CodeInspectionSettings> service)
             : base(service)
         {
             InspectionSettings = new ListCollectionView(
@@ -30,6 +30,7 @@ namespace Rubberduck.UI.Settings
                 config.UserSettings.CodeInspectionSettings.WhitelistedIdentifiers.OrderBy(o => o.Identifier).Distinct());
 
             RunInspectionsOnSuccessfulParse = config.UserSettings.CodeInspectionSettings.RunInspectionsOnSuccessfulParse;
+            IgnoreFormControlsHungarianNotation = config.UserSettings.CodeInspectionSettings.IgnoreFormControlsHungarianNotation;
 
             InspectionSettings.GroupDescriptions?.Add(new PropertyGroupDescription("InspectionType"));
             ExportButtonCommand = new DelegateCommand(LogManager.GetCurrentClassLogger(), _ =>
@@ -93,7 +94,7 @@ namespace Rubberduck.UI.Settings
                     OnPropertyChanged(nameof(InspectionSettings));
                 }
             }
-        }        
+        }
 
         private bool FilterResults(object setting)
         {
@@ -132,6 +133,20 @@ namespace Rubberduck.UI.Settings
             }
         }
 
+        private bool _ignoreFormControlsHungarianNotation;
+        public bool IgnoreFormControlsHungarianNotation
+        {
+            get => _ignoreFormControlsHungarianNotation;
+            set
+            {
+                if (_ignoreFormControlsHungarianNotation != value)
+                {
+                    _ignoreFormControlsHungarianNotation = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private ObservableCollection<WhitelistedIdentifierSetting> _whitelistedNameSettings;
         public ObservableCollection<WhitelistedIdentifierSetting> WhitelistedIdentifierSettings
         {
@@ -151,6 +166,7 @@ namespace Rubberduck.UI.Settings
             config.UserSettings.CodeInspectionSettings.CodeInspections = new HashSet<CodeInspectionSetting>(InspectionSettings.SourceCollection.OfType<CodeInspectionSetting>());
             config.UserSettings.CodeInspectionSettings.WhitelistedIdentifiers = WhitelistedIdentifierSettings.Distinct().ToArray();
             config.UserSettings.CodeInspectionSettings.RunInspectionsOnSuccessfulParse = _runInspectionsOnSuccessfulParse;
+            config.UserSettings.CodeInspectionSettings.IgnoreFormControlsHungarianNotation = _ignoreFormControlsHungarianNotation;
         }
 
         public void SetToDefaults(Configuration config)
@@ -194,11 +210,12 @@ namespace Rubberduck.UI.Settings
         protected override void TransferSettingsToView(CodeInspectionSettings toLoad)
         {
             InspectionSettings = new ListCollectionView(toLoad.CodeInspections.ToList());
-            
+
             InspectionSettings.GroupDescriptions.Add(new PropertyGroupDescription("TypeLabel"));
-            
+
             WhitelistedIdentifierSettings = new ObservableCollection<WhitelistedIdentifierSetting>();
-            RunInspectionsOnSuccessfulParse = true;
+            RunInspectionsOnSuccessfulParse = toLoad.RunInspectionsOnSuccessfulParse;
+            IgnoreFormControlsHungarianNotation = toLoad.IgnoreFormControlsHungarianNotation;
         }
 
         protected override string DialogLoadTitle => SettingsUI.DialogCaption_LoadInspectionSettings;

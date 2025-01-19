@@ -80,19 +80,22 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             _settings = settings;
         }
 
+        private CodeInspectionSettings _configuration;
+
         protected override List<string> GlobalInformation(DeclarationFinder finder)
         {
-            var settings = _settings.Read();
-            return settings.WhitelistedIdentifiers
+            _configuration = _settings.Read();
+            return _configuration.WhitelistedIdentifiers
                 .Select(s => s.Identifier)
                 .ToList();
         }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder, List<string> whitelistedNames)
         {
-            return !whitelistedNames.Contains(declaration.IdentifierName)
-                   && !IgnoredProcedureTypes.Contains(declaration.ParentDeclaration.DeclarationType)
-                   && declaration.IdentifierName.TryMatchHungarianNotationCriteria(out _);
+            return (_configuration.IgnoreFormControlsHungarianNotation || declaration.DeclarationType == DeclarationType.Control)
+                && !whitelistedNames.Contains(declaration.IdentifierName)
+                && !IgnoredProcedureTypes.Contains(declaration.ParentDeclaration.DeclarationType)
+                && declaration.IdentifierName.TryMatchHungarianNotationCriteria(out _);
         }
 
         protected override string ResultDescription(Declaration declaration)

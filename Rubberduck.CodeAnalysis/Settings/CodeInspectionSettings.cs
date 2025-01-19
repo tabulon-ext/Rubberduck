@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Rubberduck.CodeAnalysis.Inspections;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Xml.Serialization;
-using Rubberduck.CodeAnalysis.Inspections;
 
 namespace Rubberduck.CodeAnalysis.Settings
 {
@@ -13,6 +13,8 @@ namespace Rubberduck.CodeAnalysis.Settings
         HashSet<CodeInspectionSetting> CodeInspections { get; set; }
         WhitelistedIdentifierSetting[] WhitelistedIdentifiers { get; set; }
         bool RunInspectionsOnSuccessfulParse { get; set; }
+
+        bool IgnoreFormControlsHungarianNotation { get; set; }
     }
 
     [SettingsSerializeAs(SettingsSerializeAs.Xml)]
@@ -26,16 +28,18 @@ namespace Rubberduck.CodeAnalysis.Settings
         public WhitelistedIdentifierSetting[] WhitelistedIdentifiers { get; set; }
 
         public bool RunInspectionsOnSuccessfulParse { get; set; }
+        public bool IgnoreFormControlsHungarianNotation { get; set; }
 
-        public CodeInspectionSettings() : this(Enumerable.Empty<CodeInspectionSetting>(), new WhitelistedIdentifierSetting[] { }, true)
+        public CodeInspectionSettings() : this(Enumerable.Empty<CodeInspectionSetting>(), new WhitelistedIdentifierSetting[] { }, true, false)
         {
         }
 
-        public CodeInspectionSettings(IEnumerable<CodeInspectionSetting> inspections, WhitelistedIdentifierSetting[] whitelistedNames, bool runInspectionsOnParse)
+        public CodeInspectionSettings(IEnumerable<CodeInspectionSetting> inspections, WhitelistedIdentifierSetting[] whitelistedNames, bool runInspectionsOnParse, bool ignoreFormControlsHungarian)
         {
             CodeInspections = new HashSet<CodeInspectionSetting>(inspections);
             WhitelistedIdentifiers = whitelistedNames;
             RunInspectionsOnSuccessfulParse = runInspectionsOnParse;
+            IgnoreFormControlsHungarianNotation = ignoreFormControlsHungarian;
         }
 
         public CodeInspectionSetting GetSetting<TInspection>() where TInspection : IInspection
@@ -53,7 +57,7 @@ namespace Rubberduck.CodeAnalysis.Settings
                 {
                     return existing;
                 }
-                var proto = Convert.ChangeType(Activator.CreateInstance(inspectionType, new object[]{null}), inspectionType);
+                var proto = Convert.ChangeType(Activator.CreateInstance(inspectionType, new object[] { null }), inspectionType);
                 var setting = new CodeInspectionSetting(proto as IInspectionModel);
                 CodeInspections.Add(setting);
                 return setting;
@@ -69,7 +73,8 @@ namespace Rubberduck.CodeAnalysis.Settings
             return other != null &&
                    CodeInspections.SequenceEqual(other.CodeInspections) &&
                    WhitelistedIdentifiers.SequenceEqual(other.WhitelistedIdentifiers) &&
-                   RunInspectionsOnSuccessfulParse == other.RunInspectionsOnSuccessfulParse;
+                   RunInspectionsOnSuccessfulParse == other.RunInspectionsOnSuccessfulParse &&
+                   IgnoreFormControlsHungarianNotation == other.IgnoreFormControlsHungarianNotation;
         }
     }
 
