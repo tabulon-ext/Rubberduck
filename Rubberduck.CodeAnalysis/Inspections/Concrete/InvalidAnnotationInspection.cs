@@ -1,3 +1,4 @@
+using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.InternalApi.Extensions;
 using Rubberduck.Parsing.Annotations;
 using Rubberduck.Parsing.Symbols;
