@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using Antlr4.Runtime;
+﻿using Antlr4.Runtime;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.Rewriter;
 using Rubberduck.Parsing.Symbols;
+using System.Linq;
 
 namespace Rubberduck.Refactorings.ReplaceReferences
 {
@@ -39,7 +39,7 @@ namespace Rubberduck.Refactorings.ReplaceReferences
         private (ParserRuleContext context, string replacementName) BuildReferenceReplacementString(IdentifierReference identifierReference, string NewName, bool moduleQualify)
         {
             var replacementExpression = moduleQualify && CanBeModuleQualified(identifierReference)
-                ? $"{identifierReference.Declaration.QualifiedModuleName.ComponentName}.{NewName}"
+                ? $"{identifierReference.Declaration.ParentDeclaration.IdentifierName}.{NewName}"
                 : NewName;
 
             return (identifierReference.Context, replacementExpression);
