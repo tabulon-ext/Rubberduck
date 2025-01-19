@@ -1,18 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using Path = System.IO.Path;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using NLog;
+﻿using NLog;
 using Rubberduck.CodeAnalysis;
 using Rubberduck.CodeAnalysis.Inspections;
 using Rubberduck.CodeAnalysis.QuickFixes;
@@ -28,6 +14,20 @@ using Rubberduck.UI.Command;
 using Rubberduck.UI.Command.ComCommands;
 using Rubberduck.UI.Settings;
 using Rubberduck.VBEditor;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using Path = System.IO.Path;
 
 namespace Rubberduck.UI.Inspections
 {
@@ -58,7 +58,7 @@ namespace Rubberduck.UI.Inspections
         public ICollection<QuickFixCommandViewModel> Commands { get; }
 
         public QuickFixViewModel(
-            IQuickFix fix, 
+            IQuickFix fix,
             IInspectionResult result,
             IEnumerable<QuickFixCommandViewModel> commands)
         {
@@ -102,10 +102,10 @@ namespace Rubberduck.UI.Inspections
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public InspectionResultsViewModel(
-            RubberduckParserState state, 
-            IInspector inspector, 
+            RubberduckParserState state,
+            IInspector inspector,
             IQuickFixProvider quickFixProvider,
-            INavigateCommand navigateCommand, 
+            INavigateCommand navigateCommand,
             ReparseCommand reparseCommand,
             IClipboardWriter clipboard,
             IWebNavigator web,
@@ -137,7 +137,7 @@ namespace Rubberduck.UI.Inspections
                 },
                 o => !IsBusy && reparseCommand.CanExecute(o));
 
-            DisableInspectionCommand = new DelegateCommand(LogManager.GetCurrentClassLogger(), ExecuteDisableInspectionCommand);
+            DisableInspectionCommand = new DelegateCommand(LogManager.GetCurrentClassLogger(), ExecuteDisableInspectionCommand, o => CanDisableInspection);
             QuickFixCommand = new DelegateCommand(LogManager.GetCurrentClassLogger(), ExecuteQuickFixCommand, CanExecuteQuickFixCommand);
             QuickFixSelectedItemsCommand = new DelegateCommand(LogManager.GetCurrentClassLogger(), ExecuteQuickFixForSelection, CanExecuteQuickFixForSelection);
             QuickFixInProcedureCommand = new DelegateCommand(LogManager.GetCurrentClassLogger(), ExecuteQuickFixInProcedureCommand, CanExecuteQuickFixInProcedure);
@@ -148,7 +148,7 @@ namespace Rubberduck.UI.Inspections
             OpenInspectionSettings = new DelegateCommand(LogManager.GetCurrentClassLogger(), OpenSettings);
             CollapseAllCommand = new DelegateCommand(LogManager.GetCurrentClassLogger(), ExecuteCollapseAll);
             ExpandAllCommand = new DelegateCommand(LogManager.GetCurrentClassLogger(), ExecuteExpandAll);
-            
+
             OpenInspectionDetailsPageCommand = new DelegateCommand(LogManager.GetCurrentClassLogger(), ExecuteOpenInspectionDetailsPageCommand);
 
             QuickFixCommands = new List<(ICommand command, string key, Func<IQuickFix, bool> visibility)>
@@ -162,7 +162,7 @@ namespace Rubberduck.UI.Inspections
             };
 
             _configService.SettingsChanged += _configService_SettingsChanged;
-            
+
             // todo: remove I/O work in constructor
             _runInspectionsOnReparse = _configService.Read().UserSettings.CodeInspectionSettings.RunInspectionsOnSuccessfulParse;
 
@@ -180,7 +180,7 @@ namespace Rubberduck.UI.Inspections
         }
 
         private void _configService_SettingsChanged(object sender, ConfigurationChangedEventArgs e)
-        {            
+        {
             if (e.InspectionSettingsChanged)
             {
                 _uiDispatcher.Invoke(() =>
@@ -208,7 +208,7 @@ namespace Rubberduck.UI.Inspections
                     return;
                 }
 
-                _selectedItem = value; 
+                _selectedItem = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(QuickFixes));
 
@@ -249,7 +249,7 @@ namespace Rubberduck.UI.Inspections
             }
         }
 
-        private List<(ICommand command, string key, Func<IQuickFix,bool> visibility)> QuickFixCommands { get; }
+        private List<(ICommand command, string key, Func<IQuickFix, bool> visibility)> QuickFixCommands { get; }
 
         private QuickFixViewModel DisplayQuickFix(IQuickFix quickFix, IInspectionResult result)
         {
@@ -325,7 +325,7 @@ namespace Rubberduck.UI.Inspections
         private bool FilterResults(object inspectionResult)
         {
             var inspectionResultBase = inspectionResult as IInspectionResult;
-            
+
             return inspectionResultBase?.Description.ToUpper().Contains(InspectionDescriptionFilter.ToUpper()) ?? false;
         }
 
@@ -345,7 +345,7 @@ namespace Rubberduck.UI.Inspections
                     return SelectedFilters.HasFlag(InspectionResultsFilter.Error);
                 default:
                     return true;    // Not in the enum...
-            }     
+            }
         }
 
         public INavigateCommand NavigateCommand { get; }
@@ -401,7 +401,7 @@ namespace Rubberduck.UI.Inspections
             {
                 _isBusy = value;
                 OnPropertyChanged();
-            } 
+            }
         }
 
         /// <summary>
@@ -446,7 +446,7 @@ namespace Rubberduck.UI.Inspections
                 return;
             }
 
-            if(_state.Status != ParserState.Ready)
+            if (_state.Status != ParserState.Ready)
             {
                 // not an error, but also not finished -> We're busy
                 IsBusy = true;
@@ -483,7 +483,7 @@ namespace Rubberduck.UI.Inspections
             }
             catch (Exception ex)
             {
-                Logger.Error(ex,"Unhandled exception when refreshing inspection results.");
+                Logger.Error(ex, "Unhandled exception when refreshing inspection results.");
             }
         }
 
@@ -579,7 +579,7 @@ namespace Rubberduck.UI.Inspections
 
             var (_, selectedResults) = tpl;
 
-            return selectedResults != null 
+            return selectedResults != null
                    && selectedResults.Count() == 1;
         }
 
@@ -597,7 +597,7 @@ namespace Rubberduck.UI.Inspections
             }
 
             var (quickFix, selectedResults) = tpl;
-            
+
             _quickFixProvider.Fix(
                 quickFix,
                 selectedResults);
@@ -777,8 +777,8 @@ namespace Rubberduck.UI.Inspections
 
         private static readonly Uri _inspectionsHomeUrl = new Uri("https://rubberduckvba.com/features/summary?name=inspections");
 
-        public Uri InspectionDetailsUrl => _selectedInspection == null 
-            ? _inspectionsHomeUrl 
+        public Uri InspectionDetailsUrl => _selectedInspection == null
+            ? _inspectionsHomeUrl
             : new Uri($"https://rubberduckvba.com/inspections/details/{_selectedInspection.AnnotationName}");
 
         private void ExecuteOpenInspectionDetailsPageCommand(object parameter) => _web.Navigate(InspectionDetailsUrl);
