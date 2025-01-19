@@ -1,4 +1,4 @@
-version: '2.5.9.{build}'
+version: '2.5.92.{build}'
 
 # enforce crlf fixing
 init:
