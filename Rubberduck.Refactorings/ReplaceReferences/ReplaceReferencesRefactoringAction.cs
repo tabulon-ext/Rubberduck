@@ -38,8 +38,13 @@ namespace Rubberduck.Refactorings.ReplaceReferences
 
         private (ParserRuleContext context, string replacementName) BuildReferenceReplacementString(IdentifierReference identifierReference, string NewName, bool moduleQualify)
         {
+            var qualifier = !moduleQualify ? null :
+                identifierReference.Declaration.DeclarationType == DeclarationType.EnumerationMember
+                    ? identifierReference.Declaration.ParentDeclaration.IdentifierName
+                    : identifierReference.Declaration.QualifiedModuleName.ComponentName;
+
             var replacementExpression = moduleQualify && CanBeModuleQualified(identifierReference)
-                ? $"{identifierReference.Declaration.ParentDeclaration.IdentifierName}.{NewName}"
+                ? $"{qualifier}.{NewName}"
                 : NewName;
 
             return (identifierReference.Context, replacementExpression);
