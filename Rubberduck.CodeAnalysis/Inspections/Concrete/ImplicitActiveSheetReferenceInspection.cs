@@ -1,10 +1,11 @@
-﻿using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Attributes;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -45,7 +46,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public ImplicitActiveSheetReferenceInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         protected override string[] GlobalObjectClassNames => new[] { "Global", "_Global", };
 
@@ -58,7 +59,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(IdentifierReference reference)
         {
             return string.Format(
-                InspectionResults.ImplicitActiveSheetReferenceInspection,
+                InspectionResults.ResourceManager.GetString("ImplicitActiveSheetReferenceInspection", CultureInfo.CurrentUICulture),
                 reference.Declaration.IdentifierName);
         }
     }

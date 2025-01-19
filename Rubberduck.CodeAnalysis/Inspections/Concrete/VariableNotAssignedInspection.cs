@@ -1,4 +1,3 @@
-using System.Linq;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
@@ -6,6 +5,8 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -42,7 +43,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public VariableNotAssignedInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Variable)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
@@ -51,7 +52,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                    && !declaration.IsWithEvents
                    && !declaration.IsSelfAssigned
                    && !HasUdtType(declaration, finder) // UDT variables don't need to be assigned
-                   && !declaration.References.Any(reference => reference.IsAssignment 
+                   && !declaration.References.Any(reference => reference.IsAssignment
                                                                || reference.IsReDim //Ignores Variants used as arrays without assignment of an existing one.
                                                                || IsAssignedByRefArgument(reference.ParentScoping, reference, finder))
                    && !IsPublicInExposedClass(declaration);
@@ -113,7 +114,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.VariableNotAssignedInspection, declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString("VariableNotAssignedInspection", CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 }

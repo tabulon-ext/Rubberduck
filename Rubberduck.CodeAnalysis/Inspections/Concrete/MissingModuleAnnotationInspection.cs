@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing.Annotations;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -38,8 +39,8 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     internal sealed class MissingModuleAnnotationInspection : DeclarationInspectionMultiResultBase<(string AttributeName, IReadOnlyList<string> AttributeValues)>
     {
         public MissingModuleAnnotationInspection(IDeclarationFinderProvider declarationFinderProvider)
-            : base(declarationFinderProvider, new []{DeclarationType.Module}, new []{DeclarationType.Document})
-        {}
+            : base(declarationFinderProvider, new[] { DeclarationType.Module }, new[] { DeclarationType.Document })
+        { }
 
         protected override IEnumerable<(string AttributeName, IReadOnlyList<string> AttributeValues)> ResultProperties(Declaration declaration, DeclarationFinder finder)
         {
@@ -50,7 +51,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         private static bool IsResultAttribute(AttributeNode attribute, Declaration declaration)
         {
-            return !IsDefaultAttribute(declaration, attribute) 
+            return !IsDefaultAttribute(declaration, attribute)
                    && MissesCorrespondingModuleAnnotation(declaration, attribute);
         }
 
@@ -74,7 +75,8 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             if (attribute.Name == "VB_Ext_Key")
             {
                 return !declaration.Annotations.Where(pta => pta.Annotation is IAttributeAnnotation)
-                    .Any(pta => {
+                    .Any(pta =>
+                    {
                         var annotation = (IAttributeAnnotation)pta.Annotation;
                         return annotation.Attribute(pta).Equals("VB_Ext_Key") && attribute.Values[0].Equals(annotation.AttributeValues(pta)[0]);
                     });
@@ -86,7 +88,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration, (string AttributeName, IReadOnlyList<string> AttributeValues) properties)
         {
-            return string.Format(InspectionResults.MissingMemberAnnotationInspection,
+            return string.Format(InspectionResults.ResourceManager.GetString("MissingMemberAnnotationInspection", CultureInfo.CurrentUICulture),
                 declaration.IdentifierName,
                 properties.AttributeName,
                 string.Join(", ", properties.AttributeValues));

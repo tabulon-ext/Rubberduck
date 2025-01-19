@@ -3,6 +3,7 @@ using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.VBA;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -39,7 +40,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             ContextListener = new ParameterListener();
         }
-        
+
         protected override IInspectionListener<VBAParser.ArgContext> ContextListener { get; }
 
         protected override string ResultDescription(QualifiedContext<VBAParser.ArgContext> context)
@@ -47,8 +48,8 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var parameterText = context.Context.unrestrictedIdentifier().GetText();
             return string.Format(
                 context.Context.GetSelection().LineCount > 3
-                    ? CodeAnalysisUI.EasterEgg_Continuator
-                    : Resources.Inspections.InspectionResults.MultilineParameterInspection,
+                    ? CodeAnalysisUI.ResourceManager.GetString("EasterEgg_Continuator", CultureInfo.CurrentUICulture)
+                    : Resources.Inspections.InspectionResults.ResourceManager.GetString("MultilineParameterInspection", CultureInfo.CurrentUICulture),
                 parameterText);
         }
 

@@ -1,10 +1,11 @@
-using System.Linq;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Attributes;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -67,8 +68,8 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
             var excelProjectId = Excel(finder).ProjectId;
             var applicationCandidates = finder.MatchName("Application")
-                .Where(m =>  m.ProjectId.Equals(excelProjectId) 
-                             && ( m.DeclarationType == DeclarationType.PropertyGet 
+                .Where(m => m.ProjectId.Equals(excelProjectId)
+                             && (m.DeclarationType == DeclarationType.PropertyGet
                                 || m.DeclarationType == DeclarationType.ClassModule));
 
             var qualifyingDeclaration = reference.QualifyingReference.Declaration;
@@ -80,7 +81,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(IdentifierReference reference)
         {
             var referenceText = reference.Context.GetText();
-            return string.Format(InspectionResults.ImplicitActiveWorkbookReferenceInspection, referenceText);
+            return string.Format(InspectionResults.ResourceManager.GetString("ImplicitActiveWorkbookReferenceInspection", CultureInfo.CurrentUICulture), referenceText);
         }
     }
 }

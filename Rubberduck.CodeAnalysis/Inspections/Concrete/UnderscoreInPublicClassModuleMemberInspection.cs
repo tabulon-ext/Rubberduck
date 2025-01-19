@@ -3,6 +3,7 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -37,13 +38,13 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public UnderscoreInPublicClassModuleMemberInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Member)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
-            return declaration.IdentifierName.Contains("_") 
-                   && (declaration.Accessibility == Accessibility.Public 
-                       || declaration.Accessibility == Accessibility.Implicit) 
+            return declaration.IdentifierName.Contains("_")
+                   && (declaration.Accessibility == Accessibility.Public
+                       || declaration.Accessibility == Accessibility.Implicit)
                    && declaration.ParentDeclaration.DeclarationType.HasFlag(DeclarationType.ClassModule)
                    && !finder.FindEventHandlers().Contains(declaration)
                    && !(declaration is ModuleBodyElementDeclaration member && member.IsInterfaceImplementation);
@@ -51,7 +52,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.UnderscoreInPublicClassModuleMemberInspection, declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString("UnderscoreInPublicClassModuleMemberInspection", CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 }

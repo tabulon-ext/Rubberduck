@@ -6,6 +6,7 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -91,7 +92,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                 //This case is necessary if the context is itself the unrestricted identifier in a member access. 
                 var furtherMemberAccessParent = memberAccessParent.GetAncestor<VBAParser.MemberAccessExprContext>();
                 if (furtherMemberAccessParent != null)
-                { 
+                {
                     return false;
                 }
             }
@@ -104,7 +105,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(IdentifierReference reference)
         {
             var functionName = reference.Declaration.QualifiedName.ToString();
-            return string.Format(InspectionResults.FunctionReturnValueDiscardedInspection, functionName);
+            return string.Format(InspectionResults.ResourceManager.GetString("FunctionReturnValueDiscardedInspection", CultureInfo.CurrentUICulture), functionName);
         }
     }
 }

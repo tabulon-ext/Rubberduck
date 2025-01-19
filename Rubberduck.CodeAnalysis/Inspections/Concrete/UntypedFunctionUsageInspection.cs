@@ -1,11 +1,12 @@
-using System.Collections.Generic;
-using System.Linq;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -38,7 +39,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public UntypedFunctionUsageInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         private readonly HashSet<string> _tokens = new HashSet<string>{
             Tokens.Error,
@@ -75,7 +76,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             return finder
                 .BuiltInDeclarations(DeclarationType.Member)
-                .Where(item => item.Scope.StartsWith("VBE7.DLL;") 
+                .Where(item => item.Scope.StartsWith("VBE7.DLL;")
                                && (_tokens.Contains(item.IdentifierName)
                                     || item.IdentifierName.StartsWith("_B_var_")
                                         && _tokens.Contains(item.IdentifierName.Substring("_B_var_".Length))));
@@ -85,7 +86,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var declarationName = reference.Declaration.IdentifierName;
             return string.Format(
-                InspectionResults.UntypedFunctionUsageInspection,
+                InspectionResults.ResourceManager.GetString("UntypedFunctionUsageInspection", CultureInfo.CurrentUICulture),
                 declarationName);
         }
 

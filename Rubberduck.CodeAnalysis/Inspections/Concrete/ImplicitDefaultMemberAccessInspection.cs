@@ -4,6 +4,7 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -75,7 +76,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var expression = reference.IdentifierName;
             var defaultMember = reference.Declaration.QualifiedName.ToString();
-            return string.Format(InspectionResults.ImplicitDefaultMemberAccessInspection, expression, defaultMember);
+            return string.Format(InspectionResults.ResourceManager.GetString("ImplicitDefaultMemberAccessInspection", CultureInfo.CurrentUICulture), expression, defaultMember);
         }
     }
 }

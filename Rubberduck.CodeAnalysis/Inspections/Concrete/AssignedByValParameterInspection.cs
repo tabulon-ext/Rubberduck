@@ -1,9 +1,10 @@
-using System.Linq;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -41,19 +42,19 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public AssignedByValParameterInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Parameter)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
-            return declaration is ParameterDeclaration parameter 
-                   && !parameter.IsByRef 
+            return declaration is ParameterDeclaration parameter
+                   && !parameter.IsByRef
                    && parameter.References
                        .Any(reference => reference.IsAssignment);
         }
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.AssignedByValParameterInspection, declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString("AssignedByValParameterInspection", CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 }

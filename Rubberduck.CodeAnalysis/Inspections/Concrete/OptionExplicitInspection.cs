@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Antlr4.Runtime.Misc;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing;
@@ -7,6 +6,8 @@ using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -47,7 +48,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             ContextListener = new MissingOptionExplicitListener();
         }
 
-        protected  override IInspectionListener<VBAParser.ModuleContext> ContextListener { get; }
+        protected override IInspectionListener<VBAParser.ModuleContext> ContextListener { get; }
 
         protected override bool IsResultContext(QualifiedContext<VBAParser.ModuleContext> context, DeclarationFinder finder)
         {
@@ -59,7 +60,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var moduleName = context.ModuleName.ComponentName;
             return string.Format(
-                InspectionResults.OptionExplicitInspection,
+                InspectionResults.ResourceManager.GetString("OptionExplicitInspection", CultureInfo.CurrentUICulture),
                 moduleName);
         }
 

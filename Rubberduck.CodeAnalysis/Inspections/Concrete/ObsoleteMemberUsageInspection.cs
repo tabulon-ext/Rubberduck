@@ -1,10 +1,11 @@
-﻿using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing.Annotations;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -54,7 +55,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public ObsoleteMemberUsageInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         protected override bool IsResultReference(IdentifierReference reference, DeclarationFinder finder)
         {
@@ -72,7 +73,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                                                .AnnotationArguments
                                                .FirstOrDefault() ?? string.Empty;
             return string.Format(
-                InspectionResults.ObsoleteMemberUsageInspection, 
+                InspectionResults.ResourceManager.GetString("ObsoleteMemberUsageInspection", CultureInfo.CurrentUICulture),
                 reference.IdentifierName,
                 replacementDocumentation);
         }

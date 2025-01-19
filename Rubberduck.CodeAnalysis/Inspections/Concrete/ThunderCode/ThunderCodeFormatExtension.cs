@@ -1,4 +1,5 @@
 ﻿using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete.ThunderCode
 {
@@ -6,7 +7,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete.ThunderCode
     {
         public static string ThunderCodeFormat(this string inspectionBase, params object[] args)
         {
-            return string.Format(InspectionResults.ThunderCode_Base, string.Format(inspectionBase, args));
+            return string.Format(InspectionResults.ResourceManager.GetString("ThunderCode_Base", CultureInfo.CurrentUICulture), string.Format(inspectionBase, args));
         }
     }
 }

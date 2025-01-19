@@ -4,6 +4,7 @@ using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -49,7 +50,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.ElseBlockContext> context)
         {
-            return InspectionResults.EmptyElseBlockInspection;
+            return InspectionResults.ResourceManager.GetString("EmptyElseBlockInspection", CultureInfo.CurrentUICulture);
         }
 
         private class EmptyElseBlockListener : EmptyBlockInspectionListenerBase

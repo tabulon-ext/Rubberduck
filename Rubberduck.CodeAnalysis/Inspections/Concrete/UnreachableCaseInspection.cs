@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Antlr4.Runtime;
+﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
+using Rubberduck.CodeAnalysis.Inspections.Concrete.UnreachableCaseEvaluation;
 using Rubberduck.CodeAnalysis.Inspections.Extensions;
 using Rubberduck.CodeAnalysis.Inspections.Results;
 using Rubberduck.Parsing;
@@ -14,7 +12,10 @@ using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Parsing.VBA.Parsing;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
-using Rubberduck.CodeAnalysis.Inspections.Concrete.UnreachableCaseEvaluation;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -137,9 +138,9 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         }
 
         public UnreachableCaseInspection(
-            IDeclarationFinderProvider declarationFinderProvider, 
-            IUnreachableCaseInspector inspector, 
-            IParseTreeValueVisitor parseTreeValueVisitor) 
+            IDeclarationFinderProvider declarationFinderProvider,
+            IUnreachableCaseInspector inspector,
+            IParseTreeValueVisitor parseTreeValueVisitor)
             : base(declarationFinderProvider)
         {
             _inspector = inspector;
@@ -194,15 +195,15 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             switch (resultType)
             {
                 case CaseInspectionResultType.Unreachable:
-                    return InspectionResults.UnreachableCaseInspection_Unreachable;
+                    return InspectionResults.ResourceManager.GetString("UnreachableCaseInspection_Unreachable", CultureInfo.CurrentUICulture);
                 case CaseInspectionResultType.InherentlyUnreachable:
-                    return InspectionResults.UnreachableCaseInspection_InherentlyUnreachable;
+                    return InspectionResults.ResourceManager.GetString("UnreachableCaseInspection_InherentlyUnreachable", CultureInfo.CurrentUICulture);
                 case CaseInspectionResultType.MismatchType:
-                    return InspectionResults.UnreachableCaseInspection_TypeMismatch;
+                    return InspectionResults.ResourceManager.GetString("UnreachableCaseInspection_TypeMismatch", CultureInfo.CurrentUICulture);
                 case CaseInspectionResultType.Overflow:
-                    return InspectionResults.UnreachableCaseInspection_Overflow;
+                    return InspectionResults.ResourceManager.GetString("UnreachableCaseInspection_Overflow", CultureInfo.CurrentUICulture);
                 case CaseInspectionResultType.CaseElse:
-                    return InspectionResults.UnreachableCaseInspection_CaseElse;
+                    return InspectionResults.ResourceManager.GetString("UnreachableCaseInspection_CaseElse", CultureInfo.CurrentUICulture);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(resultType), resultType, null);
             }

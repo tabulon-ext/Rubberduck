@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Antlr4.Runtime;
+﻿using Antlr4.Runtime;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.InternalApi.Extensions;
 using Rubberduck.Parsing;
@@ -9,6 +7,9 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -55,7 +56,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public FunctionReturnValueAlwaysDiscardedInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Function)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
@@ -168,7 +169,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(Declaration declaration)
         {
             var functionName = declaration.QualifiedName.ToString();
-            return string.Format(InspectionResults.FunctionReturnValueAlwaysDiscardedInspection, functionName);
+            return string.Format(InspectionResults.ResourceManager.GetString("FunctionReturnValueAlwaysDiscardedInspection", CultureInfo.CurrentUICulture), functionName);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Antlr4.Runtime;
+﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing;
@@ -8,6 +7,8 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete.ThunderCode
 {
@@ -31,12 +32,12 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete.ThunderCode
 
         protected override string ResultDescription(QualifiedContext<ParserRuleContext> context)
         {
-            return InspectionResults.NegativeLineNumberInspection.ThunderCodeFormat();
+            return InspectionResults.ResourceManager.GetString("NegativeLineNumberInspection", CultureInfo.CurrentUICulture).ThunderCodeFormat();
         }
 
         protected override bool IsResultContext(QualifiedContext<ParserRuleContext> context, DeclarationFinder finder)
         {
-            return !IsOnErrorGotoMinusOne(context.Context) 
+            return !IsOnErrorGotoMinusOne(context.Context)
                 || ProcedureHasMinusOneLabel(finder, context);
         }
 

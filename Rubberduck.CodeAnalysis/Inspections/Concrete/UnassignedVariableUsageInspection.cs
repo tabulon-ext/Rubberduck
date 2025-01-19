@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Antlr4.Runtime.Misc;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.InternalApi.Extensions;
@@ -11,6 +8,10 @@ using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -50,7 +51,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public UnassignedVariableUsageInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         //See https://github.com/rubberduck-vba/Rubberduck/issues/2010 for why these are being excluded.
         private static readonly List<string> IgnoredFunctions = new List<string>
@@ -136,7 +137,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override bool IsResultReference(IdentifierReference reference, DeclarationFinder finder)
         {
             return reference != null
-                   && !IsArraySubscriptAssignment(reference) 
+                   && !IsArraySubscriptAssignment(reference)
                    && !IsArrayReDim(reference);
         }
 
@@ -144,7 +145,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var identifierName = reference.IdentifierName;
             return string.Format(
-                InspectionResults.UnassignedVariableUsageInspection,
+                InspectionResults.ResourceManager.GetString("UnassignedVariableUsageInspection", CultureInfo.CurrentUICulture),
                 identifierName);
         }
 
@@ -190,7 +191,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
             var callingExpression = indexExpression.Parent;
 
-            return callingExpression is VBAParser.SetStmtContext 
+            return callingExpression is VBAParser.SetStmtContext
                    || callingExpression is VBAParser.LetStmtContext;
         }
 
@@ -215,7 +216,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                 return false;
             }
 
-            if(!reference.Context.TryGetAncestor<VBAParser.ModuleBodyElementContext>(out var containingMember))
+            if (!reference.Context.TryGetAncestor<VBAParser.ModuleBodyElementContext>(out var containingMember))
             {
                 return false;
             }

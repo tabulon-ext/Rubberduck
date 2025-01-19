@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Attributes;
 using Rubberduck.Parsing.Annotations;
@@ -8,6 +6,9 @@ using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor.SafeComWrappers;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -44,7 +45,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public MissingAttributeInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         protected override IEnumerable<IParseTreeAnnotation> ResultProperties(Declaration declaration, DeclarationFinder finder)
         {
@@ -60,8 +61,8 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         }
 
         protected override string ResultDescription(Declaration declaration, IParseTreeAnnotation pta) =>
-            string.Format(InspectionResults.MissingAttributeInspection, declaration.IdentifierName, pta.Annotation.Name);
-        
+            string.Format(InspectionResults.ResourceManager.GetString("MissingAttributeInspection", CultureInfo.CurrentUICulture), declaration.IdentifierName, pta.Annotation.Name);
+
 
         private static bool MissesCorrespondingAttribute(Declaration declaration, IParseTreeAnnotation annotationInstance)
         {

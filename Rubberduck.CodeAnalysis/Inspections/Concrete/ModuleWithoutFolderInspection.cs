@@ -1,10 +1,11 @@
-﻿using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing.Annotations.Concrete;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -36,7 +37,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public ModuleWithoutFolderInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Module)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
@@ -45,7 +46,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.ModuleWithoutFolderInspection, declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString("ModuleWithoutFolderInspection", CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 }

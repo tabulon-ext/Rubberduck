@@ -4,6 +4,7 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Resources.Inspections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
@@ -48,6 +49,6 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         }
 
         protected override string ResultDescription(IParseTreeAnnotation pta) =>
-            string.Format(InspectionResults.UnrecognizedAnnotationInspection, pta.Context.GetText());
+            string.Format(InspectionResults.ResourceManager.GetString("UnrecognizedAnnotationInspection", CultureInfo.CurrentUICulture), pta.Context.GetText());
     }
 }

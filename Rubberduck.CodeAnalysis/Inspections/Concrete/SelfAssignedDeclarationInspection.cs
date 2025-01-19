@@ -1,10 +1,11 @@
-﻿using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -48,7 +49,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public SelfAssignedDeclarationInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Variable)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
@@ -63,7 +64,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.SelfAssignedDeclarationInspection, declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString("SelfAssignedDeclarationInspection", CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 }

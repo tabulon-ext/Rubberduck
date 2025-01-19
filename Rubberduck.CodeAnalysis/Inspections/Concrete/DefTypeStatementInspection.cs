@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using Antlr4.Runtime.Misc;
+﻿using Antlr4.Runtime.Misc;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Resources.Inspections;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -34,7 +35,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             ContextListener = new DefTypeStatementInspectionListener();
         }
-        
+
         protected override IInspectionListener<VBAParser.DefTypeContext> ContextListener { get; }
 
         protected override string ResultDescription(QualifiedContext<VBAParser.DefTypeContext> context)
@@ -43,7 +44,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var defStmtText = context.Context.start.Text;
 
             return string.Format(
-                InspectionResults.DefTypeStatementInspection,
+                InspectionResults.ResourceManager.GetString("DefTypeStatementInspection", CultureInfo.CurrentUICulture),
                 typeName,
                 defStmtText);
         }

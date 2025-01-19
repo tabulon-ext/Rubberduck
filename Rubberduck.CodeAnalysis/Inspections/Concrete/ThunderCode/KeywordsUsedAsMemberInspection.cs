@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.InternalApi.Extensions;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete.ThunderCode
 {
@@ -23,7 +24,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete.ThunderCode
     {
         public KeywordsUsedAsMemberInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.EnumerationMember, DeclarationType.UserDefinedTypeMember)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
@@ -33,11 +34,11 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete.ThunderCode
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return InspectionResults.KeywordsUsedAsMemberInspection.ThunderCodeFormat(declaration.IdentifierName);
+            return InspectionResults.ResourceManager.GetString("KeywordsUsedAsMemberInspection", CultureInfo.CurrentUICulture).ThunderCodeFormat(declaration.IdentifierName);
         }
 
         // MS-VBAL 3.3.5.2 Reserved Identifiers and IDENTIFIER
-        private static readonly IEnumerable<string> ReservedKeywords = new []
+        private static readonly IEnumerable<string> ReservedKeywords = new[]
         {
             /*
 Statement-keyword = "Call" / "Case" /"Close" / "Const"/ "Declare" / "DefBool" / "DefByte" / 

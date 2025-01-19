@@ -3,6 +3,7 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete.ThunderCode
 {
@@ -32,7 +33,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete.ThunderCode
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return InspectionResults.NonBreakingSpaceIdentifierInspection.ThunderCodeFormat(declaration.IdentifierName);
+            return InspectionResults.ResourceManager.GetString("NonBreakingSpaceIdentifierInspection", CultureInfo.CurrentUICulture).ThunderCodeFormat(declaration.IdentifierName);
         }
     }
 }

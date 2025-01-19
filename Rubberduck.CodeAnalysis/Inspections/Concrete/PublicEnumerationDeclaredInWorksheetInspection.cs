@@ -6,6 +6,7 @@ using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor.SafeComWrappers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
@@ -44,7 +45,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         public PublicEnumerationDeclaredInWorksheetInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Enumeration)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration enumeration, DeclarationFinder finder)
         {
@@ -62,8 +63,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.PublicEnumerationDeclaredInWorksheetInspection,
-                declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString("PublicEnumerationDeclaredInWorksheetInspection", CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
 
         /// <summary>

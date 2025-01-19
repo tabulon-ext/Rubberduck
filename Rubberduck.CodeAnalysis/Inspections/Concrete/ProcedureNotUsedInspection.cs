@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Extensions;
 using Rubberduck.Parsing.Annotations;
@@ -8,6 +6,8 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -110,7 +110,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public ProcedureNotUsedInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, ProcedureTypes)
-        {}
+        { }
 
         private static readonly DeclarationType[] ProcedureTypes =
         {
@@ -143,10 +143,10 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                        .Any(reference => !reference.ParentScoping.Equals(declaration)) // ignore recursive/self-referential calls
                    && !finder.FindEventHandlers().Contains(declaration)
                    && !IsClassLifeCycleHandler(declaration)
-                   && !(declaration is ModuleBodyElementDeclaration member 
+                   && !(declaration is ModuleBodyElementDeclaration member
                         && member.IsInterfaceImplementation)
                    && !declaration.Annotations
-                       .Any(pta => pta.Annotation is ITestAnnotation) 
+                       .Any(pta => pta.Annotation is ITestAnnotation)
                    && !IsDocumentEventHandler(declaration)
                    && !IsEntryPoint(declaration)
                    && !IsPublicInExposedClass(declaration);
@@ -154,13 +154,13 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         private static bool IsPublicInExposedClass(Declaration procedure)
         {
-            if(!(procedure.Accessibility == Accessibility.Public
+            if (!(procedure.Accessibility == Accessibility.Public
                     || procedure.Accessibility == Accessibility.Global))
             {
                 return false;
             }
 
-            if(!(Declaration.GetModuleParent(procedure) is ClassModuleDeclaration classParent))
+            if (!(Declaration.GetModuleParent(procedure) is ClassModuleDeclaration classParent))
             {
                 return false;
             }
@@ -168,7 +168,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             return classParent.IsExposed;
         }
 
-        private static bool IsEntryPoint(Declaration procedure) => 
+        private static bool IsEntryPoint(Declaration procedure) =>
             procedure.Annotations.Any(pta => pta.Annotation is EntryPointAnnotation || pta.Annotation is ExcelHotKeyAnnotation);
 
         private static bool IsClassLifeCycleHandler(Declaration procedure)
@@ -179,7 +179,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             }
 
             var parent = Declaration.GetModuleParent(procedure);
-            return parent != null 
+            return parent != null
                    && parent.DeclarationType.HasFlag(DeclarationType.ClassModule);
         }
 
@@ -195,8 +195,8 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var declarationType = declaration.DeclarationType.ToLocalizedString();
             var declarationName = declaration.IdentifierName;
             return string.Format(
-                InspectionResults.IdentifierNotUsedInspection, 
-                declarationType, 
+                InspectionResults.ResourceManager.GetString("IdentifierNotUsedInspection", CultureInfo.CurrentUICulture),
+                declarationType,
                 declarationName);
         }
     }

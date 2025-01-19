@@ -5,6 +5,7 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 using Tokens = Rubberduck.Resources.Tokens;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
@@ -75,15 +76,15 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// </example>
     internal sealed class SuspiciousPredeclaredInstanceAccessInspection : IdentifierReferenceInspectionBase
     {
-        public SuspiciousPredeclaredInstanceAccessInspection(IDeclarationFinderProvider declarationFinderProvider) 
+        public SuspiciousPredeclaredInstanceAccessInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
         {
         }
 
         protected override bool IsResultReference(IdentifierReference reference, DeclarationFinder finder)
         {
-            return 
-                reference.Declaration is ClassModuleDeclaration module && 
+            return
+                reference.Declaration is ClassModuleDeclaration module &&
                 module.HasPredeclaredId &&
                 reference.ParentScoping.ParentDeclaration.Equals(module) &&
                 reference.Context.TryGetAncestor<VBAParser.MemberAccessExprContext>(out var expression) &&
@@ -93,7 +94,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(IdentifierReference reference)
         {
             reference.Context.TryGetAncestor<VBAParser.MemberAccessExprContext>(out var expression);
-            return string.Format(InspectionResults.SuspiciousPredeclaredInstanceAccessInspection, reference.IdentifierName, expression.GetText());
+            return string.Format(InspectionResults.ResourceManager.GetString("SuspiciousPredeclaredInstanceAccessInspection", CultureInfo.CurrentUICulture), reference.IdentifierName, expression.GetText());
         }
     }
 }

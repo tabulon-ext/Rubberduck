@@ -1,11 +1,12 @@
-using System.Collections.Generic;
-using System.Linq;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -46,7 +47,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public WriteOnlyPropertyInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.PropertyLet, DeclarationType.PropertySet) { }
-        
+
         protected override IEnumerable<IInspectionResult> DoGetInspectionResults(QualifiedModuleName module, DeclarationFinder finder)
         {
             var setters = RelevantDeclarationsInModule(module, finder)
@@ -71,7 +72,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.WriteOnlyPropertyInspection, declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString("WriteOnlyPropertyInspection", CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 }

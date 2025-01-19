@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Attributes;
 using Rubberduck.Parsing.Annotations;
 using Rubberduck.Parsing.Symbols;
@@ -8,6 +6,9 @@ using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor.SafeComWrappers;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -45,7 +46,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public AttributeValueOutOfSyncInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         protected override IEnumerable<(IParseTreeAnnotation Annotation, string AttributeName, IReadOnlyList<string> AttributeValues)> ResultProperties(Declaration declaration, DeclarationFinder finder)
         {
@@ -61,7 +62,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             foreach (var pta in declaration.Annotations)
             {
-                if (!(pta.Annotation is IAttributeAnnotation annotation) 
+                if (!(pta.Annotation is IAttributeAnnotation annotation)
                     || !HasDifferingAttributeValues(declaration, pta, out var attributeValues))
                 {
                     continue;
@@ -101,7 +102,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var (pta, attributeName, attributeValues) = properties;
             var annotationName = pta.Annotation.Name;
-            return string.Format(InspectionResults.AttributeValueOutOfSyncInspection,
+            return string.Format(InspectionResults.ResourceManager.GetString("AttributeValueOutOfSyncInspection", CultureInfo.CurrentUICulture),
                 attributeName,
                 string.Join(", ", attributeValues),
                 annotationName);

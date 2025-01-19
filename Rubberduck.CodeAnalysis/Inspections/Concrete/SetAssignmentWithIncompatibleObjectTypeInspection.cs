@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.Symbols;
@@ -8,6 +7,8 @@ using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -93,7 +94,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
             var assignedTypeName = AssignedTypeName(reference, finder);
 
-            if(assignedTypeName == null || SetAssignmentPossiblyLegal(reference.Declaration, assignedTypeName))
+            if (assignedTypeName == null || SetAssignmentPossiblyLegal(reference.Declaration, assignedTypeName))
             {
                 return (false, null);
             }
@@ -109,7 +110,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             }
 
             var declaration = reference.Declaration;
-            return declaration?.AsTypeDeclaration != null 
+            return declaration?.AsTypeDeclaration != null
                    && declaration.IsObject;
         }
 
@@ -165,7 +166,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var declarationName = reference.Declaration.IdentifierName;
             var variableTypeName = reference.Declaration.FullAsTypeName;
-            return string.Format(InspectionResults.SetAssignmentWithIncompatibleObjectTypeInspection, declarationName, variableTypeName, assignedTypeName);
+            return string.Format(InspectionResults.ResourceManager.GetString("SetAssignmentWithIncompatibleObjectTypeInspection", CultureInfo.CurrentUICulture), declarationName, variableTypeName, assignedTypeName);
         }
     }
 }

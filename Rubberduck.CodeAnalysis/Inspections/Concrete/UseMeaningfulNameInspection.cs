@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Extensions;
 using Rubberduck.CodeAnalysis.Settings;
 using Rubberduck.Parsing.Grammar;
@@ -9,6 +7,9 @@ using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Refactorings.Common;
 using Rubberduck.SettingsProvider;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -47,11 +48,11 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             _settings = settings;
         }
 
-        private static readonly DeclarationType[] IgnoreDeclarationTypes = 
+        private static readonly DeclarationType[] IgnoreDeclarationTypes =
         {
-            DeclarationType.BracketedExpression, 
+            DeclarationType.BracketedExpression,
             DeclarationType.LibraryFunction,
-            DeclarationType.LibraryProcedure, 
+            DeclarationType.LibraryProcedure,
         };
 
         protected override string[] GlobalInformation(DeclarationFinder finder)
@@ -79,7 +80,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var declarationType = declaration.DeclarationType.ToLocalizedString();
             var declarationName = declaration.IdentifierName;
             return string.Format(
-                Resources.Inspections.InspectionResults.IdentifierNameInspection,
+                Resources.Inspections.InspectionResults.ResourceManager.GetString("IdentifierNameInspection", CultureInfo.CurrentUICulture),
                 declarationType,
                 declarationName);
         }
@@ -89,7 +90,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             return declaration.DeclarationType.HasFlag(DeclarationType.Module)
                    || declaration.DeclarationType.HasFlag(DeclarationType.Project)
                    || declaration.DeclarationType.HasFlag(DeclarationType.Control)
-                   ? new List<string> {nameof(QuickFixes.Concrete.IgnoreOnceQuickFix)}
+                   ? new List<string> { nameof(QuickFixes.Concrete.IgnoreOnceQuickFix) }
                    : new List<string>();
         }
     }

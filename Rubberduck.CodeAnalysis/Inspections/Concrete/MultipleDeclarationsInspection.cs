@@ -5,6 +5,7 @@ using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -50,7 +51,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<ParserRuleContext> context)
         {
-            return InspectionResults.MultipleDeclarationsInspection;
+            return InspectionResults.ResourceManager.GetString("MultipleDeclarationsInspection", CultureInfo.CurrentUICulture);
         }
 
         private class ParameterListListener : InspectionListenerBase<ParserRuleContext>
@@ -59,7 +60,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             {
                 if (context.variableSubStmt().Length > 1)
                 {
-                   SaveContext(context);
+                    SaveContext(context);
                 }
             }
 

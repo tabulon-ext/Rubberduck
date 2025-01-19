@@ -1,9 +1,10 @@
-﻿using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -44,7 +45,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public MoveFieldCloserToUsageInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Variable)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
@@ -62,7 +63,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var firstReference = declaration.References.FirstOrDefault();
             var usageMember = firstReference?.ParentScoping;
 
-            if (usageMember == null 
+            if (usageMember == null
                 || declaration.References.Any(reference => !reference.ParentScoping.Equals(usageMember)))
             {
                 return false;
@@ -89,7 +90,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.MoveFieldCloserToUsageInspection, declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString("MoveFieldCloserToUsageInspection", CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 }

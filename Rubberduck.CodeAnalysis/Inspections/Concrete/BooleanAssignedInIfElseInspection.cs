@@ -1,9 +1,10 @@
-﻿using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -46,7 +47,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             ContextListener = new BooleanAssignedInIfElseListener();
         }
-        
+
         protected override IInspectionListener<VBAParser.IfStmtContext> ContextListener { get; }
 
         protected override string ResultDescription(QualifiedContext<VBAParser.IfStmtContext> context)
@@ -57,9 +58,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                 .lExpression()
                 .GetText()
                 .Trim();
-            return string.Format(
-                InspectionResults.BooleanAssignedInIfElseInspection, 
-                literalText);
+            return string.Format(InspectionResults.ResourceManager.GetString("BooleanAssignedInIfElseInspection", CultureInfo.CurrentUICulture), literalText);
         }
 
         private class BooleanAssignedInIfElseListener : InspectionListenerBase<VBAParser.IfStmtContext>

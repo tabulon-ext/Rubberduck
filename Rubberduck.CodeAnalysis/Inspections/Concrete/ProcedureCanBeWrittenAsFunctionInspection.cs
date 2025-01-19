@@ -1,11 +1,12 @@
-﻿using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -53,8 +54,8 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     internal sealed class ProcedureCanBeWrittenAsFunctionInspection : DeclarationInspectionBase
     {
         public ProcedureCanBeWrittenAsFunctionInspection(IDeclarationFinderProvider declarationFinderProvider)
-            : base(declarationFinderProvider, new []{DeclarationType.Procedure}, new []{DeclarationType.LibraryProcedure, DeclarationType.PropertyLet, DeclarationType.PropertySet})
-        {}
+            : base(declarationFinderProvider, new[] { DeclarationType.Procedure }, new[] { DeclarationType.LibraryProcedure, DeclarationType.PropertyLet, DeclarationType.PropertySet })
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
@@ -119,7 +120,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(Declaration declaration)
         {
             return string.Format(
-                InspectionResults.ProcedureCanBeWrittenAsFunctionInspection,
+                InspectionResults.ResourceManager.GetString("ProcedureCanBeWrittenAsFunctionInspection", CultureInfo.CurrentUICulture),
                 declaration.IdentifierName);
         }
     }

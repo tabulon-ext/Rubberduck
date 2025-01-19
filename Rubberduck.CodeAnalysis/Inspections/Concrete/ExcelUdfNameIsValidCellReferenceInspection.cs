@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Attributes;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
@@ -10,6 +6,11 @@ using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
 using Rubberduck.VBEditor.SafeComWrappers;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -41,8 +42,8 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     internal class ExcelUdfNameIsValidCellReferenceInspection : DeclarationInspectionUsingGlobalInformationBase<bool>
     {
         public ExcelUdfNameIsValidCellReferenceInspection(IDeclarationFinderProvider declarationFinderProvider)
-            : base(declarationFinderProvider, new []{DeclarationType.Function}, new []{DeclarationType.PropertyGet, DeclarationType.LibraryFunction})
-        {}
+            : base(declarationFinderProvider, new[] { DeclarationType.Function }, new[] { DeclarationType.PropertyGet, DeclarationType.LibraryFunction })
+        { }
 
         protected override IEnumerable<IInspectionResult> DoGetInspectionResults(QualifiedModuleName module, DeclarationFinder finder, bool excelIsReferenced)
         {
@@ -96,7 +97,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.ExcelUdfNameIsValidCellReferenceInspection, declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString("ExcelUdfNameIsValidCellReferenceInspection", CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 }

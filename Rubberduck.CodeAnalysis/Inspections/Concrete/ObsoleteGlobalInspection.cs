@@ -4,6 +4,7 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -33,11 +34,11 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public ObsoleteGlobalInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
-            return declaration.Accessibility == Accessibility.Global 
+            return declaration.Accessibility == Accessibility.Global
                    && declaration.Context != null
                    && declaration.DeclarationType != DeclarationType.BracketedExpression;
         }
@@ -47,7 +48,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var declarationType = declaration.DeclarationType.ToLocalizedString();
             var declarationName = declaration.IdentifierName;
             return string.Format(
-                    InspectionResults.ObsoleteGlobalInspection,
+                    InspectionResults.ResourceManager.GetString("ObsoleteGlobalInspection", CultureInfo.CurrentUICulture),
                     declarationType,
                     declarationName);
         }

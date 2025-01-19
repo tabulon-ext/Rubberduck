@@ -4,6 +4,7 @@ using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -52,7 +53,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.CaseClauseContext> context)
         {
-            return InspectionResults.EmptyCaseBlockInspection;
+            return InspectionResults.ResourceManager.GetString("EmptyCaseBlockInspection", CultureInfo.CurrentUICulture);
         }
 
         private class EmptyCaseBlockListener : EmptyBlockInspectionListenerBase

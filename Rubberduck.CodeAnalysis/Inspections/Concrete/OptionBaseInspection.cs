@@ -3,6 +3,7 @@ using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -46,14 +47,14 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             ContextListener = new OptionBaseStatementListener();
         }
-        
+
         protected override IInspectionListener<VBAParser.OptionBaseStmtContext> ContextListener { get; }
 
         protected override string ResultDescription(QualifiedContext<VBAParser.OptionBaseStmtContext> context)
         {
             var moduleName = context.ModuleName.ComponentName;
             return string.Format(
-                InspectionResults.OptionBaseInspection, 
+                InspectionResults.ResourceManager.GetString("OptionBaseInspection", CultureInfo.CurrentUICulture),
                 moduleName);
         }
 
@@ -63,7 +64,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             {
                 if (context.numberLiteral()?.INTEGERLITERAL().Symbol.Text == "1")
                 {
-                   SaveContext(context);
+                    SaveContext(context);
                 }
             }
         }

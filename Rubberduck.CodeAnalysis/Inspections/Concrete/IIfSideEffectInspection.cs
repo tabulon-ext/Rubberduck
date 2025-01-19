@@ -8,6 +8,7 @@ using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
@@ -119,7 +120,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override IEnumerable<IInspectionResult> DoGetInspectionResults(QualifiedModuleName module, DeclarationFinder finder)
         {
             var iifReferences = _declarationFinderProvider.DeclarationFinder.BuiltInDeclarations(DeclarationType.Function)
-                .SingleOrDefault(d => string.Compare( d.IdentifierName, "IIf", System.StringComparison.InvariantCultureIgnoreCase) == 0)
+                .SingleOrDefault(d => string.Compare(d.IdentifierName, "IIf", System.StringComparison.InvariantCultureIgnoreCase) == 0)
                 .References.Where(rf => rf.QualifiedModuleName == module);
 
             if (!iifReferences.Any())
@@ -178,7 +179,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                     .SelectMany(ctxt => ctxt.children.OfType<VBAParser.UnrestrictedIdentifierContext>())
                     //'ToUpperInvariant' in case the user has (at some point) entered a declaration that re-cased any IIf parameter names
                     .ToDictionary(ch => ch.GetText().ToUpperInvariant());
-                
+
                 if (unrestrictedIDContextsByName.TryGetValue(partParam.Identifier.ToUpperInvariant(), out var expressionUnrestrictedIDContext))
                 {
                     return expressionUnrestrictedIDContext.Parent.Parent as VBAParser.ArgumentContext;
@@ -190,7 +191,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(IdentifierReference reference)
         {
-            return string.Format(InspectionResults.IIfSideEffectInspection, reference.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString("IIfSideEffectInspection", CultureInfo.CurrentUICulture), reference.IdentifierName);
         }
 
         /// <summary>
@@ -199,7 +200,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         /// <returns></returns>
         private static Dictionary<string, string> CreateLibraryFunctionIdentifiersToIgnore()
         {
-            return LoadLibraryFunctionIdentifiersToIgnore( new Dictionary<string, string>(),
+            return LoadLibraryFunctionIdentifiersToIgnore(new Dictionary<string, string>(),
                 //MS-VBAL 6.1.2.3 Conversion Module
                 /*Excluded for potential of raising errors:
                  * "CBool", "CByte", "CCur", "CDate", "CVDate", "CDbl", "CDec", "CInt", "CLng", "CLngLng", "ClngPtr",
@@ -224,7 +225,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                  */
 
                 //MS-VBAL 6.1.2.7 Information
-                "IMEStatus", "IsArray", "IsDate", "IsEmpty", "IsError", "IsMissing", "IsNull", "IsNumeric", "IsObject", 
+                "IMEStatus", "IsArray", "IsDate", "IsEmpty", "IsError", "IsMissing", "IsNull", "IsNumeric", "IsObject",
                 "QBColor", "RGB", "TypeName", "VarType",
 
                 //MS-VBAL 6.1.2.8 Interaction
@@ -248,7 +249,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                  * "Right$", "RightB$", "Asc", "AscW", "AscB", "Chr", "Chr$", "ChB", "ChB$", "ChrW", "ChrW$", "Filter", 
                  * "MonthName", "WeekdayName", "Space", "Space$", "Split","StrConv", "String", "String$"
                 */
-                "LCase", "LCase$", "Len", "LenB", "Trim", "LTrim", "RTrim", "Trim$", "LTrim$", "RTrim$", "StrComp", 
+                "LCase", "LCase$", "Len", "LenB", "Trim", "LTrim", "RTrim", "Trim$", "LTrim$", "RTrim$", "StrComp",
                 "StrReverse", "UCase", "UCase$"
                 );
         }

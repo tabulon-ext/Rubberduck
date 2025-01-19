@@ -4,6 +4,7 @@ using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -46,7 +47,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var identifierName = context.Context.identifier().GetText();
             return string.Format(
-                InspectionResults.ModuleScopeDimKeywordInspection,
+                InspectionResults.ResourceManager.GetString("ModuleScopeDimKeywordInspection", CultureInfo.CurrentUICulture),
                 identifierName);
         }
 

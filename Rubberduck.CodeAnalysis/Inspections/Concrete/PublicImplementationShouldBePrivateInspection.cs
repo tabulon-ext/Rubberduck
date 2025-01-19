@@ -1,16 +1,12 @@
-﻿using Rubberduck.CodeAnalysis.CodeMetrics;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Refactorings.Common;
-using Rubberduck.Resources.Inspections;
-using Rubberduck.VBEditor;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -78,7 +74,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public PublicImplementationShouldBePrivateInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Member)
-        {}
+        { }
 
         //Overriding DoGetInspectionResults in order to dereference the DeclarationFinder FindXXX declaration 
         //lists only once per inspections pass.
@@ -109,11 +105,11 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         private static IEnumerable<Declaration> FindDocumentEventHandlers(IEnumerable<Declaration> publicMembers)
         {
             //Excel and Word
-            var docEventPrefixes = new List<string>() 
-            { 
-                "Workbook", 
-                "Worksheet", 
-                "Document" 
+            var docEventPrefixes = new List<string>()
+            {
+                "Workbook",
+                "Worksheet",
+                "Document"
             };
 
             //FindDocumentEventHandlers can be a source of False Positives if a Document's code
@@ -125,7 +121,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(Resources.Inspections.InspectionResults.PublicImplementationShouldBePrivateInspection, 
+            return string.Format(Resources.Inspections.InspectionResults.ResourceManager.GetString("PublicImplementationShouldBePrivateInspection", CultureInfo.CurrentUICulture),
                 declaration.IdentifierName);
         }
 
@@ -139,7 +135,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var splitup = procedureName.Split('_');
 
-            return splitup.Length == 2 
+            return splitup.Length == 2
                 && splitup[0].Equals(docEventHandlerPrefix, StringComparison.InvariantCultureIgnoreCase)
                 && splitup[1].Length > 2 //Excel and Word document events all have at least 3 characters
                 && !splitup[1].Any(c => char.IsDigit(c)); //Excel and Word document event names do not contain numbers

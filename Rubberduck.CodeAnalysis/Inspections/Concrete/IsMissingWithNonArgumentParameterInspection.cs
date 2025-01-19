@@ -3,6 +3,7 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -38,7 +39,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public IsMissingWithNonArgumentParameterInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         protected override (bool isResult, ParameterDeclaration properties) IsUnsuitableArgumentWithAdditionalProperties(ArgumentReference reference, DeclarationFinder finder)
         {
@@ -49,7 +50,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(IdentifierReference reference, ParameterDeclaration properties)
         {
-            return InspectionResults.IsMissingWithNonArgumentParameterInspection;
+            return InspectionResults.ResourceManager.GetString("IsMissingWithNonArgumentParameterInspection", CultureInfo.CurrentUICulture);
         }
     }
 }

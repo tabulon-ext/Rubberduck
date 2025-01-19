@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Attributes;
 using Rubberduck.Common;
 using Rubberduck.Parsing;
@@ -12,6 +10,9 @@ using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor.ComManagement;
 using Rubberduck.VBEditor.SafeComWrappers;
 using Rubberduck.VBEditor.SafeComWrappers.Abstract;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -128,15 +129,15 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
             var hostWorkbookDeclaration = GetHostWorkbookDeclaration(finder);
 
-            var context = reference.Context as VBAParser.MemberAccessExprContext 
+            var context = reference.Context as VBAParser.MemberAccessExprContext
                         ?? reference.Context.Parent as VBAParser.MemberAccessExprContext
                         ?? reference.Context.Parent.Parent as VBAParser.MemberAccessExprContext;
 
             if (context is VBAParser.MemberAccessExprContext memberAccess)
             {
                 var appObjectDeclaration = GetHostApplicationDeclaration(finder);
-                var isApplicationQualifier = appObjectDeclaration.References.Any(appRef => 
-                    context.GetSelection().Contains(appRef.Selection) 
+                var isApplicationQualifier = appObjectDeclaration.References.Any(appRef =>
+                    context.GetSelection().Contains(appRef.Selection)
                     && appRef.QualifiedModuleName.Equals(reference.QualifiedModuleName));
 
                 if (isApplicationQualifier)
@@ -229,6 +230,6 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             return null;
         }
 
-        protected override string ResultDescription(IdentifierReference reference, string codeName) => InspectionResults.SheetAccessedUsingStringInspection;
+        protected override string ResultDescription(IdentifierReference reference, string codeName) => InspectionResults.ResourceManager.GetString("SheetAccessedUsingStringInspection", CultureInfo.CurrentUICulture);
     }
 }

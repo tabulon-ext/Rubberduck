@@ -3,6 +3,7 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -36,7 +37,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         public ImplicitPublicMemberInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, ProcedureTypes) { }
 
-        private static readonly DeclarationType[] ProcedureTypes = 
+        private static readonly DeclarationType[] ProcedureTypes =
         {
             DeclarationType.Function,
             DeclarationType.Procedure,
@@ -54,7 +55,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.ImplicitPublicMemberInspection, declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString("ImplicitPublicMemberInspection", CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 }

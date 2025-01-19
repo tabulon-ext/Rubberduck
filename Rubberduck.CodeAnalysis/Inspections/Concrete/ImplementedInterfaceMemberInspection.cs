@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Common;
 using Rubberduck.Parsing;
 using Rubberduck.Parsing.Annotations.Concrete;
@@ -7,6 +6,8 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -44,7 +45,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public ImplementedInterfaceMemberInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.ClassModule)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
@@ -74,12 +75,12 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var qualifiedName = declaration.QualifiedModuleName.ToString();
             var declarationType = CodeAnalysisUI.ResourceManager
-                .GetString("DeclarationType_" + declaration.DeclarationType)
+                .GetString("DeclarationType_" + declaration.DeclarationType, CultureInfo.CurrentUICulture)
                 .Capitalize();
             var identifierName = declaration.IdentifierName;
 
             return string.Format(
-                InspectionResults.ImplementedInterfaceMemberInspection,
+                InspectionResults.ResourceManager.GetString("ImplementedInterfaceMemberInspection", CultureInfo.CurrentUICulture),
                 qualifiedName,
                 declarationType,
                 identifierName);

@@ -3,6 +3,7 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
@@ -49,7 +50,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public ImplicitByRefModifierInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Parameter)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
@@ -70,14 +71,14 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         private static bool IsPropertyMutatorRHSParameter(ModuleBodyElementDeclaration enclosingMethod, ParameterDeclaration implicitByRefParameter)
         {
             return (enclosingMethod.DeclarationType.HasFlag(DeclarationType.PropertyLet)
-                    || enclosingMethod.DeclarationType.HasFlag(DeclarationType.PropertySet)) 
+                    || enclosingMethod.DeclarationType.HasFlag(DeclarationType.PropertySet))
                 && enclosingMethod.Parameters.Last().Equals(implicitByRefParameter);
         }
 
         protected override string ResultDescription(Declaration declaration)
         {
             return string.Format(
-                InspectionResults.ImplicitByRefModifierInspection,
+                InspectionResults.ResourceManager.GetString("ImplicitByRefModifierInspection", CultureInfo.CurrentUICulture),
                 declaration.IdentifierName);
         }
     }

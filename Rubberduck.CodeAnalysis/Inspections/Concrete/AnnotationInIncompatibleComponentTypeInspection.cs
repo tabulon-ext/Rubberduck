@@ -5,6 +5,7 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Resources.Inspections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
@@ -63,14 +64,14 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             if (pta.Annotation.RequiredComponentType.HasValue)
             {
-                return string.Format(InspectionResults.InvalidAnnotationInspection_NotInRequiredComponentType,
+                return string.Format(InspectionResults.ResourceManager.GetString("InvalidAnnotationInspection_NotInRequiredComponentType", CultureInfo.CurrentUICulture),
                     pta.Annotation.Name, // annotation...
                     pta.QualifiedSelection.QualifiedName.ComponentType,  // is used in a...
                     pta.Annotation.RequiredComponentType); // but is only valid in a...
             }
             else
             {
-                return string.Format(InspectionResults.InvalidAnnotationInspection_IncompatibleComponentType,
+                return string.Format(InspectionResults.ResourceManager.GetString("InvalidAnnotationInspection_IncompatibleComponentType", CultureInfo.CurrentUICulture),
                     pta.Annotation.Name, // annotation...
                     pta.QualifiedSelection.QualifiedName.ComponentType); // cannot be used in a...
             }

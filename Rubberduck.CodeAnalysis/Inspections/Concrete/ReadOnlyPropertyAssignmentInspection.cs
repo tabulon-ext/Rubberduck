@@ -4,6 +4,7 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
@@ -129,7 +130,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var identifierName = reference.IdentifierName;
             return string.Format(
-                InspectionResults.ReadOnlyPropertyAssignmentInspection, identifierName);
+                InspectionResults.ResourceManager.GetString("ReadOnlyPropertyAssignmentInspection", CultureInfo.CurrentUICulture), identifierName);
         }
     }
 }

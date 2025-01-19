@@ -1,5 +1,3 @@
-using System.Diagnostics;
-using System.Linq;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
@@ -8,6 +6,9 @@ using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -59,7 +60,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public ParameterCanBeByValInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Parameter)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
@@ -82,7 +83,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
             if (enclosingMember is ModuleBodyElementDeclaration member)
             {
-                if(member.IsInterfaceMember)
+                if (member.IsInterfaceMember)
                 {
                     return AllImplementationParametersCanBeChangedToByVal(parameter, member, finder);
                 }
@@ -234,7 +235,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         private static bool ParameterAtIndexCanBeChangedToBePassedByValIfRelatedParameterCan(IParameterizedDeclaration member, int parameterIndex, DeclarationFinder finder)
         {
             var parameter = member.Parameters.ElementAtOrDefault(parameterIndex);
-            return parameter != null 
+            return parameter != null
                    && CanBeChangedToBePassedByValIfRelatedParameterCan(parameter, finder);
         }
 
@@ -265,7 +266,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.ParameterCanBeByValInspection, declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString("ParameterCanBeByValInspection", CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 }
