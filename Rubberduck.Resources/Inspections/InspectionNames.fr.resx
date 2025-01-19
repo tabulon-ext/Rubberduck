@@ -135,6 +135,9 @@
   <data name="ImplicitActiveWorkbookReferenceInspection" xml:space="preserve">
     <value>Référence implicite au classeur actif</value>
   </data>
+  <data name="ImplicitByRefModifierInspection" xml:space="preserve">
+    <value>Paramètre ByRef implicite</value>
+  </data>
   <data name="ImplicitPublicMemberInspection" xml:space="preserve">
     <value>Membre implicitement public</value>
   </data>
@@ -201,8 +204,14 @@
   <data name="SelfAssignedDeclarationInspection" xml:space="preserve">
     <value>La variable objet est assignée lors de sa déclaration.</value>
   </data>
+  <data name="FunctionReturnValueAlwaysDiscardedInspection" xml:space="preserve">
+    <value>La valeur renvoyée par la fonction est systématiquement ignorée.</value>
+  </data>
   <data name="ObjectVariableNotSetInspection" xml:space="preserve">
     <value>L'assignation d'une référence d'objet requiert le mot-clé 'Set'.</value>
+  </data>
+  <data name="MissingAnnotationArgumentInspection" xml:space="preserve">
+    <value>Paramètre d'annotation manquant</value>
   </data>
   <data name="ModuleScopeDimKeywordInspection" xml:space="preserve">
     <value>Utilisation du mot-clé 'Dim' au niveau module</value>
@@ -210,65 +219,62 @@
   <data name="UndeclaredVariableInspection" xml:space="preserve">
     <value>Variable non déclarée</value>
   </data>
-  <data name="MissingAnnotationArgumentInspection" xml:space="preserve">
-    <value>Paramètre d'annotation manquant</value>
-  </data>
-  <data name="ApplicationWorksheetFunctionInspection" xml:space="preserve">
-    <value>Appel de fonction WorksheetFunction à liaison tardive.</value>
-  </data>
-  <data name="HostSpecificExpressionInspection" xml:space="preserve">
-    <value>Les expressions spécifiques à l'application hôte, encadrées de crochets, sont seulement évaluées lors de l'exécution</value>
-  </data>
   <data name="HungarianNotationInspection" xml:space="preserve">
     <value>L'identifiant utilise la notation hongroise.</value>
   </data>
   <data name="MemberNotOnInterfaceInspection" xml:space="preserve">
     <value>Membre inexistant ou introuvable</value>
   </data>
-  <data name="IntegerDataTypeInspection" xml:space="preserve">
-    <value>Utilisation d'un entier 16-bits</value>
+  <data name="HostSpecificExpressionInspection" xml:space="preserve">
+    <value>Les expressions spécifiques à l'application hôte, encadrées de crochets, sont seulement évaluées lors de l'exécution</value>
   </data>
-  <data name="EmptyCaseBlockInspection" xml:space="preserve">
-    <value>Bloc 'Case' vide</value>
-  </data>
-  <data name="EmptyIfBlockInspection" xml:space="preserve">
-    <value>Branche conditionelle vide</value>
-  </data>
-  <data name="RedundantByRefModifierInspection" xml:space="preserve">
-    <value>Modificateur 'ByRef' redondant</value>
+  <data name="ApplicationWorksheetFunctionInspection" xml:space="preserve">
+    <value>Appel de fonction WorksheetFunction à liaison tardive.</value>
   </data>
   <data name="OptionBaseZeroInspection" xml:space="preserve">
     <value>'Option Base 0' est redondant</value>
   </data>
-  <data name="EmptyForLoopBlockInspection" xml:space="preserve">
-    <value>Boucle 'For...Next' vide</value>
+  <data name="InvalidAnnotationInspection" xml:space="preserve">
+    <value>Annotation invalide</value>
   </data>
-  <data name="ImplicitByRefModifierInspection" xml:space="preserve">
-    <value>Paramètre ByRef implicite</value>
+  <data name="MissingAttributeInspection" xml:space="preserve">
+    <value>Attribut manquant</value>
   </data>
-  <data name="EmptyForEachBlockInspection" xml:space="preserve">
-    <value>Boucle 'For Each...Next' vide</value>
+  <data name="EmptyIfBlockInspection" xml:space="preserve">
+    <value>Branche conditionelle vide</value>
+  </data>
+  <data name="RedundantOptionInspection" xml:space="preserve">
+    <value>Option de module redondante</value>
+  </data>
+  <data name="RedundantByRefModifierInspection" xml:space="preserve">
+    <value>Modificateur 'ByRef' redondant</value>
+  </data>
+  <data name="EmptyElseBlockInspection" xml:space="preserve">
+    <value>Bloc 'Else' vide</value>
+  </data>
+  <data name="IntegerDataTypeInspection" xml:space="preserve">
+    <value>Utilisation d'un entier 16-bits</value>
+  </data>
+  <data name="StopKeywordInspection" xml:space="preserve">
+    <value>Mot-clé 'Stop'</value>
+  </data>
+  <data name="EmptyCaseBlockInspection" xml:space="preserve">
+    <value>Bloc 'Case' vide</value>
   </data>
   <data name="EmptyDoWhileBlockInspection" xml:space="preserve">
     <value>Boucle 'Do...While' vide</value>
   </data>
-  <data name="EmptyElseBlockInspection" xml:space="preserve">
-    <value>Bloc 'Else' vide</value>
+  <data name="EmptyForEachBlockInspection" xml:space="preserve">
+    <value>Boucle 'For Each...Next' vide</value>
+  </data>
+  <data name="EmptyForLoopBlockInspection" xml:space="preserve">
+    <value>Boucle 'For...Next' vide</value>
   </data>
   <data name="EmptyWhileWendBlockInspection" xml:space="preserve">
     <value>Boucle 'While...Wend' vide</value>
   </data>
   <data name="ShadowedDeclarationInspection" xml:space="preserve">
     <value>Déclaration cachée</value>
-  </data>
-  <data name="MissingAttributeInspection" xml:space="preserve">
-    <value>Attribut manquant</value>
-  </data>
-  <data name="RedundantOptionInspection" xml:space="preserve">
-    <value>Option de module redondante</value>
-  </data>
-  <data name="StopKeywordInspection" xml:space="preserve">
-    <value>Mot-clé 'Stop'</value>
   </data>
   <data name="BooleanAssignedInIfElseInspection" xml:space="preserve">
     <value>Assignation d'une valeur Booléenne littérale dans une structure conditionnelle</value>
@@ -297,17 +303,20 @@
   <data name="SheetAccessedUsingStringInspection" xml:space="preserve">
     <value>Une feuille Excel accessible statiquement est référencée par une chaîne de caractères</value>
   </data>
-  <data name="AssignmentNotUsedInspection" xml:space="preserve">
-    <value>Assignation non utilisée</value>
+  <data name="ObsoleteMemberUsageInspection" xml:space="preserve">
+    <value>Utilisation d'un membre marqué '@Obsolete'</value>
+  </data>
+  <data name="ObsoleteCallingConventionInspection" xml:space="preserve">
+    <value>Utilisation de la convention d'appel 'CDecl' sous Windows</value>
   </data>
   <data name="DuplicatedAnnotationInspection" xml:space="preserve">
     <value>Annotation dupliquée</value>
   </data>
-  <data name="ExcelMemberMayReturnNothingInspection" xml:space="preserve">
-    <value>Accès à un membre pouvant renvoyer 'Nothing'</value>
+  <data name="ModuleWithoutFolderInspection" xml:space="preserve">
+    <value>Module sans annotation '@Folder'</value>
   </data>
-  <data name="ExcelUdfNameIsValidCellReferenceInspection" xml:space="preserve">
-    <value>Une fonction est cachée par une référence de cellule valide</value>
+  <data name="OnLocalErrorInspection" xml:space="preserve">
+    <value>Instruction obsolète 'On Local Error'</value>
   </data>
   <data name="IsMissingOnInappropriateArgumentInspection" xml:space="preserve">
     <value>Utilisation inappropriée ou incorrecte de la fonction 'IsMissing'</value>
@@ -315,20 +324,17 @@
   <data name="IsMissingWithNonArgumentParameterInspection" xml:space="preserve">
     <value>Utilisation inappropriée ou incorrecte de la fonction 'IsMissing'</value>
   </data>
-  <data name="ModuleWithoutFolderInspection" xml:space="preserve">
-    <value>Module sans annotation '@Folder'</value>
-  </data>
-  <data name="ObsoleteCallingConventionInspection" xml:space="preserve">
-    <value>Utilisation de la convention d'appel 'CDecl' sous Windows</value>
-  </data>
-  <data name="ObsoleteMemberUsageInspection" xml:space="preserve">
-    <value>Utilisation d'un membre marqué '@Obsolete'</value>
-  </data>
-  <data name="OnLocalErrorInspection" xml:space="preserve">
-    <value>Instruction obsolète 'On Local Error'</value>
+  <data name="AssignmentNotUsedInspection" xml:space="preserve">
+    <value>Assignation non utilisée</value>
   </data>
   <data name="UnderscoreInPublicClassModuleMemberInspection" xml:space="preserve">
     <value>Caractère de soulignement dans le nom d'un membre d'un module de classe</value>
+  </data>
+  <data name="ExcelMemberMayReturnNothingInspection" xml:space="preserve">
+    <value>Accès à un membre pouvant renvoyer 'Nothing'</value>
+  </data>
+  <data name="ExcelUdfNameIsValidCellReferenceInspection" xml:space="preserve">
+    <value>Une fonction est cachée par une référence de cellule valide</value>
   </data>
   <data name="AttributeValueOutOfSyncInspection" xml:space="preserve">
     <value>La valeur de l'attribut diffère de celle suggérée par l'annotation</value>
@@ -338,6 +344,18 @@
   </data>
   <data name="MissingModuleAnnotationInspection" xml:space="preserve">
     <value>Annotation manquante (module)</value>
+  </data>
+  <data name="KeywordsUsedAsMemberInspection" xml:space="preserve">
+    <value>Mot-clé utilisé comme nom de membre</value>
+  </data>
+  <data name="LineContinuationBetweenKeywordsInspection" xml:space="preserve">
+    <value>Marqueur de continuation entre les mots-clés</value>
+  </data>
+  <data name="NonBreakingSpaceIdentifierInspection" xml:space="preserve">
+    <value>Identifiant contenant un espace insécable (&amp;nbsp;)</value>
+  </data>
+  <data name="NegativeLineNumberInspection" xml:space="preserve">
+    <value>Numéro de ligne négatif</value>
   </data>
   <data name="ObsoleteWhileWendStatementInspection" xml:space="preserve">
     <value>Utilisation de l'instruction obsolète 'While...Wend'</value>
@@ -396,46 +414,31 @@
   <data name="SuspiciousLetAssignmentInspection" xml:space="preserve">
     <value>Assignation 'Let' suspecte</value>
   </data>
-  <data name="FunctionReturnValueAlwaysDiscardedInspection" xml:space="preserve">
-    <value>La valeur renvoyée par la fonction est systématiquement ignorée.</value>
-  </data>
   <data name="FunctionReturnValueDiscardedInspection" xml:space="preserve">
     <value>La valeur renvoyée par la fonction est ignorée.</value>
   </data>
   <data name="ImplicitlyTypedConstInspection" xml:space="preserve">
     <value>Constante implicitement typée</value>
   </data>
-  <data name="KeywordsUsedAsMemberInspection" xml:space="preserve">
-    <value>Mot-clé utilisé comme nom de membre</value>
-  </data>
-  <data name="LineContinuationBetweenKeywordsInspection" xml:space="preserve">
-    <value>Marqueur de continuation entre les mots-clés</value>
-  </data>
-  <data name="NegativeLineNumberInspection" xml:space="preserve">
-    <value>Numéro de ligne négatif</value>
-  </data>
-  <data name="NonBreakingSpaceIdentifierInspection" xml:space="preserve">
-    <value>Identifiant contenant un espace insécable (&amp;nbsp;)</value>
-  </data>
   <data name="SuperfluousAnnotationArgumentInspection" xml:space="preserve">
     <value>Arguments d'annotation superflus</value>
-  </data>
-  <data name="AnnotationInIncompatibleComponentTypeInspection" xml:space="preserve">
-    <value>Annotation dans un type de composant incompatible</value>
-  </data>
-  <data name="ImplicitContainingWorkbookReferenceInspection" xml:space="preserve">
-    <value>Référence implicite au classeur contenant le projet</value>
   </data>
   <data name="ImplicitContainingWorksheetReferenceInspection" xml:space="preserve">
     <value>Référence implicite à la feuille (Worksheet) hôte</value>
   </data>
-  <data name="InvalidAnnotationInspection" xml:space="preserve">
-    <value>Annotation invalide</value>
+  <data name="ImplicitContainingWorkbookReferenceInspection" xml:space="preserve">
+    <value>Référence implicite au classeur contenant le projet</value>
   </data>
   <data name="MisleadingByRefParameterInspection" xml:space="preserve">
     <value>Modificateur ByRef trompeur</value>
   </data>
+  <data name="AnnotationInIncompatibleComponentTypeInspection" xml:space="preserve">
+    <value>Annotation dans un type de composant incompatible</value>
+  </data>
   <data name="UnrecognizedAnnotationInspection" xml:space="preserve">
     <value>Annotation inconnue</value>
+  </data>
+  <data name="InconsistentArrayBaseInspection" xml:space="preserve">
+    <value>Le tableau '{0}' a zéro pour base</value>
   </data>
 </root>

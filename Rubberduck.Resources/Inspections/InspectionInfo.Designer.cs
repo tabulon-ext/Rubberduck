@@ -19,7 +19,7 @@ namespace Rubberduck.Resources.Inspections {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class InspectionInfo {
@@ -439,6 +439,15 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Arrays created with ParamArray or VBA.Array (explicitly qualified with &apos;VBA&apos;) are always zero-based, regardless of Option Base 1..
+        /// </summary>
+        public static string InconsistentArrayBaseInspection {
+            get {
+                return ResourceManager.GetString("InconsistentArrayBaseInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A default member access hides away which member is actually called. Although it is apparent that some call is made in the case of an indexed default member access being explicit is usually better for readability..
         /// </summary>
         public static string IndexedDefaultMemberAccessInspection {
@@ -853,7 +862,7 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Copying a worksheet which contains a public Enum declaration will also create a copy of the Enum declaration.  The copied declaration will result in an &apos;Ambiguous name detected&apos; compiler error.  Declaring Enumerations in Standard or Class modules avoids unintentional duplication of an Enum declaration..
+        ///   Looks up a localized string similar to Copying a worksheet which contains a public Enum declaration will also create a copy of the Enum declaration. The copied declaration will result in an &apos;Ambiguous name detected&apos; compiler error. Declaring Enumerations in Standard or Class modules avoids unintentional duplication of an Enum declaration..
         /// </summary>
         public static string PublicEnumerationDeclaredInWorksheetInspection {
             get {
@@ -871,7 +880,7 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In general, the VBE editor catches this type of error and will not compile.  However, there are a few scenarios where the error is overlooked by the compiler and an error is generated at runtime.  To avoid a runtime error, implement the missing Property or Subroutine. .
+        ///   Looks up a localized string similar to In general, the VBE editor catches this type of error and will not compile. However, there are a few scenarios where the error is overlooked by the compiler and an error is generated at runtime. To avoid a runtime error, implement the missing Property or Subroutine. .
         /// </summary>
         public static string ReadOnlyPropertyAssignmentInspection {
             get {
@@ -988,7 +997,7 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A User Defined Type (UDT) member is declared but not used.  Consider removing the UDT member declaration..
+        ///   Looks up a localized string similar to A User Defined Type (UDT) member is declared but not used. Consider removing the UDT member declaration..
         /// </summary>
         public static string UDTMemberNotUsedInspection {
             get {

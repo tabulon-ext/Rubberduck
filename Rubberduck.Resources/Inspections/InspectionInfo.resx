@@ -478,4 +478,7 @@ If the parameter can be null, ignore this inspection result; passing a null valu
   <data name="PublicImplementationShouldBePrivateInspection" xml:space="preserve">
     <value>The default (Public) interface of a class module should not expose the implementation of other interfaces or event handler procedures.</value>
   </data>
+  <data name="InconsistentArrayBaseInspection" xml:space="preserve">
+    <value>Arrays created with ParamArray or VBA.Array (explicitly qualified with 'VBA') are always zero-based, regardless of Option Base 1.</value>
+  </data>
 </root>

@@ -478,4 +478,7 @@
   <data name="PublicImplementationShouldBePrivateInspection" xml:space="preserve">
     <value>Implementations of interfaces and event handlers should be Private</value>
   </data>
+  <data name="InconsistentArrayBaseInspection" xml:space="preserve">
+    <value>Array '{0}' is zero-based</value>
+  </data>
 </root>
