@@ -8,6 +8,7 @@ using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -69,6 +70,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                                       && !declaration.IsSelfAssigned
                                       && finder.MatchName(declaration.AsTypeName)
                                           .All(d => d.DeclarationType != DeclarationType.UserDefinedType)
+                                      && !declaration.IdentifierName.StartsWith("out", StringComparison.InvariantCultureIgnoreCase)
                                       && !declaration.References
                                           .Any(reference => reference.IsAssignment)
                                       && !declaration.References
