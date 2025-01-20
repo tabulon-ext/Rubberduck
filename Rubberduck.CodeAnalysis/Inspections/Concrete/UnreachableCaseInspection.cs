@@ -137,6 +137,12 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             CaseElse
         }
 
+        public UnreachableCaseInspection(IDeclarationFinderProvider declarationFinderProvider)
+            : this(declarationFinderProvider, null, null)
+        {
+            /* for reflection / default settings */
+        }
+
         public UnreachableCaseInspection(
             IDeclarationFinderProvider declarationFinderProvider,
             IUnreachableCaseInspector inspector,
