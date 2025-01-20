@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Path = System.IO.Path;
 using System.Runtime.InteropServices.ComTypes;
-using Rubberduck.UI.AddRemoveReferences;
+using Path = System.IO.Path;
 
 namespace Rubberduck.Parsing.ComReflection.TypeLibReflection
 {
@@ -11,7 +10,7 @@ namespace Rubberduck.Parsing.ComReflection.TypeLibReflection
     {
         private static readonly Dictionary<int, string> NativeLocaleNames = new Dictionary<int, string>
         {
-            { 0, AddRemoveReferencesUI.DefaultLocale }
+            { 0, "en-US" }
         };
 
         public RegisteredLibraryKey UniqueId { get; }
@@ -41,8 +40,8 @@ namespace Rubberduck.Parsing.ComReflection.TypeLibReflection
                 }
                 catch
                 {
-                    NativeLocaleNames.Add(LocaleId, AddRemoveReferencesUI.DefaultLocale);
-                    return AddRemoveReferencesUI.DefaultLocale;
+                    NativeLocaleNames.Add(LocaleId, "en-US");
+                    return "en-US";
                 }
             }
         }

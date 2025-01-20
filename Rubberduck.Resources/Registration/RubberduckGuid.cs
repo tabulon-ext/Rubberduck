@@ -12,7 +12,7 @@
         private const string TypeLibGuidspace = "E07C84";
         public const string RubberduckTypeLibGuid = TypeLibGuidspace + "1C" + GuidSuffix;
         public const string RubberduckApiTypeLibGuid = TypeLibGuidspace + "1D" + GuidSuffix;
-        
+
         // Addin Guids:
         private const string AddinGuidspace = "69E0F6";
         public const string ExtensionGuid = AddinGuidspace + "97" + GuidSuffix;
@@ -56,7 +56,7 @@
         public const string ParamsFreeFileGuid = UnitTestingGuidspace + "5C" + GuidSuffix;
         public const string ParamsDirGuid = UnitTestingGuidspace + "5E" + GuidSuffix;
         public const string ParamsFileCopyGuid = UnitTestingGuidspace + "5F" + GuidSuffix;
-        public const string IMockProviderGuid = UnitTestingGuidspace + "E2" + GuidSuffix;
+        public const string IMockProviderGuid = UnitTestingGuidspace + "F2" + GuidSuffix;
         public const string MockProviderGuid = UnitTestingGuidspace + "E3" + GuidSuffix;
         public const string IComMockGuid = UnitTestingGuidspace + "E4" + GuidSuffix;
         public const string ComMockGuid = UnitTestingGuidspace + "E5" + GuidSuffix;

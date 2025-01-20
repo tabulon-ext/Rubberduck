@@ -1,30 +1,30 @@
-﻿using Extensibility;
-using Rubberduck.UI;
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using System.Windows.Threading;
-using Castle.Windsor;
+﻿using Castle.Windsor;
+using Extensibility;
 using NLog;
 using Rubberduck.Common.WinAPI;
-using Rubberduck.Root;
 using Rubberduck.Resources;
 using Rubberduck.Resources.Registration;
+using Rubberduck.Root;
 using Rubberduck.Runtime;
 using Rubberduck.Settings;
 using Rubberduck.SettingsProvider;
+using Rubberduck.UI;
 using Rubberduck.VBEditor.ComManagement;
 using Rubberduck.VBEditor.ComManagement.TypeLibs;
 using Rubberduck.VBEditor.Events;
 using Rubberduck.VBEditor.SafeComWrappers.Abstract;
 using Rubberduck.VBEditor.VbeRuntime;
-using System.IO.Abstractions;
 using Rubberduck.VersionCheck;
+using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO.Abstractions;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using System.Windows.Threading;
 
 namespace Rubberduck
 {
@@ -114,7 +114,7 @@ namespace Rubberduck
 
         public void OnStartupComplete(ref Array custom)
         {
-            InitializeAddIn();            
+            InitializeAddIn();
         }
 
         public void OnBeginShutdown(ref Array custom)
@@ -125,7 +125,7 @@ namespace Rubberduck
 
         // ReSharper disable InconsistentNaming
         public void OnDisconnection(ext_DisconnectMode RemoveMode, ref Array custom)
-        {            
+        {
             switch (RemoveMode)
             {
                 case ext_DisconnectMode.ext_dm_UserClosed:
@@ -278,7 +278,7 @@ namespace Rubberduck
 
                 using (var windows = _vbe.Windows)
                 {
-                    windows.ReleaseDockableHosts();   
+                    windows.ReleaseDockableHosts();
                 }
 
                 if (_app != null)
@@ -321,10 +321,10 @@ namespace Rubberduck
                 }
                 finally
                 {
-                    _logger.Trace("Unregistering AppDomain handlers....");  
+                    _logger.Trace("Unregistering AppDomain handlers....");
                     currentDomain.AssemblyResolve -= LoadFromSameFolder;
                     currentDomain.UnhandledException -= HandleAppDomainException;
-                    _logger.Trace( "Done. Main Shutdown completed. Toolwindows follow. Quack!");
+                    _logger.Trace("Done. Main Shutdown completed. Toolwindows follow. Quack!");
                     _isInitialized = false;
                 }
             }
