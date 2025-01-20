@@ -142,7 +142,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal sealed class PublicControlFieldAccessInspection : DeclarationInspectionBase
+    internal sealed class PublicControlFieldAccessInspection : IdentifierReferenceInspectionBase
     {
         public PublicControlFieldAccessInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)

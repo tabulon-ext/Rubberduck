@@ -51,7 +51,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal class ProcedureRequiredInspection : DeclarationInspectionBase
+    internal class ProcedureRequiredInspection : IdentifierReferenceInspectionBase
     {
         public ProcedureRequiredInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)

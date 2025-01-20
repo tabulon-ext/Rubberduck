@@ -74,7 +74,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal sealed class SuspiciousPredeclaredInstanceAccessInspection : DeclarationInspectionBase
+    internal sealed class SuspiciousPredeclaredInstanceAccessInspection : IdentifierReferenceInspectionBase
     {
         public SuspiciousPredeclaredInstanceAccessInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)

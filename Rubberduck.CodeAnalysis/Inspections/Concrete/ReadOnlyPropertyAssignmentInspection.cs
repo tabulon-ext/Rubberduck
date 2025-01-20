@@ -93,7 +93,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal sealed class ReadOnlyPropertyAssignmentInspection : DeclarationInspectionBase
+    internal sealed class ReadOnlyPropertyAssignmentInspection : IdentifierReferenceInspectionBase
     {
         public ReadOnlyPropertyAssignmentInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)

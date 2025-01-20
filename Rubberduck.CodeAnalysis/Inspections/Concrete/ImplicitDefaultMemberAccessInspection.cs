@@ -55,7 +55,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal sealed class ImplicitDefaultMemberAccessInspection : DeclarationInspectionBase
+    internal sealed class ImplicitDefaultMemberAccessInspection : IdentifierReferenceInspectionBase
     {
         public ImplicitDefaultMemberAccessInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)

@@ -73,7 +73,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal sealed class UseOfRecursiveBangNotationInspection : DeclarationInspectionBase
+    internal sealed class UseOfRecursiveBangNotationInspection : IdentifierReferenceInspectionBase
     {
         public UseOfRecursiveBangNotationInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)

@@ -66,7 +66,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal sealed class UseOfUnboundBangNotationInspection : DeclarationInspectionBase
+    internal sealed class UseOfUnboundBangNotationInspection : IdentifierReferenceInspectionBase
     {
         public UseOfUnboundBangNotationInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)

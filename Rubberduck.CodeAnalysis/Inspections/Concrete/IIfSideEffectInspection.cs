@@ -102,7 +102,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// </module>
     /// </example>
 
-    internal sealed class IIfSideEffectInspection : DeclarationInspectionBase
+    internal sealed class IIfSideEffectInspection : IdentifierReferenceInspectionBase
     {
         private readonly IDeclarationFinderProvider _declarationFinderProvider;
 

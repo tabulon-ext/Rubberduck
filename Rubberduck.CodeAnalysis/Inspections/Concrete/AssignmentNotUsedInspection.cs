@@ -60,7 +60,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal sealed class AssignmentNotUsedInspection : DeclarationInspectionBase
+    internal sealed class AssignmentNotUsedInspection : IdentifierReferenceInspectionBase
     {
         private readonly Walker _walker;
 
