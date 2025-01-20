@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Moq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Moq;
 
 namespace Rubberduck.ComClientLibrary.UnitTesting.Mocks
 {
@@ -44,8 +44,8 @@ namespace Rubberduck.ComClientLibrary.UnitTesting.Mocks
                 switch (member.Value)
                 {
                     case PropertyInfo propertyInfo:
-                        memberAccessExpression = parameterExpressions != null
-                            ? (Expression) Expression.Property(typeExpression, propertyInfo, parameterExpressions)
+                        memberAccessExpression = parameterExpressions != null && parameterExpressions.Any()
+                            ? (Expression)Expression.Call(typeExpression, propertyInfo.GetMethod, parameterExpressions)
                             : Expression.MakeMemberAccess(typeExpression, member.Value);
                         break;
                     case MethodInfo methodInfo:

@@ -1,12 +1,12 @@
-﻿using System;
+﻿using ExpressiveReflection;
+using Moq;
+using NLog;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using ExpressiveReflection;
-using Moq;
-using NLog;
 
 namespace Rubberduck.ComClientLibrary.UnitTesting.Mocks
 {
@@ -259,7 +259,7 @@ namespace Rubberduck.ComClientLibrary.UnitTesting.Mocks
                     // TODO: need to take care that the args passed into DynamicInvoke do not need to be ref'd - it should be
                     // TODO: passed in as values then made ref within the expression tree.
                     var name = $"p{index:00}";
-                    var itByRef = ItByRefMemberInfos.Is(elementType).Invoke(null, new [] {definition.Values[0]});
+                    var itByRef = ItByRefMemberInfos.Is(elementType).Invoke(null, new[] { definition.Values[0] });
                     var forwardedArgExpression = Expression.Parameter(itByRef.GetType(), name);
                     forwardedArgs.Add(forwardedArgExpression, itByRef);
                     parameterExpression = Expression.Field(forwardedArgExpression, ItByRefMemberInfos.Value(elementType));

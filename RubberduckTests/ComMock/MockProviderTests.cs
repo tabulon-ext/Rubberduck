@@ -1,10 +1,10 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
 using Rubberduck.ComClientLibrary.UnitTesting.Mocks;
 using Rubberduck.Parsing.ComReflection.TypeLibReflection;
 using Rubberduck.Resources.Registration;
+using System;
+using System.Runtime.InteropServices;
 
 namespace RubberduckTests.ComMock
 {
@@ -146,7 +146,7 @@ namespace RubberduckTests.ComMock
                 }
 
                 dynamic proxy = Marshal.GetObjectForIUnknown(pMocked);
-                
+
                 Assert.IsNull(proxy.GetTempName());
                 Assert.IsNull(proxy.BuildPath("abc", "def"));
             }
@@ -172,7 +172,7 @@ namespace RubberduckTests.ComMock
                 var obj = mock.Object;
 
                 pUnk = Marshal.GetIUnknownForObject(obj);
-                
+
                 var hr = Marshal.QueryInterface(pUnk, ref IID_IFileSystem3, out pProxy);
                 if (hr != 0)
                 {
@@ -207,7 +207,7 @@ namespace RubberduckTests.ComMock
                 var expected = "foobar";
                 var provider = new MockProvider();
                 var mock = provider.Mock("Scripting.FileSystemObject");
-                mock.SetupWithReturns("BuildPath", expected, new object[] {provider.It.IsAny(), provider.It.IsAny()});
+                mock.SetupWithReturns("BuildPath", expected, new object[] { provider.It.IsAny(), provider.It.IsAny() });
                 var obj = mock.Object;
 
                 pUnk = Marshal.GetIUnknownForObject(obj);
@@ -267,7 +267,7 @@ namespace RubberduckTests.ComMock
         }
 
         [Test]
-        [TestCase("foobar" ,"abc", "def")]
+        [TestCase("foobar", "abc", "def")]
         [TestCase(null, "def", "abc")]
         [TestCase(null, "", "")]
         [TestCase(null, null, null)]
@@ -396,7 +396,7 @@ namespace RubberduckTests.ComMock
             {
                 var provider = new MockProvider();
                 var mock = provider.Mock("Scripting.FileSystemObject");
-                mock.SetupWithReturns("BuildPath", "foobar", new object[] { provider.It.IsInRange(start1, end1, type), provider.It.IsInRange(start2, end2, type)});
+                mock.SetupWithReturns("BuildPath", "foobar", new object[] { provider.It.IsInRange(start1, end1, type), provider.It.IsInRange(start2, end2, type) });
                 var obj = mock.Object;
 
                 pUnk = Marshal.GetIUnknownForObject(obj);
@@ -462,6 +462,7 @@ namespace RubberduckTests.ComMock
         }
 
         [Test]
+        //[Ignore("Test cases are failing with a TargetInvocationException: expression type 'index' is unhandled.")]
         [TestCase(IID_FileSystem3_String, true, "abc")]
         [TestCase(IID_FileSystem_String, true, "abc")]
         [TestCase(IID_FileSystem3_String, false, "def")]
@@ -508,13 +509,13 @@ namespace RubberduckTests.ComMock
         {
             var pUnk = IntPtr.Zero;
             var pProxy = IntPtr.Zero;
-            
+
             try
             {
                 var provider = new MockProvider();
                 var mockFso = provider.Mock("Scripting.FileSystemObject");
                 var mockDrives = mockFso.SetupChildMock("Drives");
-                var mockDrive = mockDrives.SetupChildMock("Item",  provider.It.Is("abc"));
+                var mockDrive = mockDrives.SetupChildMock("Item", provider.It.Is("abc"));
                 mockDrive.SetupWithReturns("Path", "foobar");
                 var obj = mockFso.Object;
 

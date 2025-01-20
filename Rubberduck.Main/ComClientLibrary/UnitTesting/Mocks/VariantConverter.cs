@@ -90,15 +90,15 @@ namespace Rubberduck.ComClientLibrary.UnitTesting.Mocks
 
         public static object ChangeType(object value, VARENUM vt)
         {
-            return ChangeType(value, vt, null);
+            return ChangeType(value, vt, CultureInfo.InvariantCulture);
         }
 
         private static bool HRESULT_FAILED(int hr) => hr < 0;
         public static object ChangeType(object value, VARENUM vt, CultureInfo cultureInfo)
         {
             object result = null;
-            var hr = cultureInfo == null 
-                ? VariantChangeType(ref result, ref value, VariantConversionFlags.NO_FLAGS, vt) 
+            var hr = cultureInfo == null
+                ? VariantChangeType(ref result, ref value, VariantConversionFlags.NO_FLAGS, vt)
                 : VariantChangeTypeEx(ref result, ref value, cultureInfo.LCID, VariantConversionFlags.NO_FLAGS, vt);
             if (HRESULT_FAILED(hr))
             {

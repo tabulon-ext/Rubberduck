@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Moq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
-using Moq;
 
 namespace Rubberduck.ComClientLibrary.UnitTesting.Mocks
 {
@@ -156,9 +156,9 @@ namespace Rubberduck.ComClientLibrary.UnitTesting.Mocks
 
         public object Execute()
         {
-            var args = _args.Count >= 0 ? new List<object> {_mock}.Concat(_args).ToArray() : _args.ToArray();
+            var args = _args.Count >= 0 ? new List<object> { _mock }.Concat(_args).ToArray() : _args.ToArray();
 
-            return _expression.NodeType == ExpressionType.Lambda 
+            return _expression.NodeType == ExpressionType.Lambda
                 ? ((LambdaExpression)_expression).Compile().DynamicInvoke(args)
                 : Expression.Lambda(_expression, _mockParameterExpression).Compile().DynamicInvoke(args);
         }
