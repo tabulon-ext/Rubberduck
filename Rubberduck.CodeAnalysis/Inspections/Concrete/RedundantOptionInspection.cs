@@ -4,6 +4,7 @@ using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -48,9 +49,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<ParserRuleContext> context)
         {
-            return string.Format(
-                InspectionResults.RedundantOptionInspection, 
-                context.Context.GetText());
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(RedundantOptionInspection), CultureInfo.CurrentUICulture), context.Context.GetText());
         }
 
         private class RedundantModuleOptionListener : InspectionListenerBase<ParserRuleContext>
@@ -59,7 +58,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             {
                 if (context.numberLiteral()?.INTEGERLITERAL().Symbol.Text == "0")
                 {
-                   SaveContext(context);
+                    SaveContext(context);
                 }
             }
 

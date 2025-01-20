@@ -1,12 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
+using Rubberduck.CodeAnalysis.Inspections.Extensions;
 using Rubberduck.CodeAnalysis.Inspections.Results;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -40,7 +42,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public ObsoleteTypeHintInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         protected override IEnumerable<IInspectionResult> DoGetInspectionResults(DeclarationFinder finder)
         {
@@ -74,11 +76,11 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         private static string ResultDescription(Declaration declaration)
         {
-            var declarationTypeName = declaration.DeclarationType.ToString().ToLower();
+            var declarationTypeName = declaration.DeclarationType.ToLocalizedString();
             var identifierName = declaration.IdentifierName;
             return string.Format(
-                InspectionResults.ObsoleteTypeHintInspection,
-                InspectionsUI.Inspections_Declaration,
+                InspectionResults.ResourceManager.GetString("ObsoleteTypeHintInspection", CultureInfo.CurrentUICulture),
+                InspectionsUI.ResourceManager.GetString("Inspections_Declaration", CultureInfo.CurrentUICulture),
                 declarationTypeName,
                 identifierName);
         }
@@ -104,10 +106,10 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         private string ResultDescription(IdentifierReference reference)
         {
-            var declarationTypeName = reference.Declaration.DeclarationType.ToString().ToLower();
+            var declarationTypeName = reference.Declaration.DeclarationType.ToLocalizedString();
             var identifierName = reference.IdentifierName;
-            return string.Format(InspectionResults.ObsoleteTypeHintInspection,
-                InspectionsUI.Inspections_Usage,
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ObsoleteTypeHintInspection), CultureInfo.CurrentUICulture),
+                InspectionsUI.ResourceManager.GetString(nameof(InspectionsUI.Inspections_Usage), CultureInfo.CurrentUICulture),
                 declarationTypeName,
                 identifierName);
         }

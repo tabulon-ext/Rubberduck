@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.Symbols;
@@ -8,6 +6,9 @@ using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -45,7 +46,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public MemberNotOnInterfaceInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         protected override IEnumerable<Declaration> RelevantDeclarationsInModule(QualifiedModuleName module, DeclarationFinder finder)
         {
@@ -94,7 +95,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var memberName = declaration.IdentifierName;
             var typeName = typeDeclaration?.IdentifierName ?? string.Empty;
             return string.Format(
-                InspectionResults.MemberNotOnInterfaceInspection,
+                InspectionResults.ResourceManager.GetString(nameof(MemberNotOnInterfaceInspection), CultureInfo.CurrentUICulture),
                 memberName,
                 typeName);
         }

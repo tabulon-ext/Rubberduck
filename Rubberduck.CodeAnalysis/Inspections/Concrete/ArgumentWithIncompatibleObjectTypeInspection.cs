@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.TypeResolvers;
@@ -8,6 +6,9 @@ using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -125,7 +126,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             return _setTypeResolver.SetTypeName(expression, containingModule);
         }
 
-        private bool ArgumentPossiblyLegal(Declaration parameterDeclaration , string assignedTypeName)
+        private bool ArgumentPossiblyLegal(Declaration parameterDeclaration, string assignedTypeName)
         {
             return assignedTypeName == parameterDeclaration.FullAsTypeName
                 || assignedTypeName == Tokens.Variant
@@ -163,7 +164,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var parameterName = reference.Declaration.IdentifierName;
             var parameterTypeName = reference.Declaration.FullAsTypeName;
             var argumentExpression = reference.Context.GetText();
-            return string.Format(InspectionResults.SetAssignmentWithIncompatibleObjectTypeInspection, parameterName, parameterTypeName, argumentExpression, argumentTypeName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(SetAssignmentWithIncompatibleObjectTypeInspection), CultureInfo.CurrentUICulture), parameterName, parameterTypeName, argumentExpression, argumentTypeName);
         }
     }
 }

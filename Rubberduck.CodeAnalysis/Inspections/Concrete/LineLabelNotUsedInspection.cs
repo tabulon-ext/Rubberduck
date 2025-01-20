@@ -1,4 +1,3 @@
-using System.Linq;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Extensions;
 using Rubberduck.Parsing.Grammar;
@@ -6,6 +5,8 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -46,7 +47,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public LineLabelNotUsedInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.LineLabel)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
@@ -61,8 +62,8 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var declarationType = declaration.DeclarationType.ToLocalizedString();
             var declarationName = declaration.IdentifierName;
             return string.Format(
-                InspectionResults.IdentifierNotUsedInspection, 
-                declarationType, 
+                InspectionResults.ResourceManager.GetString(nameof(InspectionResults.IdentifierNotUsedInspection), CultureInfo.CurrentUICulture),
+                declarationType,
                 declarationName);
         }
     }

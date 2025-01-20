@@ -97,6 +97,8 @@
 
                     <BitmapImage x:Key="ExpandAllImage" UriSource="pack://application:,,,/Rubberduck.Resources;component/Icons/Fugue/expand-all.png" />
                     <BitmapImage x:Key="CollapseAllImage" UriSource="pack://application:,,,/Rubberduck.Resources;component/Icons/Fugue/collapse-all.png" />
+
+                    <BitmapImage x:Key="DisableInspectionImage" UriSource="pack://application:,,,/Rubberduck.Resources;component/Icons/Fugue/cross-script.png" />
                 </ToolBar.Resources>
 
                 <Button Command="{Binding RefreshCommand}">
@@ -118,6 +120,10 @@
                         </MenuItem.Header>
                     </MenuItem>
                 </Menu>
+
+                <Button Command="{Binding DisableInspectionCommand}" ToolTip="{Resx ResxName=Rubberduck.Resources.Inspections.InspectionsUI, Key=DisableThisInspection}">
+                    <Image Source="{StaticResource DisableInspectionImage}" />
+                </Button>
 
                 <Separator />
 

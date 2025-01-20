@@ -3,6 +3,7 @@ using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -39,12 +40,12 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             ContextListener = new ObsoleteLetStatementListener();
         }
-        
+
         protected override IInspectionListener<VBAParser.LetStmtContext> ContextListener { get; }
 
         protected override string ResultDescription(QualifiedContext<VBAParser.LetStmtContext> context)
         {
-            return InspectionResults.ObsoleteLetStatementInspection;
+            return InspectionResults.ResourceManager.GetString(nameof(ObsoleteLetStatementInspection), CultureInfo.CurrentUICulture);
         }
 
         private class ObsoleteLetStatementListener : InspectionListenerBase<VBAParser.LetStmtContext>
@@ -53,7 +54,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             {
                 if (context.LET() != null)
                 {
-                   SaveContext(context);
+                    SaveContext(context);
                 }
             }
         }

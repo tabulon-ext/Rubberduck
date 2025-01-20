@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Attributes;
 using Rubberduck.InternalApi.Extensions;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -60,7 +61,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public ApplicationWorksheetFunctionInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         protected override IEnumerable<Declaration> ObjectionableDeclarations(DeclarationFinder finder)
         {
@@ -91,7 +92,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(IdentifierReference reference)
         {
-            return string.Format(InspectionResults.ApplicationWorksheetFunctionInspection, reference.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ApplicationWorksheetFunctionInspection), CultureInfo.CurrentUICulture), reference.IdentifierName);
         }
     }
 }

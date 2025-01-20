@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Extensions;
 using Rubberduck.InternalApi.Extensions;
 using Rubberduck.Parsing.Symbols;
@@ -9,6 +6,10 @@ using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.VBEditor;
 using Rubberduck.VBEditor.SafeComWrappers;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -55,13 +56,13 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         public ShadowedDeclarationInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         protected override IDictionary<string, HashSet<string>> GlobalInformation(DeclarationFinder finder)
         {
-           return finder.UserDeclarations(DeclarationType.Project)
-                .OfType<ProjectDeclaration>()
-                .ToDictionary(project => project.ProjectId, ReferencedProjectIds);
+            return finder.UserDeclarations(DeclarationType.Project)
+                 .OfType<ProjectDeclaration>()
+                 .ToDictionary(project => project.ProjectId, ReferencedProjectIds);
         }
 
         protected override IDictionary<string, HashSet<string>> GlobalInformation(QualifiedModuleName module, DeclarationFinder finder)
@@ -92,7 +93,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                 return (false, null);
             }
 
-            if(!referencedProjectIdsByProjectId.TryGetValue(userDeclaration.ProjectId, out var referencedProjectIds))
+            if (!referencedProjectIdsByProjectId.TryGetValue(userDeclaration.ProjectId, out var referencedProjectIds))
             {
                 referencedProjectIds = new HashSet<string>();
             }
@@ -129,8 +130,8 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             if (originalDeclaration.ProjectId != userDeclaration.ProjectId)
             {
-                return referencedProjectIds.Contains(originalDeclaration.ProjectId) 
-                    ? DeclarationSite.ReferencedProject 
+                return referencedProjectIds.Contains(originalDeclaration.ProjectId)
+                    ? DeclarationSite.ReferencedProject
                     : DeclarationSite.NotApplicable;
             }
 
@@ -342,20 +343,20 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             {
                 return DeclarationIsLocal(userDeclaration);
             }
-            
+
             // Shadowing between two enumerations or enumeration members is not possible inside one component.
-            if (((originalDeclaration.DeclarationType == DeclarationType.Enumeration 
+            if (((originalDeclaration.DeclarationType == DeclarationType.Enumeration
                     && userDeclaration.DeclarationType == DeclarationType.EnumerationMember)
                 || (originalDeclaration.DeclarationType == DeclarationType.EnumerationMember
                     && userDeclaration.DeclarationType == DeclarationType.Enumeration)))
-            { 
-                    var originalDeclarationIndex = originalDeclaration.Context.start.StartIndex;
-                    var userDeclarationIndex = userDeclaration.Context.start.StartIndex;
+            {
+                var originalDeclarationIndex = originalDeclaration.Context.start.StartIndex;
+                var userDeclarationIndex = userDeclaration.Context.start.StartIndex;
 
-                    // First declaration wins
-                    return originalDeclarationIndex > userDeclarationIndex 
-                           // Enumeration member can have the same name as enclosing enumeration
-                           && !userDeclaration.Equals(originalDeclaration.ParentDeclaration);
+                // First declaration wins
+                return originalDeclarationIndex > userDeclarationIndex
+                       // Enumeration member can have the same name as enclosing enumeration
+                       && !userDeclaration.Equals(originalDeclaration.ParentDeclaration);
             }
 
             // Events don't have a body, so their parameters can't be accessed
@@ -364,7 +365,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                 return false;
             }
 
-            return  SameComponentTypeShadowingRelations[originalDeclaration.DeclarationType].Contains(userDeclaration.DeclarationType);
+            return SameComponentTypeShadowingRelations[originalDeclaration.DeclarationType].Contains(userDeclaration.DeclarationType);
         }
 
         private static bool DeclarationAccessibilityCanBeShadowed(Declaration originalDeclaration)
@@ -652,7 +653,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var shadowedDeclarationType = shadowedDeclaration.DeclarationType.ToLocalizedString();
             var shadowedDeclarationName = shadowedDeclaration.QualifiedName.ToString();
             return string.Format(
-                Resources.Inspections.InspectionResults.ShadowedDeclarationInspection,
+                Resources.Inspections.InspectionResults.ResourceManager.GetString(nameof(ShadowedDeclarationInspection), CultureInfo.CurrentUICulture),
                 declarationType,
                 declarationName,
                 shadowedDeclarationType,

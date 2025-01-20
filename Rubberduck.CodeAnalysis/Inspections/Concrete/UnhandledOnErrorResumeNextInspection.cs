@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -45,13 +46,13 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         public UnhandledOnErrorResumeNextInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         protected override IInspectionListener<VBAParser.OnErrorStmtContext> ContextListener => _listener;
 
         protected override string ResultDescription(QualifiedContext<VBAParser.OnErrorStmtContext> context, IReadOnlyList<VBAParser.OnErrorStmtContext> properties)
         {
-            return InspectionResults.UnhandledOnErrorResumeNextInspection;
+            return InspectionResults.ResourceManager.GetString(nameof(UnhandledOnErrorResumeNextInspection), CultureInfo.CurrentUICulture);
         }
 
         protected override (bool isResult, IReadOnlyList<VBAParser.OnErrorStmtContext> properties) IsResultContextWithAdditionalProperties(QualifiedContext<VBAParser.OnErrorStmtContext> context, DeclarationFinder finder)

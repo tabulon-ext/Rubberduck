@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing.Annotations;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -40,9 +41,9 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// </example>
     internal sealed class DuplicatedAnnotationInspection : DeclarationInspectionMultiResultBase<IAnnotation>
     {
-        public DuplicatedAnnotationInspection(IDeclarationFinderProvider declarationFinderProvider) 
+        public DuplicatedAnnotationInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         protected override IEnumerable<IAnnotation> ResultProperties(Declaration declaration, DeclarationFinder finder)
         {
@@ -54,7 +55,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration, IAnnotation annotation)
         {
-            return string.Format(InspectionResults.DuplicatedAnnotationInspection, annotation);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(DuplicatedAnnotationInspection), CultureInfo.CurrentUICulture), annotation);
         }
     }
 }

@@ -4,6 +4,7 @@ using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -47,7 +48,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.StopStmtContext> context)
         {
-            return InspectionResults.StopKeywordInspection;
+            return InspectionResults.ResourceManager.GetString(nameof(StopKeywordInspection), CultureInfo.CurrentUICulture);
         }
 
         private class StopKeywordListener : InspectionListenerBase<VBAParser.StopStmtContext>

@@ -51,7 +51,7 @@
       <Version>4.6.4</Version>
     </PackageReference>
     <PackageReference Include="Antlr4.Runtime">
-      <Version>4.6.4</Version>
+      <Version>4.6.6</Version>
     </PackageReference>
     <PackageReference Include="NLog">
       <Version>4.5.10</Version>

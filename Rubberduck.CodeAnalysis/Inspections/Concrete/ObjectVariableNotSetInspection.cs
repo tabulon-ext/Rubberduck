@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Antlr4.Runtime;
+﻿using Antlr4.Runtime;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
@@ -10,6 +7,10 @@ using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -46,7 +47,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public ObjectVariableNotSetInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         protected override IEnumerable<IdentifierReference> ReferencesInModule(QualifiedModuleName module, DeclarationFinder finder)
         {
@@ -89,7 +90,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var assignments = finder.IdentifierReferences(module)
                 .Where(reference => reference.IsAssignment
                                     && !reference.IsSetAssignment
-                                    && (reference.IsNonIndexedDefaultMemberAccess 
+                                    && (reference.IsNonIndexedDefaultMemberAccess
                                         || Tokens.Variant.Equals(reference.Declaration.AsTypeName, StringComparison.InvariantCultureIgnoreCase)));
             var unboundAssignments = finder.UnboundDefaultMemberAccesses(module)
                 .Where(reference => reference.IsAssignment);
@@ -104,7 +105,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(IdentifierReference reference)
         {
-            return string.Format(InspectionResults.ObjectVariableNotSetInspection, reference.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ObjectVariableNotSetInspection), CultureInfo.CurrentUICulture), reference.IdentifierName);
         }
     }
 }

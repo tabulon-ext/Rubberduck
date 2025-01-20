@@ -263,4 +263,10 @@
   <data name="CodeInspectionSettingsPage_FilterBySeverity" xml:space="preserve">
     <value>Sévérité:</value>
   </data>
+  <data name="CodeInspectionSettingsPage_Misc_IgnoreFormControlHungarianNotation" xml:space="preserve">
+    <value>Ignorer la notation hongroise pour les contrôles des UserForm</value>
+  </data>
+  <data name="InconsistentArrayBaseInspection_ParamArray" xml:space="preserve">
+    <value>Le tableau de paramètres (ParamArray) '{0}' a zéro pour base.</value>
+  </data>
 </root>

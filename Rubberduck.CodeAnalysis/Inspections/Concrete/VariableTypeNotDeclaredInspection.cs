@@ -4,6 +4,7 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -38,14 +39,14 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     internal sealed class VariableTypeNotDeclaredInspection : ImplicitTypeInspectionBase
     {
         public VariableTypeNotDeclaredInspection(IDeclarationFinderProvider declarationFinderProvider)
-            : base(declarationFinderProvider, new []{DeclarationType.Parameter, DeclarationType.Variable}, new[]{DeclarationType.Control})
-        {}
+            : base(declarationFinderProvider, new[] { DeclarationType.Parameter, DeclarationType.Variable }, new[] { DeclarationType.Control })
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
             return base.IsResultDeclaration(declaration, finder)
                    && !declaration.IsUndeclared
-                   && (declaration.DeclarationType != DeclarationType.Parameter 
+                   && (declaration.DeclarationType != DeclarationType.Parameter
                        || declaration is ParameterDeclaration parameter && !parameter.IsParamArray);
         }
 
@@ -54,7 +55,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var declarationType = declaration.DeclarationType.ToLocalizedString();
             var declarationName = declaration.IdentifierName;
             return string.Format(
-                InspectionResults.ImplicitVariantDeclarationInspection,
+                InspectionResults.ResourceManager.GetString(nameof(InspectionResults.ImplicitVariantDeclarationInspection), CultureInfo.CurrentUICulture),
                 declarationType,
                 declarationName);
         }

@@ -478,4 +478,13 @@
   <data name="PublicImplementationShouldBePrivateInspection" xml:space="preserve">
     <value>Implementations of interfaces and event handlers should be Private</value>
   </data>
+  <data name="InconsistentArrayBaseInspection" xml:space="preserve">
+    <value>Inconsistently zero-based array</value>
+  </data>
+  <data name="InconsistentParamArrayBaseInspection" xml:space="preserve">
+    <value>Inconsistently zero-based parameter array</value>
+  </data>
+  <data name="ParameterlessCellsInspection" xml:space="preserve">
+    <value>Parameterless call to 'Range.Cells' is redundant</value>
+  </data>
 </root>

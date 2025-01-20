@@ -1,5 +1,5 @@
-using System;
 using Rubberduck.Resources.UnitTesting;
+using System;
 
 namespace Rubberduck.UnitTesting.CodeGeneration
 {
@@ -121,7 +121,7 @@ $@"#If {LateBindConstName} Then
 
         private static string TestModuleTemplate =>
 $@"'@TestModule
-'@Folder(""{DefaultTestFolder}"")
+'@Folder ""{DefaultTestFolder}""
 
 {{0}}
 Option Explicit

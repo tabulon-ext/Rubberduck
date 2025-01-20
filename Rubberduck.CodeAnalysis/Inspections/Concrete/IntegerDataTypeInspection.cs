@@ -4,6 +4,7 @@ using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -38,7 +39,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public IntegerDataTypeInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
@@ -82,7 +83,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var declarationType = declaration.DeclarationType.ToLocalizedString();
             var declarationName = declaration.IdentifierName;
             return string.Format(
-                Resources.Inspections.InspectionResults.IntegerDataTypeInspection,
+                Resources.Inspections.InspectionResults.ResourceManager.GetString(nameof(IntegerDataTypeInspection), CultureInfo.CurrentUICulture),
                 declarationType,
                 declarationName);
         }

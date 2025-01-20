@@ -30,9 +30,6 @@
     <Compile Update="CodeExplorer\CodeExplorerUI.Designer.cs">
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Update="Inspections\InspectionInfo.Designer.cs">
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Update="Inspections\InspectionNames.Designer.cs">
       <DesignTime>True</DesignTime>
     </Compile>

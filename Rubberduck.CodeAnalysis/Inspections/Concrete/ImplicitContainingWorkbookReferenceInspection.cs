@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Attributes;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -67,7 +68,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var referenceText = reference.Context.GetText();
             return string.Format(
-                InspectionResults.ImplicitContainingWorkbookReferenceInspection, 
+                InspectionResults.ResourceManager.GetString(nameof(ImplicitContainingWorkbookReferenceInspection), CultureInfo.CurrentUICulture),
                 referenceText);
         }
     }

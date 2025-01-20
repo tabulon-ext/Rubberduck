@@ -1,10 +1,11 @@
 ﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Extensions;
+using Rubberduck.Parsing;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
-using Rubberduck.Parsing;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -37,12 +38,12 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public EmptyMethodInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Member)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
-            return declaration is ModuleBodyElementDeclaration member 
-                   && !member.IsInterfaceMember 
+            return declaration is ModuleBodyElementDeclaration member
+                   && !member.IsInterfaceMember
                    && !member.Block.ContainsExecutableStatements();
         }
 
@@ -52,7 +53,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var declarationType = member.DeclarationType.ToLocalizedString();
 
             return string.Format(
-                InspectionResults.EmptyMethodInspection,
+                InspectionResults.ResourceManager.GetString(nameof(EmptyMethodInspection), CultureInfo.CurrentUICulture),
                 declarationType,
                 identifierName);
         }

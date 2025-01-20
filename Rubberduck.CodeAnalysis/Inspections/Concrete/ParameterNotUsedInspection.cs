@@ -1,11 +1,12 @@
-using System.Diagnostics;
-using System.Linq;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Common;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -44,7 +45,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public ParameterNotUsedInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Parameter)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
@@ -100,7 +101,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var implementations = finder.FindInterfaceImplementationMembers(interfaceMember).ToList();
 
             //We do not want to report all parameters of not implemented interfaces.
-            return implementations.Any() 
+            return implementations.Any()
                    && implementations.All(implementation => ParameterAtIndexIsNotUsed(implementation, parameterIndex));
         }
 
@@ -136,13 +137,13 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var handlers = finder.FindEventHandlers(eventDeclaration).ToList();
 
             //We do not want to report all parameters of not handled events.
-            return handlers.Any() 
+            return handlers.Any()
                    && handlers.All(handler => ParameterAtIndexIsNotUsed(handler, parameterIndex));
         }
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.ParameterNotUsedInspection, declaration.IdentifierName).Capitalize();
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ParameterNotUsedInspection), CultureInfo.CurrentUICulture), declaration.IdentifierName).Capitalize();
         }
     }
 }

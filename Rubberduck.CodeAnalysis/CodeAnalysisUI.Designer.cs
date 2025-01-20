@@ -162,6 +162,15 @@ namespace Rubberduck.CodeAnalysis {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ignore Hungarian Notation for UserForm controls.
+        /// </summary>
+        public static string CodeInspectionSettingsPage_Misc_IgnoreFormControlHungarianNotation {
+            get {
+                return ResourceManager.GetString("CodeInspectionSettingsPage_Misc_IgnoreFormControlHungarianNotation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Run inspections automatically on successful parse.
         /// </summary>
         public static string CodeInspectionSettingsPage_Misc_RunInspectionsOnSuccessfulParse {
@@ -491,6 +500,15 @@ namespace Rubberduck.CodeAnalysis {
         public static string GroupingGrid_Filter {
             get {
                 return ResourceManager.GetString("GroupingGrid_Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter array &apos;{0}&apos; is zero-based..
+        /// </summary>
+        public static string InconsistentArrayBaseInspection_ParamArray {
+            get {
+                return ResourceManager.GetString("InconsistentArrayBaseInspection_ParamArray", resourceCulture);
             }
         }
     }

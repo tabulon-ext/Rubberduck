@@ -1,10 +1,10 @@
+using Moq;
+using NUnit.Framework;
+using Rubberduck.CodeAnalysis.Inspections;
+using Rubberduck.CodeAnalysis.Settings;
+using Rubberduck.Settings;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
-using Moq;
-using Rubberduck.CodeAnalysis.Inspections;
-using Rubberduck.Settings;
-using Rubberduck.CodeAnalysis.Settings;
 
 namespace RubberduckTests
 {
@@ -15,13 +15,13 @@ namespace RubberduckTests
         [Category("Settings")]
         public void GetDefaultTodoMarkersTest()
         {
-            var defaultMarkers = new[] {new ToDoMarker("NOTE"), new ToDoMarker("TODO"), new ToDoMarker("BUG")};
+            var defaultMarkers = new[] { new ToDoMarker("NOTE"), new ToDoMarker("TODO"), new ToDoMarker("BUG") };
             var settings = new ToDoListSettings(defaultMarkers, null);
 
             ToDoMarker[] markers = settings.ToDoMarkers;
-            Assert.AreEqual("NOTE", markers[0].Text.Trim(),"Note failed to load.");
-            Assert.AreEqual("TODO", markers[1].Text.Trim(),"Todo failed to load.");
-            Assert.AreEqual("BUG" , markers[2].Text.Trim(),"Bug failed to load.");
+            Assert.AreEqual("NOTE", markers[0].Text.Trim(), "Note failed to load.");
+            Assert.AreEqual("TODO", markers[1].Text.Trim(), "Todo failed to load.");
+            Assert.AreEqual("BUG", markers[2].Text.Trim(), "Bug failed to load.");
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace RubberduckTests
             inspection.SetupGet(m => m.Severity).Returns(CodeInspectionSeverity.DoNotShow);
 
             var expected = new[] { inspection.Object };
-            var actual = new CodeInspectionSettings(new HashSet<CodeInspectionSetting> {new CodeInspectionSetting(inspection.Object)}, new WhitelistedIdentifierSetting[] {}, true).CodeInspections;
+            var actual = new CodeInspectionSettings(new HashSet<CodeInspectionSetting> { new CodeInspectionSetting(inspection.Object) }, new WhitelistedIdentifierSetting[] { }, true, false).CodeInspections;
 
             Assert.AreEqual(expected.Length, actual.Count);
             Assert.AreEqual(inspection.Object.Name, actual.First().Name);

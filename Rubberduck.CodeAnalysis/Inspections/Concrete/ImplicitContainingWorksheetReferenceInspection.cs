@@ -1,10 +1,11 @@
-﻿using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Attributes;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -41,7 +42,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public ImplicitContainingWorksheetReferenceInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         protected override bool IsResultReference(IdentifierReference reference, DeclarationFinder finder)
         {
@@ -53,7 +54,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(IdentifierReference reference)
         {
             return string.Format(
-                InspectionResults.ImplicitContainingWorksheetReferenceInspection,
+                InspectionResults.ResourceManager.GetString(nameof(ImplicitContainingWorksheetReferenceInspection), CultureInfo.CurrentUICulture),
                 reference.Declaration.IdentifierName);
         }
     }

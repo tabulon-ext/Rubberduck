@@ -3,6 +3,7 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -35,7 +36,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public HostSpecificExpressionInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.BracketedExpression)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
@@ -44,7 +45,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.HostSpecificExpressionInspection, declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(HostSpecificExpressionInspection), CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 }

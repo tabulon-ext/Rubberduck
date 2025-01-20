@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -75,7 +76,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var expression = failedIndexedDefaultMemberAccess.IdentifierName;
             var typeName = failedIndexedDefaultMemberAccess.Declaration?.FullAsTypeName;
-            return string.Format(InspectionResults.DefaultMemberRequiredInspection, expression, typeName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(DefaultMemberRequiredInspection), CultureInfo.CurrentUICulture), expression, typeName);
         }
     }
 }

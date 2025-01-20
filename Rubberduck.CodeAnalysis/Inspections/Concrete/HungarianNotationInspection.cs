@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Extensions;
 using Rubberduck.CodeAnalysis.Settings;
 using Rubberduck.Common;
@@ -8,6 +6,9 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.SettingsProvider;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -49,7 +50,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// </example>
     internal sealed class HungarianNotationInspection : DeclarationInspectionUsingGlobalInformationBase<List<string>>
     {
-        private static readonly DeclarationType[] TargetDeclarationTypes = new []
+        private static readonly DeclarationType[] TargetDeclarationTypes = new[]
         {
             DeclarationType.Parameter,
             DeclarationType.Constant,
@@ -65,7 +66,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             DeclarationType.Variable
         };
 
-        private static readonly DeclarationType[] IgnoredProcedureTypes = new []
+        private static readonly DeclarationType[] IgnoredProcedureTypes = new[]
         {
             DeclarationType.LibraryFunction,
             DeclarationType.LibraryProcedure
@@ -79,19 +80,22 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             _settings = settings;
         }
 
+        private CodeInspectionSettings _configuration;
+
         protected override List<string> GlobalInformation(DeclarationFinder finder)
         {
-            var settings = _settings.Read();
-            return settings.WhitelistedIdentifiers
+            _configuration = _settings.Read();
+            return _configuration.WhitelistedIdentifiers
                 .Select(s => s.Identifier)
                 .ToList();
         }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder, List<string> whitelistedNames)
         {
-            return !whitelistedNames.Contains(declaration.IdentifierName)
-                   && !IgnoredProcedureTypes.Contains(declaration.ParentDeclaration.DeclarationType)
-                   && declaration.IdentifierName.TryMatchHungarianNotationCriteria(out _);
+            return (_configuration.IgnoreFormControlsHungarianNotation && declaration.DeclarationType == DeclarationType.Control) ||
+                (!whitelistedNames.Contains(declaration.IdentifierName)
+                && !IgnoredProcedureTypes.Contains(declaration.ParentDeclaration.DeclarationType)
+                && declaration.IdentifierName.TryMatchHungarianNotationCriteria(out _));
         }
 
         protected override string ResultDescription(Declaration declaration)
@@ -99,7 +103,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var declarationType = declaration.DeclarationType.ToLocalizedString();
             var declarationName = declaration.IdentifierName;
             return string.Format(
-                Resources.Inspections.InspectionResults.IdentifierNameInspection,
+                Resources.Inspections.InspectionResults.ResourceManager.GetString(nameof(Resources.Inspections.InspectionResults.IdentifierNameInspection), CultureInfo.CurrentUICulture),
                 declarationType,
                 declarationName);
         }

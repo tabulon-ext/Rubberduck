@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Extensions;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -81,7 +82,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(IdentifierReference reference)
         {
             var expression = reference.IdentifierName;
-            return string.Format(InspectionResults.ImplicitUnboundDefaultMemberAccessInspection, expression);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ImplicitUnboundDefaultMemberAccessInspection), CultureInfo.CurrentUICulture), expression);
         }
     }
 }

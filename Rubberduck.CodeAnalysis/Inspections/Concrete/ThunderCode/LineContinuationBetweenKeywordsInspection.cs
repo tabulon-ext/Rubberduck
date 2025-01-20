@@ -5,6 +5,7 @@ using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete.ThunderCode
 {
@@ -32,7 +33,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete.ThunderCode
 
         protected override string ResultDescription(QualifiedContext<ParserRuleContext> context)
         {
-            return InspectionResults.LineContinuationBetweenKeywordsInspection.ThunderCodeFormat();
+            return InspectionResults.ResourceManager.GetString("LineContinuationBetweenKeywordsInspection", CultureInfo.CurrentUICulture).ThunderCodeFormat();
         }
 
         private class LineContinuationBetweenKeywordsListener : InspectionListenerBase<ParserRuleContext>

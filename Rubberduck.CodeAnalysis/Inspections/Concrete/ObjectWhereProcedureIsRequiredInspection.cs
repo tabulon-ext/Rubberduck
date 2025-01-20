@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Results;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -101,7 +102,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var expression = reference.IdentifierName;
             var defaultMember = reference.Declaration.QualifiedName.ToString();
-            return string.Format(InspectionResults.ObjectWhereProcedureIsRequiredInspection, expression, defaultMember);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ObjectWhereProcedureIsRequiredInspection), CultureInfo.CurrentUICulture), expression, defaultMember);
         }
 
         private IEnumerable<IInspectionResult> UnboundInspectionResults(QualifiedModuleName module, DeclarationFinder finder)
@@ -117,7 +118,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         private IInspectionResult UnboundInspectionResult(IdentifierReference reference, DeclarationFinder finder)
         {
-            var disabledQuickFixes = new List<string>{ "ExpandDefaultMemberQuickFix" };
+            var disabledQuickFixes = new List<string> { "ExpandDefaultMemberQuickFix" };
             return new IdentifierReferenceInspectionResult(
                 this,
                 UnboundResultDescription(reference),
@@ -129,7 +130,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         private static string UnboundResultDescription(IdentifierReference reference)
         {
             var expression = reference.IdentifierName;
-            return string.Format(InspectionResults.ObjectWhereProcedureIsRequiredInspection_Unbound, expression);
+            return string.Format(InspectionResults.ResourceManager.GetString("ObjectWhereProcedureIsRequiredInspection_Unbound", CultureInfo.CurrentUICulture), expression);
         }
     }
 }

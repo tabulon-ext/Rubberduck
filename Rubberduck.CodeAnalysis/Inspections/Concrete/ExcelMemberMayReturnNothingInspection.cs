@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Attributes;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -47,7 +48,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public ExcelMemberMayReturnNothingInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         private static readonly List<(string className, string memberName)> ExcelMembers = new List<(string className, string memberName)>
         {
@@ -77,6 +78,6 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                 .Where(member => ExcelMembers.Contains((member.ComponentName, member.IdentifierName)));
         }
 
-        public override string ResultTemplate => InspectionResults.ExcelMemberMayReturnNothingInspection;
+        public override string ResultTemplate => InspectionResults.ResourceManager.GetString(nameof(ExcelMemberMayReturnNothingInspection), CultureInfo.CurrentUICulture);
     }
 }

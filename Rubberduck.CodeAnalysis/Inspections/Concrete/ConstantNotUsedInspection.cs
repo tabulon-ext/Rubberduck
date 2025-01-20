@@ -1,10 +1,11 @@
-using System.Linq;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Extensions;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -40,11 +41,11 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public ConstantNotUsedInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Constant)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
-            return declaration?.Context != null 
+            return declaration?.Context != null
                    && !declaration.References.Any()
                    && !IsPublicInExposedClass(declaration);
         }
@@ -70,7 +71,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var declarationType = declaration.DeclarationType.ToLocalizedString();
             var declarationName = declaration.IdentifierName;
             return string.Format(
-                InspectionResults.IdentifierNotUsedInspection,
+                InspectionResults.ResourceManager.GetString(nameof(InspectionResults.IdentifierNotUsedInspection), CultureInfo.CurrentUICulture),
                 declarationType,
                 declarationName);
         }

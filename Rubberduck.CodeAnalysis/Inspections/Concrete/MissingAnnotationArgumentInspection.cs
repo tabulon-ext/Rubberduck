@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Results;
 using Rubberduck.Parsing;
@@ -9,6 +7,9 @@ using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -42,7 +43,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public MissingAnnotationArgumentInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
-        {}
+        { }
 
         protected override IEnumerable<IInspectionResult> DoGetInspectionResults(DeclarationFinder finder)
         {
@@ -79,7 +80,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         private static string ResultDescription(IParseTreeAnnotation pta)
         {
             return string.Format(
-                InspectionResults.MissingAnnotationArgumentInspection,
+                InspectionResults.ResourceManager.GetString(nameof(MissingAnnotationArgumentInspection), CultureInfo.CurrentUICulture),
                 pta.Annotation.Name);
         }
     }

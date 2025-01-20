@@ -3,6 +3,7 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
@@ -58,14 +59,14 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                 && parameter.IsByRef && !parameter.IsImplicitByRef;
         }
 
-        private static bool IsAlwaysByRef(Declaration parameter) 
+        private static bool IsAlwaysByRef(Declaration parameter)
             => parameter.IsArray
                 || (parameter.AsTypeDeclaration?.DeclarationType.HasFlag(DeclarationType.UserDefinedType) ?? false);
 
         protected override string ResultDescription(Declaration declaration)
         {
             return string.Format(
-                InspectionResults.MisleadingByRefParameterInspection,
+                InspectionResults.ResourceManager.GetString(nameof(MisleadingByRefParameterInspection), CultureInfo.CurrentUICulture),
                 declaration.IdentifierName, declaration.ParentDeclaration.QualifiedName.MemberName);
         }
     }

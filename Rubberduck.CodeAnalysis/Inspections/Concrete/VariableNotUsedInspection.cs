@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Antlr4.Runtime;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Extensions;
@@ -10,6 +8,8 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -49,12 +49,12 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         /// <returns></returns>
         public VariableNotUsedInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Variable)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
             // exclude undeclared, see #5439
-            return !declaration.IsWithEvents 
+            return !declaration.IsWithEvents
                    && !declaration.IsUndeclared
                    && declaration.References.All(reference => reference.IsAssignment)
                    && !declaration.References.Any(IsForLoopAssignment)
@@ -79,7 +79,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         private bool IsForLoopAssignment(IdentifierReference reference)
         {
-            if(!reference.IsAssignment)
+            if (!reference.IsAssignment)
             {
                 return false;
             }
@@ -104,8 +104,8 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var declarationType = declaration.DeclarationType.ToLocalizedString();
             var declarationName = declaration.IdentifierName;
             return string.Format(
-                InspectionResults.IdentifierNotUsedInspection, 
-                declarationType, 
+                InspectionResults.ResourceManager.GetString(nameof(InspectionResults.IdentifierNotUsedInspection), CultureInfo.CurrentUICulture),
+                declarationType,
                 declarationName);
         }
 

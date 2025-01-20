@@ -2,6 +2,7 @@ using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -33,11 +34,11 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public ImplicitVariantReturnTypeInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Function)
-        {}
+        { }
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.ImplicitVariantReturnTypeInspection, declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ImplicitVariantReturnTypeInspection), CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 }

@@ -4,6 +4,7 @@ using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete.ThunderCode
 {
@@ -27,7 +28,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete.ThunderCode
 
         protected override string ResultDescription(QualifiedContext<VBAParser.OnErrorStmtContext> context)
         {
-            return InspectionResults.OnErrorGoToMinusOneInspection.ThunderCodeFormat();
+            return InspectionResults.ResourceManager.GetString("OnErrorGoToMinusOneInspection", CultureInfo.CurrentUICulture).ThunderCodeFormat();
         }
 
         private class OnErrorGoToMinusOneListener : InspectionListenerBase<VBAParser.OnErrorStmtContext>
@@ -37,13 +38,13 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete.ThunderCode
                 CheckContext(context, context.expression());
                 base.EnterOnErrorStmt(context);
             }
-            
+
             private void CheckContext(VBAParser.OnErrorStmtContext context, IParseTree expression)
             {
                 var target = expression?.GetText().Trim() ?? string.Empty;
                 if (target.StartsWith("-") && int.TryParse(target.Substring(1), out var result) && result == 1)
                 {
-                   SaveContext(context);
+                    SaveContext(context);
                 }
             }
         }

@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
 using Rubberduck.AddRemoveReferences;
 using Rubberduck.UI;
 using Rubberduck.UI.AddRemoveReferences;
 using Rubberduck.VBEditor;
 using Rubberduck.VBEditor.SafeComWrappers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace RubberduckTests.AddRemoveReferences
 {
@@ -403,7 +403,7 @@ namespace RubberduckTests.AddRemoveReferences
         [Test]
         [Category("AddRemoveReferences")]
         public void ViewModelMoveDownCommand_DoesNotMoveLastReference()
-        
+
         {
             var viewModel = AddRemoveReferencesSetup.ArrangeViewModel();
             var referenced = viewModel.ProjectReferences.OfType<ReferenceModel>().ToDictionary(model => model.Priority.GetValueOrDefault());

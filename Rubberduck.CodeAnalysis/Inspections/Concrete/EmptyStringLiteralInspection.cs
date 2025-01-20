@@ -3,6 +3,7 @@ using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -10,7 +11,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// Flags uses of an empty string literal ("").
     /// </summary>
     /// <remarks>
-    /// Treating an empty string literal as equal to the 'vbNullString' constant
+    /// In the context of a unit test, treating an empty string literal as equal to the 'vbNullString' constant
     /// requires using the PermissiveAssertClass. The default AssertClass is more strict about data types, and tells them apart.
     /// </remarks>
     /// <why>
@@ -53,7 +54,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.LiteralExpressionContext> context)
         {
-            return InspectionResults.EmptyStringLiteralInspection;
+            return InspectionResults.ResourceManager.GetString(nameof(EmptyStringLiteralInspection), CultureInfo.CurrentUICulture);
         }
 
         private class EmptyStringLiteralListener : InspectionListenerBase<VBAParser.LiteralExpressionContext>

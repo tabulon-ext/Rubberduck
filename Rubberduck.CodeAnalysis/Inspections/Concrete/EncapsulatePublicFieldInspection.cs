@@ -3,6 +3,7 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -35,7 +36,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public EncapsulatePublicFieldInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Variable)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
@@ -47,7 +48,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.EncapsulatePublicFieldInspection, declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(EncapsulatePublicFieldInspection), CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 }

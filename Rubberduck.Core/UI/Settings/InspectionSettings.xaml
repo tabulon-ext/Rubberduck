@@ -146,6 +146,8 @@
                 <StackPanel>
                     <CheckBox IsChecked="{Binding RunInspectionsOnSuccessfulParse}" 
                               Content="{Resx ResxName=Rubberduck.CodeAnalysis.CodeAnalysisUI, Key=CodeInspectionSettingsPage_Misc_RunInspectionsOnSuccessfulParse}" />
+                    <CheckBox IsChecked="{Binding IgnoreFormControlsHungarianNotation}" 
+                              Content="{Resx ResxName=Rubberduck.CodeAnalysis.CodeAnalysisUI, Key=CodeInspectionSettingsPage_Misc_IgnoreFormControlHungarianNotation}" />
                 </StackPanel>
 
                 <Border Style="{StaticResource BorderHeader}"

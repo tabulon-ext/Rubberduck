@@ -1,11 +1,12 @@
-﻿using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Parsing.VBA.Parsing;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -21,7 +22,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         private readonly IParseTreeProvider _parseTreeProvider;
 
         public EmptyModuleInspection(IDeclarationFinderProvider declarationFinderProvider, IParseTreeProvider parseTreeProvider)
-            : base(declarationFinderProvider, new []{DeclarationType.Module}, new []{DeclarationType.Document})
+            : base(declarationFinderProvider, new[] { DeclarationType.Module }, new[] { DeclarationType.Document })
         {
             _emptyModuleVisitor = new EmptyModuleVisitor();
             _parseTreeProvider = parseTreeProvider;
@@ -37,7 +38,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.EmptyModuleInspection, declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(EmptyModuleInspection), CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 

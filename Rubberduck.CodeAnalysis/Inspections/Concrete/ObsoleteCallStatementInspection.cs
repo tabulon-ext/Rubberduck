@@ -4,6 +4,7 @@ using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -51,7 +52,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.CallStmtContext> context)
         {
-            return InspectionResults.ObsoleteCallStatementInspection;
+            return InspectionResults.ResourceManager.GetString(nameof(ObsoleteCallStatementInspection), CultureInfo.CurrentUICulture);
         }
 
         protected override bool IsResultContext(QualifiedContext<VBAParser.CallStmtContext> context, DeclarationFinder finder)

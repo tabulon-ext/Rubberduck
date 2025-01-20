@@ -1,14 +1,14 @@
-using System.Linq;
-using NUnit.Framework;
 using Moq;
+using NUnit.Framework;
+using Rubberduck.CodeAnalysis.Inspections;
+using Rubberduck.CodeAnalysis.Inspections.Concrete;
+using Rubberduck.CodeAnalysis.Settings;
+using Rubberduck.Parsing.VBA;
 using Rubberduck.SettingsProvider;
 using Rubberduck.VBEditor.SafeComWrappers;
 using RubberduckTests.Mocks;
-using Rubberduck.CodeAnalysis.Settings;
-using Rubberduck.Parsing.VBA;
 using System.Collections.Generic;
-using Rubberduck.CodeAnalysis.Inspections;
-using Rubberduck.CodeAnalysis.Inspections.Concrete;
+using System.Linq;
 
 namespace RubberduckTests.Inspections
 {
@@ -154,7 +154,7 @@ End Sub";
                 {
                     new WhitelistedIdentifierSetting("sss"),
                     new WhitelistedIdentifierSetting("oRange")
-                }, true));
+                }, true, false));
 
             return settings;
         }

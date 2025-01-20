@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Rubberduck.CodeAnalysis.Inspections.Abstract;
+﻿using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Extensions;
 using Rubberduck.CodeAnalysis.Inspections.Results;
 using Rubberduck.Parsing;
@@ -10,6 +8,9 @@ using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
 using Rubberduck.VBEditor;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -126,7 +127,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         private IInspectionResult InspectionResult(IdentifierReference lhsReference, IdentifierReference rhsReference, bool isUnbound, DeclarationFinder finder)
         {
             var disabledQuickFixes = isUnbound
-                ? new List<string> {"ExpandDefaultMemberQuickFix"}
+                ? new List<string> { "ExpandDefaultMemberQuickFix" }
                 : new List<string>();
             return new IdentifierReferenceInspectionResult<IdentifierReference>(
                 this,
@@ -141,7 +142,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var lhsExpression = lhsReference.IdentifierName;
             var rhsExpression = rhsReference.IdentifierName;
-            return string.Format(InspectionResults.SuspiciousLetAssignmentInspection, lhsExpression, rhsExpression);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(SuspiciousLetAssignmentInspection), CultureInfo.CurrentUICulture), lhsExpression, rhsExpression);
         }
 
         private IEnumerable<IInspectionResult> UnboundLhsInspectionResults(QualifiedModuleName module, DeclarationFinder finder)

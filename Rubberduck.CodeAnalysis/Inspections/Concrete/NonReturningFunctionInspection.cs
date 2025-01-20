@@ -1,4 +1,3 @@
-using System.Linq;
 using Antlr4.Runtime.Tree;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.Parsing;
@@ -7,6 +6,8 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -42,7 +43,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     {
         public NonReturningFunctionInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider, DeclarationType.Function)
-        {}
+        { }
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
@@ -59,7 +60,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var inScopeIdentifierReferences = member.References
                 .Where(reference => reference.ParentScoping.Equals(member));
             return inScopeIdentifierReferences
-                .Any(reference => reference.IsAssignment 
+                .Any(reference => reference.IsAssignment
                                   || IsAssignedByRefArgument(member, reference, finder));
         }
 
@@ -97,7 +98,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         private static bool IsReturningUserDefinedType(Declaration member)
         {
-            return member.AsTypeDeclaration != null 
+            return member.AsTypeDeclaration != null
                    && member.AsTypeDeclaration.DeclarationType == DeclarationType.UserDefinedType;
         }
 
@@ -114,7 +115,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.NonReturningFunctionInspection, declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(NonReturningFunctionInspection), CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
 
         /// <summary>

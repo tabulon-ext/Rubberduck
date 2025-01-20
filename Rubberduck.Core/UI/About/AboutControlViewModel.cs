@@ -1,12 +1,12 @@
-﻿using System;
-using System.Diagnostics;
-using Path = System.IO.Path;
-using NLog;
+﻿using NLog;
 using NLog.Targets;
 using Rubberduck.Resources.About;
 using Rubberduck.UI.Command;
 using Rubberduck.VersionCheck;
+using System;
+using System.Diagnostics;
 using Application = System.Windows.Forms.Application;
+using Path = System.IO.Path;
 
 namespace Rubberduck.UI.About
 {
@@ -26,8 +26,11 @@ namespace Rubberduck.UI.About
 
         public string Version => string.Format(Resources.RubberduckUI.Rubberduck_AboutBuild, _version.VersionString);
 
-        public string OperatingSystem => 
-            string.Format(AboutUI.AboutWindow_OperatingSystem, Environment.OSVersion.VersionString, Environment.Is64BitOperatingSystem ? "x64" : "x86");
+        private static readonly string _versionString = Environment.OSVersion.Version.Build > 22000
+            ? $"{Environment.OSVersion.VersionString} (Win11)"
+            : Environment.OSVersion.VersionString;
+
+        public string OperatingSystem => string.Format(AboutUI.AboutWindow_OperatingSystem, _versionString, Environment.Is64BitOperatingSystem ? "x64" : "x86");
 
         public string HostProduct =>
             string.Format(AboutUI.AboutWindow_HostProduct, Application.ProductName, Environment.Is64BitProcess ? "x64" : "x86");
@@ -36,7 +39,7 @@ namespace Rubberduck.UI.About
 
         public string HostExecutable => string.Format(AboutUI.AboutWindow_HostExecutable,
             Path.GetFileName(Application.ExecutablePath).ToUpper()); // .ToUpper() used to convert ExceL.EXE -> EXCEL.EXE
-            
+
         public string AboutCopyright =>
             string.Format(AboutUI.AboutWindow_Copyright, DateTime.Now.Year);
 
@@ -48,11 +51,11 @@ namespace Rubberduck.UI.About
 
         private void ExecuteViewLog(object parameter)
         {
-            var fileTarget = (FileTarget) LogManager.Configuration.FindTargetByName("file");
-                    
-            var logEventInfo = new LogEventInfo { TimeStamp = DateTime.Now }; 
+            var fileTarget = (FileTarget)LogManager.Configuration.FindTargetByName("file");
+
+            var logEventInfo = new LogEventInfo { TimeStamp = DateTime.Now };
             var fileName = fileTarget.FileName.Render(logEventInfo);
-                    
+
             // The /select argument will only work if the path has backslashes
             fileName = fileName.Replace("/", "\\");
             Process.Start(new ProcessStartInfo("explorer.exe", $"/select, \"{fileName}\""));

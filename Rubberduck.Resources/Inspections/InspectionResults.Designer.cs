@@ -19,7 +19,7 @@ namespace Rubberduck.Resources.Inspections {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class InspectionResults {
@@ -448,6 +448,24 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This array is inconsistently zero-based.
+        /// </summary>
+        public static string InconsistentArrayBaseInspection {
+            get {
+                return ResourceManager.GetString("InconsistentArrayBaseInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ParamArray &apos;{0}&apos; is inconsistently zero-based.
+        /// </summary>
+        public static string InconsistentParamArrayBaseInspection {
+            get {
+                return ResourceManager.GetString("InconsistentParamArrayBaseInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The expression &apos;{0}&apos; contains an indexed default member access to &apos;{1}&apos;..
         /// </summary>
         public static string IndexedDefaultMemberAccessInspection {
@@ -840,6 +858,15 @@ namespace Rubberduck.Resources.Inspections {
         public static string ParameterCanBeByValInspection {
             get {
                 return ResourceManager.GetString("ParameterCanBeByValInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameterless &apos;Range.Cells&apos; call is redundant..
+        /// </summary>
+        public static string ParameterlessCellsInspection {
+            get {
+                return ResourceManager.GetString("ParameterlessCellsInspection", resourceCulture);
             }
         }
         

@@ -4,6 +4,7 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Resources.Inspections;
+using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -80,7 +81,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(IdentifierReference reference)
         {
             var expression = reference.IdentifierName;
-            return string.Format(InspectionResults.UseOfBangNotationInspection, expression);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(UseOfBangNotationInspection), CultureInfo.CurrentUICulture), expression);
         }
     }
 }
