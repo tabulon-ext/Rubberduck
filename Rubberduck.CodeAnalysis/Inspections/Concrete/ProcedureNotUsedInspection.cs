@@ -3,6 +3,7 @@ using System.Linq;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Extensions;
 using Rubberduck.Parsing.Annotations;
+using Rubberduck.Parsing.Annotations.Concrete;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
@@ -18,10 +19,9 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// Shape object in the host document: in such cases the inspection result should be ignored.
     /// </why>
     /// <remarks>
-    /// Not all unused procedures can/should be removed: ignore any inspection results for 
-    /// event handler procedures and interface members that Rubberduck isn't recognizing as such.
-    /// Public procedures of Standard Modules are not flagged by this inspection regardless of
-    /// the presence or absence of user code references.
+    /// Not all unused procedures can/should be removed: ignore any inspection results for event handler procedures or annotate them with @EntryPoint.
+    /// Members that are annotated with @EntryPoint (or @ExcelHotkey) are not flagged by this inspection, regardless of the presence or absence of user code references.
+    /// Moreover, unused public members of exposed class modules will not be reported. 
     /// </remarks>
     /// <example hasResult="true">
     /// <module name="Module1" type="Standard Module">
@@ -96,6 +96,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// <![CDATA[
     /// Option Explicit
     /// 
+    /// '@EntryPoint "Rounded Rectangle 1"
     /// Public Sub ReferenceAllClass1Procedures()
     ///     Dim target As Class1
     ///     Set target = new Class1
@@ -141,32 +142,34 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             return !declaration.References
                        .Any(reference => !reference.ParentScoping.Equals(declaration)) // ignore recursive/self-referential calls
                    && !finder.FindEventHandlers().Contains(declaration)
-                   && !IsPublicModuleMember(declaration)
                    && !IsClassLifeCycleHandler(declaration)
                    && !(declaration is ModuleBodyElementDeclaration member 
-                        && (member.IsInterfaceMember 
-                            || member.IsInterfaceImplementation))
+                        && member.IsInterfaceImplementation)
                    && !declaration.Annotations
                        .Any(pta => pta.Annotation is ITestAnnotation) 
-                   && !IsDocumentEventHandler(declaration);
+                   && !IsDocumentEventHandler(declaration)
+                   && !IsEntryPoint(declaration)
+                   && !IsPublicInExposedClass(declaration);
         }
 
-        /// <remarks>
-        /// We cannot determine whether exposed members of standard modules are called or not,
-        /// so we assume they are instead of flagging them as "never called".
-        /// </remarks>
-        private static bool IsPublicModuleMember(Declaration procedure)
+        private static bool IsPublicInExposedClass(Declaration procedure)
         {
-            if ((procedure.Accessibility != Accessibility.Implicit
-                 && procedure.Accessibility != Accessibility.Public))
+            if(!(procedure.Accessibility == Accessibility.Public
+                    || procedure.Accessibility == Accessibility.Global))
             {
                 return false;
             }
 
-            var parent = Declaration.GetModuleParent(procedure);
-            return parent != null 
-                   && parent.DeclarationType.HasFlag(DeclarationType.ProceduralModule);
+            if(!(Declaration.GetModuleParent(procedure) is ClassModuleDeclaration classParent))
+            {
+                return false;
+            }
+
+            return classParent.IsExposed;
         }
+
+        private static bool IsEntryPoint(Declaration procedure) => 
+            procedure.Annotations.Any(pta => pta.Annotation is EntryPointAnnotation || pta.Annotation is ExcelHotKeyAnnotation);
 
         private static bool IsClassLifeCycleHandler(Declaration procedure)
         {

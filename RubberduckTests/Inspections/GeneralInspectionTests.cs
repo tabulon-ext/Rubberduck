@@ -84,13 +84,15 @@ namespace RubberduckTests.Inspections
         {
             var inspectionsWithSharedResultFormat = new List<string>
             {
+                typeof(UDTMemberNotUsedInspection).Name,
                 typeof(ConstantNotUsedInspection).Name,
                 typeof(ParameterNotUsedInspection).Name,
                 typeof(ProcedureNotUsedInspection).Name,
                 typeof(VariableNotUsedInspection).Name,
                 typeof(LineLabelNotUsedInspection).Name,
                 typeof(UseMeaningfulNameInspection).Name,
-                typeof(HungarianNotationInspection).Name
+                typeof(HungarianNotationInspection).Name,
+                typeof(AnnotationInIncompatibleComponentTypeInspection).Name
             };
 
             var inspections = typeof(InspectionBase).Assembly.GetTypes()

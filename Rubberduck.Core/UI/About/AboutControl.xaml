@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:about="clr-namespace:Rubberduck.UI.About"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DataContext="{d:DesignInstance {x:Type about:AboutControlViewModel}, IsDesignTimeCreatable=False}"
              KeyDown="OnKeyDownHandler">
     <UserControl.Resources>
@@ -13,7 +13,7 @@
                 <ResourceDictionary Source="../Styles/DefaultStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
-            <BitmapImage x:Key="RD" UriSource="pack://application:,,,/Rubberduck.Resources;component/Rubberduck.png" />
+            <BitmapImage x:Key="RD" UriSource="pack://application:,,,/Rubberduck.Resources;component/Rubberduck_Banner.png" />
             <Style x:Key="NormalLabel" TargetType="TextBlock">
                 <Style.Setters>
                     <Setter Property="FontFamily" Value="Segoe UI" />
@@ -44,8 +44,8 @@
                     <Setter Property="BorderBrush" Value="{x:Static SystemColors.HighlightBrush}" />
                     <Setter Property="BorderThickness" Value="2" />
                     <Setter Property="CornerRadius" Value="8" />
-                    <Setter Property="Margin" Value="8,8" />
-                    <Setter Property="Padding" Value="4" />
+                    <Setter Property="Margin" Value="10,0" />
+                    <Setter Property="Padding" Value="2" />
                 </Style.Setters>
             </Style>
             <Style x:Key="ReportButtonBorder" TargetType="Border">
@@ -73,36 +73,44 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="3" Margin="10">
+        <!-- heading -->
+        <Border Grid.Row="0" Margin="10" BorderThickness="0,1" BorderBrush="Black">
             <Image Source="{StaticResource RD}" Stretch="Uniform" />
         </Border>
-        <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource SectionBorder}">
-            <StackPanel Grid.Column="0" Grid.Row="1"
-                        MinHeight="100" MinWidth="250" 
-                        VerticalAlignment="Center">
-                <TextBlock x:Name="Version" Text="{Binding Version}" Style="{StaticResource HeadingLabel}" HorizontalAlignment="Center" Margin="5" />
-                <TextBlock x:Name="OperatingSystem" Text="{Binding OperatingSystem}" Style="{StaticResource NormalLabel}" HorizontalAlignment="Center"/>
-                <TextBlock x:Name="HostProduct" Text="{Binding HostProduct}" Style="{StaticResource NormalLabel}" HorizontalAlignment="Center"/>
-                <TextBlock x:Name="HostVersion" Text="{Binding HostVersion}" Style="{StaticResource NormalLabel}" HorizontalAlignment="Center"/>
-                <TextBlock x:Name="HostExecutable" Text="{Binding HostExecutable}" Style="{StaticResource NormalLabel}" HorizontalAlignment="Center"/>
-                <TextBlock Style="{StaticResource SubtleLabel}" HorizontalAlignment="Center" Margin="5,10,5,2">
+        
+        <!-- client area -->
+        <Border Grid.Row="1" Style="{StaticResource SectionBorder}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" MinWidth="250"/>
+                    <ColumnDefinition Width="*" MinWidth="250"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel MinHeight="100" MinWidth="250" VerticalAlignment="Top">
+                    <TextBlock x:Name="Version" Text="{Binding Version}" Style="{StaticResource HeadingLabel}" HorizontalAlignment="Center" Margin="5" />
+                    <TextBlock x:Name="OperatingSystem" Text="{Binding OperatingSystem}" Style="{StaticResource NormalLabel}" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="HostProduct" Text="{Binding HostProduct}" Style="{StaticResource NormalLabel}" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="HostVersion" Text="{Binding HostVersion}" Style="{StaticResource NormalLabel}" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="HostExecutable" Text="{Binding HostExecutable}" Style="{StaticResource NormalLabel}" HorizontalAlignment="Center"/>
+                    <TextBlock Style="{StaticResource SubtleLabel}" HorizontalAlignment="Center" Margin="5,10,5,2">
                     <Hyperlink Click="CopyVersionInfo_Click">
                         <Run Text="{Resx ResxName=Rubberduck.Resources.About.AboutUI, Key=AboutWindow_CopyVersionLabel}"/>
                     </Hyperlink>
-                </TextBlock>
-                <TextBlock Style="{StaticResource SubtleLabel}" HorizontalAlignment="Center" Margin="5,2,5,10" >
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource SubtleLabel}" HorizontalAlignment="Center" Margin="5,2,5,10" >
                     <Hyperlink Command="{Binding ViewLogCommand}">
                         <Run Text="{Resx ResxName=Rubberduck.Resources.About.AboutUI, Key=AboutWindow_ViewLogLabel}"/>
                     </Hyperlink>
-                </TextBlock>
-            </StackPanel>
-        </Border>
-        <Border Grid.Row="2" Grid.Column="0" Style="{StaticResource SectionBorder}">
+                    </TextBlock>
+                </StackPanel>
 
-            <TextBlock Grid.Column="0" Grid.Row="2" TextAlignment="Center">
+                <TextBlock Grid.Column="0" Grid.Row="2" TextAlignment="Center">
                 <StackPanel Orientation="Vertical" Margin="10">
                     <TextBlock Text="{Resx ResxName=Rubberduck.Resources.About.AboutUI, Key=AboutWindow_FoundAnIssue}"
                                Style="{StaticResource HeadingLabel}"/>
@@ -161,6 +169,7 @@
                     </TextBlock>
                 </StackPanel>
             </TextBlock>
+            </Grid>
         </Border>
         <Border Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Style="{StaticResource SectionBorder}">
             <ScrollViewer Margin="5" Height="360" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
@@ -174,19 +183,17 @@
                                Style="{StaticResource HeadingLabel}" Margin="0,5" />
                     <StackPanel Margin="5,0,0,0">
                         <TextBlock Text="{Resx ResxName=Rubberduck.Resources.About.AboutUI, Key=AboutWindow_CommunityHeader}"
-                                   Style="{StaticResource NormalLabel}" FontWeight="Bold" />
-                        <TextBlock Style="{StaticResource NormalLabel}" Margin="5,0"
-                                   xml:space="preserve">JetBrains ReSharper Community Team
-Code Review Stack Exchange
+                                    Style="{StaticResource NormalLabel}" FontWeight="Bold" />
+                        <TextBlock Style="{StaticResource NormalLabel}" Margin="5,0" xml:space="preserve">Code Review (Stack Exchange)
 Stack Overflow
 Digital Ocean Hacktoberfest
-                        </TextBlock>
+JetBrains ReSharper Community Team
+Microsoft MVP Award Program
+</TextBlock>
 
-                        <TextBlock Text="{Resx ResxName=Rubberduck.Resources.About.AboutUI, Key=AboutWindow_ContributorsHeader}"
-                                   Style="{StaticResource NormalLabel}" FontWeight="Bold" />
-                        <TextBlock Style="{StaticResource NormalLabel}"
-                                   Margin="5,0"
-                                   xml:space="preserve">Abraham Hosch
+                            <TextBlock Text="{Resx ResxName=Rubberduck.Resources.About.AboutUI, Key=AboutWindow_ContributorsHeader}"
+                                       Style="{StaticResource NormalLabel}" FontWeight="Bold" />
+                            <TextBlock Style="{StaticResource NormalLabel}" Margin="5,0" xml:space="preserve">Abraham Hosch
 Andrew Jackson
 Andrew Zschetzsche
 Andrew Mansell
@@ -215,6 +222,7 @@ Max Dörner
 Michal Krzych
 @mjolka
 Nelson Vides
+@PhilCattivocaratere
 Philip Wales
 Radosław Kapka
 Rob Bovey (Smart Indenter)
@@ -223,20 +231,21 @@ Ross Knudsen
 Simon Forsberg
 Stephen Bullen (Smart Indenter)
 @tommy9
-Wayne Phillips (vbWatchdog)
-                        </TextBlock>
+Wayne Phillips (vbWatchdog, twinBASIC)
+                            </TextBlock>
 
-                        <TextBlock Text="{Resx ResxName=Rubberduck.Resources.About.AboutUI, Key=AboutWindow_GeneralThanks}"
-                                   FontSize="10"
-                                   HorizontalAlignment="Left"
-                                   TextWrapping="WrapWithOverflow"
-                                   Margin="15,0,0,0"/>
+                            <TextBlock 
+                                Text="{Resx ResxName=Rubberduck.Resources.About.AboutUI, Key=AboutWindow_GeneralThanks}"
+                                FontSize="10"
+                                HorizontalAlignment="Left"
+                                TextWrapping="WrapWithOverflow"
+                                Margin="15,0,0,0" />
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </ScrollViewer>
+                </ScrollViewer>
         </Border>
-        <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"
-                   Text="{Binding AboutCopyright}" Style="{StaticResource SubtleLabel}"
-                   Margin="0,15" HorizontalAlignment="Center" />
+        <!-- bottom copyright notice -->
+        <TextBlock Grid.Row="2" Text="{Binding AboutCopyright}" Style="{StaticResource SubtleLabel}" Margin="0,15" HorizontalAlignment="Center" />
+
     </Grid>
 </UserControl>

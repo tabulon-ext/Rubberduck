@@ -33,6 +33,7 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
         private readonly ConcurrentDictionary<(QualifiedMemberName memberName, DeclarationType declarationType), ConcurrentBag<Declaration>> _newUndeclared;
 
         private IDictionary<QualifiedModuleName,IDictionary<int, List<IParseTreeAnnotation>>> _annotations;
+        private readonly IReadOnlyDictionary<QualifiedModuleName, LogicalLineStore> _logicalLines;
         private IDictionary<Declaration, List<ParameterDeclaration>> _parametersByParent;
         private IDictionary<DeclarationType, List<Declaration>> _userDeclarationsByType;
        
@@ -68,14 +69,15 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
                 : declaration.QualifiedSelection;
         }
         
-        public DeclarationFinder(
-            IReadOnlyList<Declaration> declarations, 
-            IEnumerable<IParseTreeAnnotation> annotations, 
+        public DeclarationFinder(IReadOnlyList<Declaration> declarations,
+            IEnumerable<IParseTreeAnnotation> annotations,
+            IReadOnlyDictionary<QualifiedModuleName, LogicalLineStore> logicalLines,
             IReadOnlyDictionary<QualifiedModuleName, IFailedResolutionStore> failedResolutionStores,
             IHostApplication hostApp = null)
         {
             _hostApp = hostApp;
             _failedResolutionStores = failedResolutionStores;
+            _logicalLines = logicalLines;
 
             _newFailedResolutionStores = new ConcurrentDictionary<QualifiedModuleName, IMutableFailedResolutionStore>();
             _newUndeclared = new ConcurrentDictionary<(QualifiedMemberName memberName, DeclarationType declarationType), ConcurrentBag<Declaration>>();
@@ -270,7 +272,7 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
                         item.WithEventsField,
                         Handlers = item.AvailableEvents.SelectMany(evnt =>
                             Members(item.WithEventsField.ParentDeclaration.QualifiedName.QualifiedModuleName, DeclarationType.Procedure)
-                                .Where(member => member.IdentifierName == $"{item.WithEventsField.IdentifierName}_{evnt.IdentifierName}"))
+                                .Where(member => member.IdentifierName.Equals($"{item.WithEventsField.IdentifierName}_{evnt.IdentifierName}", StringComparison.InvariantCultureIgnoreCase)))
                             .OfType<ModuleBodyElementDeclaration>()
                     })
                     .ToDictionary(item => item.WithEventsField, item => item.Handlers.ToList());
@@ -279,7 +281,51 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
 
         //This does not need a lock because enumerators over a ConcurrentBag uses a snapshot.    
         public IEnumerable<Declaration> FreshUndeclared => _newUndeclared.AllValues();
-        public IReadOnlyDictionary<QualifiedModuleName, IFailedResolutionStore> FreshFailedResolutionStores => _newFailedResolutionStores.ToDictionary(kvp => kvp.Key, kvp => (IFailedResolutionStore)new FailedResolutionStore(kvp.Value));  
+        public IReadOnlyDictionary<QualifiedModuleName, IFailedResolutionStore> FreshFailedResolutionStores => _newFailedResolutionStores.ToDictionary(kvp => kvp.Key, kvp => (IFailedResolutionStore)new FailedResolutionStore(kvp.Value));
+
+        public int? LogicalLine(QualifiedModuleName module, int physicalLine)
+        {
+            return _logicalLines.TryGetValue(module, out var lineStore)
+                ? lineStore.LogicalLineNumber(physicalLine)
+                : null;
+        }
+
+        public int? PhysicalStartLine(QualifiedModuleName module, int logicalLine)
+        {
+            return _logicalLines.TryGetValue(module, out var lineStore)
+                ? lineStore.PhysicalStartLineNumber(logicalLine)
+                : null;
+        }
+
+        public int? PhysicalEndLine(QualifiedModuleName module, int logicalLine)
+        {
+            return _logicalLines.TryGetValue(module, out var lineStore)
+                ? lineStore.PhysicalEndLineNumber(logicalLine)
+                : null;
+        }
+
+        public int? NumberOfLogicalLines(QualifiedModuleName module)
+        {
+            if (!_logicalLines.TryGetValue(module, out var lineStore))
+            {
+                return null;
+            }
+            return lineStore.NumberOfLogicalLines();
+        }
+
+        public int? StartOfContainingLogicalLine(QualifiedModuleName module, int physicalLine)
+        {
+            return _logicalLines.TryGetValue(module, out var lineStore)
+                ? lineStore.StartOfContainingLogicalLine(physicalLine)
+                : null;
+        }
+
+        public int? EndOfContainingLogicalLine(QualifiedModuleName module, int physicalLine)
+        {
+            return _logicalLines.TryGetValue(module, out var lineStore)
+                ? lineStore.EndOfContainingLogicalLine(physicalLine)
+                : null;
+        }
 
         public IEnumerable<Declaration> Members(Declaration module)
         {
@@ -333,8 +379,8 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
         {
             var withEventsDeclarations = FindWithEventFields(eventDeclaration);
             return withEventsDeclarations
-                .Select(withEventsField => FindHandlersForWithEventsField(withEventsField)
-                                            .Single(handler => handler.IdentifierName == $"{withEventsField.IdentifierName}_{eventDeclaration.IdentifierName}"));
+                .Select(withEventsField => FindHandlersForWithEventsField(withEventsField).SingleOrDefault(handler => 
+                    handler.IdentifierName.Equals($"{withEventsField.IdentifierName}_{eventDeclaration.IdentifierName}", StringComparison.InvariantCultureIgnoreCase)));
         }
 
         public ICollection<Declaration> FindFormControlEventHandlers()
@@ -345,8 +391,8 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
         public IEnumerable<Declaration> FindFormControlEventHandlers(Declaration control)
         {
             return _eventHandlers.Value
-                .Where(handlers=> handlers.ParentScope == control.ParentScope
-                                  && handlers.IdentifierName.StartsWith(control.IdentifierName + "_"));
+                .Where(handlers=> handlers.ParentScope.Equals(control.ParentScope, StringComparison.InvariantCultureIgnoreCase) && 
+                    handlers.IdentifierName.StartsWith(control.IdentifierName + "_", StringComparison.InvariantCultureIgnoreCase));
         }
 
         public ICollection<Declaration> FindFormEventHandlers()
@@ -356,6 +402,18 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
 
         public IEnumerable<Declaration> Classes => _classes.Value;
         public IEnumerable<Declaration> Projects => _projects.Value;
+
+        /// <summary>
+        /// Gets the <see cref="ProjectDeclaration"/> object for specified referenced project/library.
+        /// </summary>
+        /// <param name="name">The identifier name of the project declaration to find.</param>
+        /// <param name="result">The <see cref="ProjectDeclaration"/> result, if found; null otherwise.</param>
+        /// <param name="includeUserDefined">True to include user-defined projects in the search; false by default.</param>
+        public bool TryFindProjectDeclaration(string name, out Declaration result, bool includeUserDefined = false)
+        {
+            result = _projects.Value.FirstOrDefault(project => project.IdentifierName.Equals(name, StringComparison.InvariantCultureIgnoreCase) && project.IsUserDefined == includeUserDefined);
+            return result != null;
+        }
 
         public IEnumerable<Declaration> UserDeclarations(DeclarationType type)
         {
@@ -521,12 +579,18 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
 
         public IEnumerable<IParseTreeAnnotation> FindAnnotations(QualifiedModuleName module, int annotatedLine)
         {
-            if(!_annotations.TryGetValue(module, out var annotationsByLineInModule))
+            if (!_annotations.TryGetValue(module, out var annotationsByLineInModule))
             {
                 return Enumerable.Empty<IParseTreeAnnotation>();
             }
 
-            return annotationsByLineInModule.TryGetValue(annotatedLine, out var result) 
+            var firstLineOfAnnotatedLogicalLine = StartOfContainingLogicalLine(module, annotatedLine);
+            if (!firstLineOfAnnotatedLogicalLine.HasValue)
+            {
+                return Enumerable.Empty<IParseTreeAnnotation>();
+            }
+
+            return annotationsByLineInModule.TryGetValue(firstLineOfAnnotatedLogicalLine.Value, out var result) 
                 ? result 
                 : Enumerable.Empty<IParseTreeAnnotation>();
         }
@@ -557,7 +621,7 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
 
         public bool IsMatch(string declarationName, string potentialMatchName)
         {
-            return string.Equals(declarationName, potentialMatchName, StringComparison.OrdinalIgnoreCase);
+            return string.Equals(declarationName, potentialMatchName, StringComparison.InvariantCultureIgnoreCase);
         }
 
         private IEnumerable<Declaration> FindEvents(Declaration module)
@@ -590,24 +654,25 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
                 : Enumerable.Empty<Declaration>();
         }
 
-        public ParameterDeclaration FindParameterOfNonDefaultMemberFromSimpleArgumentNotPassedByValExplicitly(VBAParser.ArgumentExpressionContext argumentExpression, Declaration enclosingProcedure)
+        public ParameterDeclaration FindParameterOfNonDefaultMemberFromSimpleArgumentNotPassedByValExplicitly(VBAParser.ArgumentContext argument, Declaration enclosingProcedure)
         {
-            return FindParameterOfNonDefaultMemberFromSimpleArgumentNotPassedByValExplicitly(argumentExpression, enclosingProcedure.QualifiedModuleName);
+            return FindParameterOfNonDefaultMemberFromSimpleArgumentNotPassedByValExplicitly(argument, enclosingProcedure.QualifiedModuleName);
         }
 
-        public ParameterDeclaration FindParameterOfNonDefaultMemberFromSimpleArgumentNotPassedByValExplicitly(VBAParser.ArgumentExpressionContext argumentExpression, QualifiedModuleName module)
+        public ParameterDeclaration FindParameterOfNonDefaultMemberFromSimpleArgumentNotPassedByValExplicitly(VBAParser.ArgumentContext argument, QualifiedModuleName module)
         {
             //todo: Rename after making it work for more general cases.
-
-            if (argumentExpression  == null 
-                || argumentExpression.GetDescendent<VBAParser.ParenthesizedExprContext>() != null 
-                || argumentExpression.BYVAL() != null)
+            var missingArgument = argument.missingArgument();
+            var argumentExpression = argument.GetDescendent<VBAParser.ArgumentExpressionContext>();
+            if ((missingArgument == null && argumentExpression  == null)
+                || argumentExpression?.GetDescendent<VBAParser.ParenthesizedExprContext>() != null 
+                || argumentExpression?.BYVAL() != null)
             {
                 // not a simple argument, or argument is parenthesized and thus passed ByVal
                 return null;
             }
 
-            var callingNonDefaultMember = CallingNonDefaultMember(argumentExpression, module);
+            var callingNonDefaultMember = CallingNonDefaultMember((ParserRuleContext)argumentExpression ?? missingArgument, module);
             if (callingNonDefaultMember == null)
             {
                 // Either we could not resolve the call or there is a default member call involved. 
@@ -615,8 +680,8 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
             }
 
             var parameters = Parameters(callingNonDefaultMember);
-
             ParameterDeclaration parameter;
+
             var namedArg = argumentExpression.GetAncestor<VBAParser.NamedArgumentContext>();
             if (namedArg != null)
             {
@@ -627,31 +692,44 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
             else
             {
                 // argument is positional: work out its index
-                var argumentList = argumentExpression.GetAncestor<VBAParser.ArgumentListContext>();
-                var arguments = argumentList.GetDescendents<VBAParser.PositionalArgumentContext>().ToArray();
-
-                var parameterIndex = arguments
-                    .Select((arg, index) => arg.GetDescendent<VBAParser.ArgumentExpressionContext>() == argumentExpression ? (arg, index) : (null, -1))
-                    .SingleOrDefault(item => item.arg != null).index;
-
+                var argumentList = ((ParserRuleContext)argumentExpression ?? missingArgument).GetAncestor<VBAParser.ArgumentListContext>();
+                var arguments = argumentList.children.Where(t => t is VBAParser.ArgumentContext).ToArray();
+                var selection = argumentExpression?.GetSelection() ?? missingArgument.GetSelection();
+                
+                var indexedArgs = arguments.Select((arg, index) => (arg: arg as ParserRuleContext, index))
+                    .Select(e => (arg: e.arg, e.index, selection:e.arg.GetSelection()))
+                    .ToList();
+                var indexedArg = indexedArgs.SingleOrDefault(item => item.selection.Contains(selection));
+                if (indexedArg.arg == null)
+                {
+                    return null;
+                }
                 parameter = parameters
-                    .OrderBy(p => p.Selection)
                     .Select((param, index) => (param, index))
-                    .SingleOrDefault(item => item.index == parameterIndex).param;
+                    .SingleOrDefault(item => item.index == indexedArg.index).param;
             }
 
             return parameter;
         }
 
-        private ModuleBodyElementDeclaration CallingNonDefaultMember(VBAParser.ArgumentExpressionContext argumentExpression, QualifiedModuleName module)
+        public ModuleBodyElementDeclaration FindInvokedMemberFromArgumentContext(VBAParser.ArgumentContext argument, QualifiedModuleName module)
+        {
+            var expression = (ParserRuleContext)argument.GetDescendent<VBAParser.ArgumentExpressionContext>() 
+                ?? argument.GetDescendent<VBAParser.MissingArgumentContext>();
+            return expression != null
+                ? CallingNonDefaultMember(expression, module)
+                : null;
+        }
+
+        private ModuleBodyElementDeclaration CallingNonDefaultMember(ParserRuleContext argumentExpressionOrMissingArgument, QualifiedModuleName module)
         {
             //todo: Make this work for default member calls.
 
-            var argumentList = argumentExpression.GetAncestor<VBAParser.ArgumentListContext>();
+            var argumentList = argumentExpressionOrMissingArgument.GetAncestor<VBAParser.ArgumentListContext>();
             var cannotHaveDefaultMemberCall = false;
 
             ParserRuleContext callingExpression;
-            switch (argumentList.Parent)
+            switch (argumentList?.Parent)
             {
                 case VBAParser.CallStmtContext callStmt:
                     cannotHaveDefaultMemberCall = true;
@@ -664,7 +742,6 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
                     callingExpression = indexExpr.lExpression();
                     break;
                 default:
-                    //This should never happen.
                     return null;
             }
 
@@ -898,9 +975,10 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
             string memberName, DeclarationType memberType)
         {
             var allMatches = MatchName(memberName);
+            var parentClass = parent as ClassModuleDeclaration;
             var memberMatches = allMatches
                 .Where(m => m.DeclarationType.HasFlag(memberType)
-                            && parent.Equals(m.ParentDeclaration))
+                            && (parent.Equals(m.ParentDeclaration) || (parentClass?.Supertypes.Any(t => t.Equals(m.ParentDeclaration)) ?? false)))
                 .ToList();
             var accessibleMembers = memberMatches.Where(m => AccessibilityCheck.IsMemberAccessible(callingProject, callingModule, callingParent, m));
             var match = accessibleMembers.FirstOrDefault();
@@ -934,21 +1012,23 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
             }
             // Classes such as Worksheet have properties such as Range that can be access in a user defined class such as Sheet1,
             // that's why we have to walk the type hierarchy and find these implementations.
-            foreach (var supertype in ClassModuleDeclaration.GetSupertypes(callingModule))
+            if (callingModule is ClassModuleDeclaration callingClass)
             {
-                // Only built-in classes such as Worksheet can be considered "real base classes".
-                // User created interfaces work differently and don't allow accessing accessing implementations.
-                if (supertype.IsUserDefined)
+                foreach (var supertype in callingClass.Supertypes)
                 {
-                    continue;
-                }
-                var supertypeMatch = FindMemberEnclosingModule(supertype, callingParent, memberName, memberType);
-                if (supertypeMatch != null)
-                {
-                    return supertypeMatch;
+                    // Only built-in classes such as Worksheet can be considered "real base classes".
+                    // User created interfaces work differently and don't allow accessing accessing implementations.
+                    if (supertype.IsUserDefined)
+                    {
+                        continue;
+                    }
+                    var supertypeMatch = FindMemberEnclosingModule(supertype, callingParent, memberName, memberType);
+                    if (supertypeMatch != null)
+                    {
+                        return supertypeMatch;
+                    }
                 }
             }
-
             return null;
         }
 
@@ -1385,8 +1465,8 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
                 {
                     var parentModuleSubtypes = ((ClassModuleDeclaration)e.ParentDeclaration).Subtypes.ToList();
                     return parentModuleSubtypes.Any()
-                        ? parentModuleSubtypes.Select(v => v.IdentifierName + "_" + e.IdentifierName)
-                        : new[] { e.ParentDeclaration.IdentifierName + "_" + e.IdentifierName };
+                        ? parentModuleSubtypes.Select(v => (v.IdentifierName + "_" + e.IdentifierName).ToLowerInvariant())
+                        : new[] { (e.ParentDeclaration.IdentifierName + "_" + e.IdentifierName).ToLowerInvariant() };
                 })
                 .ToHashSet();
 
@@ -1396,22 +1476,22 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
                     IsHostSpecificHandler(item))
                 .Concat(
                     UserDeclarations(DeclarationType.Procedure)
-                        .Where(item => handlerNames.Contains(item.IdentifierName))
+                        .Where(item => handlerNames.Any(n => n.Equals(item.IdentifierName, StringComparison.InvariantCultureIgnoreCase)))
                 )
                 .Concat(_handlersByWithEventsField.Value.AllValues())
                 .Concat(FindFormControlEventHandlers())
-                .Concat(FindFormEventHandlers());
+                .Concat(FindFormEventHandlers())
+                .Concat(FindAllDocumentEventHandlers());
             return handlers.ToHashSet();
 
             // Local functions to help break up the complex logic in finding built-in handlers
             bool IsVBAClassSpecificHandler(Declaration item)
             {
                 return item.ParentDeclaration.DeclarationType == DeclarationType.ClassModule && (
-                           item.IdentifierName.Equals("Class_Initialize",
-                               StringComparison.InvariantCultureIgnoreCase) ||
+                           item.IdentifierName.Equals("Class_Initialize", StringComparison.InvariantCultureIgnoreCase) ||
                            item.IdentifierName.Equals("Class_Terminate", StringComparison.InvariantCultureIgnoreCase));
             }
-
+            
             bool IsHostSpecificHandler(Declaration item)
             {
                 return _hostApp?.AutoMacroIdentifiers.Any(i =>
@@ -1423,20 +1503,40 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
             }
         }
 
+        private HashSet<Declaration> FindAllDocumentEventHandlers()
+        {
+            var documents = DeclarationsWithType(DeclarationType.Document).OfType<DocumentModuleDeclaration>();
+            var documentTypes = documents.SelectMany(doc => doc.Supertypes).ToHashSet();
+            var events = BuiltInDeclarations(DeclarationType.Event).OfType<EventDeclaration>().Where(e => documentTypes.Contains(e.ParentDeclaration));
+            var handlerNames = events.Select(e => (Event:e, HandlerName:$"{e.QualifiedModuleName.ComponentName}_{e.IdentifierName}".ToLowerInvariant())).ToHashSet();
+
+            var procedures = UserDeclarations(DeclarationType.Procedure)
+                .Where(procedure => procedure.ParentDeclaration is DocumentModuleDeclaration);
+
+            var candidates = procedures.Where(procedure => handlerNames.Select(e => e.HandlerName).Contains(procedure.IdentifierName.ToLowerInvariant()))
+                .Select(c => (CandidateHandler: c as SubroutineDeclaration, Event: handlerNames.Single(h => h.HandlerName.EndsWith(c.IdentifierName)).Event));
+
+            var handlers = candidates.Where(candidate => candidate.CandidateHandler.Parameters.Count == candidate.Event.Parameters.Count
+                && Enumerable.SequenceEqual(candidate.CandidateHandler.Parameters.Select(p => p.FullAsTypeName), 
+                                            candidate.Event.Parameters.Select(p => p.FullAsTypeName)));
+            
+            return handlers.Select(h => h.CandidateHandler).Cast<Declaration>().ToHashSet();
+        }
+
         private HashSet<Declaration> FindAllFormEventHandlers()
         {
-            var forms = DeclarationsWithType(DeclarationType.ClassModule).
-                Where(declaration => declaration.QualifiedModuleName.ComponentType == ComponentType.UserForm);
+            var forms = DeclarationsWithType(DeclarationType.ClassModule)
+                .Where(declaration => declaration.QualifiedModuleName.ComponentType == ComponentType.UserForm);
             var formScopes = forms
                 .Select(form => form.Scope)
                 .ToHashSet();
             var events = BuiltInDeclarations(DeclarationType.Event)
                 .Where(item => item.ParentScope == "FM20.DLL;MSForms.FormEvents");
             var handlerNames = events
-                .Select(item => "UserForm_" + item.IdentifierName)
+                .Select(item => ("UserForm_" + item.IdentifierName).ToLowerInvariant())
                 .ToHashSet();
             var handlers = UserDeclarations(DeclarationType.Procedure)
-                .Where(procedure => handlerNames.Contains(procedure.IdentifierName)
+                .Where(procedure => handlerNames.Contains(procedure.IdentifierName.ToLowerInvariant())
                                     && formScopes.Contains(procedure.ParentScope));
             return handlers.ToHashSet();
         }
@@ -1468,13 +1568,23 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
             identifierMatches = identifierMatches.Where(nc => !IsEnumOrUDTMemberDeclaration(nc)).ToList();
             var referenceConflicts = identifierMatches.Where(idm =>
                 renameTarget.References
-                    .Any(renameTargetRef => renameTargetRef.ParentScoping == idm.ParentDeclaration
+                    .Any(renameTargetRef => 
+                        renameTargetRef.ParentScoping == idm.ParentDeclaration
+                        
                         || !renameTarget.ParentDeclaration.DeclarationType.HasFlag(DeclarationType.ClassModule)
                             && idm == renameTargetRef.ParentScoping
                             && !UsesScopeResolution(renameTargetRef.Context.Parent)
+
                         || idm.References
                             .Any(idmRef => idmRef.ParentScoping == renameTargetRef.ParentScoping
-                                && !UsesScopeResolution(renameTargetRef.Context.Parent)))
+                                && renameTargetRef.QualifiedModuleName != renameTarget.QualifiedModuleName
+                                && !UsesScopeResolution(renameTargetRef.Context.Parent))
+
+                        || idm.References
+                            .Any(idmRef => idmRef.ParentScoping == renameTargetRef.ParentScoping
+                                && renameTargetRef.QualifiedModuleName == renameTarget.QualifiedModuleName
+                                && !UsesScopeResolution(idmRef.Context.Parent)))
+
                 || idm.DeclarationType.HasFlag(DeclarationType.Variable)
                     && idm.ParentDeclaration.DeclarationType.HasFlag(DeclarationType.Module)
                     && renameTarget.References.Any(renameTargetRef => renameTargetRef.QualifiedModuleName == idm.ParentDeclaration.QualifiedModuleName))
@@ -1553,12 +1663,15 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
             }
 
             referenceProject = GetProjectDeclarationForReference(reference);
-
+            if (referenceProject == null)
+            {
+                Logger.Warn($"Could not get the project declaration for reference '{reference.Name}'.");
+                return output;
+            }
             if (!_referencesByProjectId.TryGetValue(referenceProject.ProjectId, out var directReferences))
             {
                 return output;
             }
-
             output.AddRange(directReferences);
 
             var projectId = referenceProject.ProjectId;
@@ -1574,7 +1687,7 @@ namespace Rubberduck.Parsing.VBA.DeclarationCaching
         {
             return reference.Guid.Equals(Guid.Empty)
                 ? UserDeclarations(DeclarationType.Project).OfType<ProjectDeclaration>().FirstOrDefault(proj =>
-                    proj.QualifiedModuleName.ProjectPath.Equals(reference.FullPath, StringComparison.OrdinalIgnoreCase))
+                    proj.QualifiedModuleName.ProjectPath.Equals(reference.FullPath, StringComparison.InvariantCultureIgnoreCase))
                 : BuiltInDeclarations(DeclarationType.Project).OfType<ProjectDeclaration>().FirstOrDefault(proj =>
                     proj.Guid.Equals(reference.Guid) && proj.MajorVersion == reference.Major &&
                     proj.MinorVersion == reference.Minor);

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Antlr4.Runtime;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
@@ -52,10 +53,28 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
-            return !declaration.IsWithEvents
-                   && declaration.References
-                       .All(reference => reference.IsAssignment)
-                   && !declaration.References.Any(IsForLoopAssignment);
+            // exclude undeclared, see #5439
+            return !declaration.IsWithEvents 
+                   && !declaration.IsUndeclared
+                   && declaration.References.All(reference => reference.IsAssignment)
+                   && !declaration.References.Any(IsForLoopAssignment)
+                   && !IsPublicInExposedClass(declaration);
+        }
+
+        private static bool IsPublicInExposedClass(Declaration procedure)
+        {
+            if (!(procedure.Accessibility == Accessibility.Public
+                    || procedure.Accessibility == Accessibility.Global))
+            {
+                return false;
+            }
+
+            if (!(Declaration.GetModuleParent(procedure) is ClassModuleDeclaration classParent))
+            {
+                return false;
+            }
+
+            return classParent.IsExposed;
         }
 
         private bool IsForLoopAssignment(IdentifierReference reference)

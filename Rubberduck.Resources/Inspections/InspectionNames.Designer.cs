@@ -19,7 +19,7 @@ namespace Rubberduck.Resources.Inspections {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class InspectionNames {
@@ -57,6 +57,15 @@ namespace Rubberduck.Resources.Inspections {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Annotation in component with incompatible type.
+        /// </summary>
+        public static string AnnotationInIncompatibleComponentTypeInspection {
+            get {
+                return ResourceManager.GetString("AnnotationInIncompatibleComponentTypeInspection", resourceCulture);
             }
         }
         
@@ -313,11 +322,11 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Illegal annotation.
+        ///   Looks up a localized string similar to Potential &apos;IIf&apos; Function side effects.
         /// </summary>
-        public static string IllegalAnnotationInspection {
+        public static string IIfSideEffectInspection {
             get {
-                return ResourceManager.GetString("IllegalAnnotationInspection", resourceCulture);
+                return ResourceManager.GetString("IIfSideEffectInspection", resourceCulture);
             }
         }
         
@@ -462,6 +471,15 @@ namespace Rubberduck.Resources.Inspections {
         public static string IntegerDataTypeInspection {
             get {
                 return ResourceManager.GetString("IntegerDataTypeInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid annotation.
+        /// </summary>
+        public static string InvalidAnnotationInspection {
+            get {
+                return ResourceManager.GetString("InvalidAnnotationInspection", resourceCulture);
             }
         }
         
@@ -790,7 +808,7 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter is not referred to..
+        ///   Looks up a localized string similar to Parameter is not used..
         /// </summary>
         public static string ParameterNotUsedInspection {
             get {
@@ -808,7 +826,7 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Procedure is not referred to..
+        ///   Looks up a localized string similar to Procedure/Function/Property is not used..
         /// </summary>
         public static string ProcedureNotUsedInspection {
             get {
@@ -822,6 +840,42 @@ namespace Rubberduck.Resources.Inspections {
         public static string ProcedureRequiredInspection {
             get {
                 return ResourceManager.GetString("ProcedureRequiredInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public control field access.
+        /// </summary>
+        public static string PublicControlFieldAccessInspection {
+            get {
+                return ResourceManager.GetString("PublicControlFieldAccessInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public enumeration declared within worksheet.
+        /// </summary>
+        public static string PublicEnumerationDeclaredInWorksheetInspection {
+            get {
+                return ResourceManager.GetString("PublicEnumerationDeclaredInWorksheetInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Implementations of interfaces and event handlers should be Private.
+        /// </summary>
+        public static string PublicImplementationShouldBePrivateInspection {
+            get {
+                return ResourceManager.GetString("PublicImplementationShouldBePrivateInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read-Only Property assignment.
+        /// </summary>
+        public static string ReadOnlyPropertyAssignmentInspection {
+            get {
+                return ResourceManager.GetString("ReadOnlyPropertyAssignmentInspection", resourceCulture);
             }
         }
         
@@ -925,6 +979,24 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Suspicious access to a predeclared instance.
+        /// </summary>
+        public static string SuspiciousPredeclaredInstanceAccessInspection {
+            get {
+                return ResourceManager.GetString("SuspiciousPredeclaredInstanceAccessInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Defined Type member is not used.
+        /// </summary>
+        public static string UDTMemberNotUsedInspection {
+            get {
+                return ResourceManager.GetString("UDTMemberNotUsedInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Variable is used but not assigned..
         /// </summary>
         public static string UnassignedVariableUsageInspection {
@@ -966,6 +1038,15 @@ namespace Rubberduck.Resources.Inspections {
         public static string UnreachableCaseInspection {
             get {
                 return ResourceManager.GetString("UnreachableCaseInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unrecognized annotation.
+        /// </summary>
+        public static string UnrecognizedAnnotationInspection {
+            get {
+                return ResourceManager.GetString("UnrecognizedAnnotationInspection", resourceCulture);
             }
         }
         
@@ -1033,7 +1114,7 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Variable is not referred to..
+        ///   Looks up a localized string similar to Variable is not used..
         /// </summary>
         public static string VariableNotUsedInspection {
             get {

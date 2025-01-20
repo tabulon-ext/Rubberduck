@@ -19,7 +19,7 @@ namespace Rubberduck.Resources.Inspections {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class InspectionResults {
@@ -322,11 +322,11 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Annotation &apos;{0}&apos; is illegal in this context..
+        ///   Looks up a localized string similar to &apos;{0}&apos; invoked by &apos;IIf&apos; Function.
         /// </summary>
-        public static string IllegalAnnotationInspection {
+        public static string IIfSideEffectInspection {
             get {
-                return ResourceManager.GetString("IllegalAnnotationInspection", resourceCulture);
+                return ResourceManager.GetString("IIfSideEffectInspection", resourceCulture);
             }
         }
         
@@ -480,6 +480,33 @@ namespace Rubberduck.Resources.Inspections {
         public static string IntegerDataTypeInspection {
             get {
                 return ResourceManager.GetString("IntegerDataTypeInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Annotation &apos;{0}&apos; is invalid in this context..
+        /// </summary>
+        public static string InvalidAnnotationInspection {
+            get {
+                return ResourceManager.GetString("InvalidAnnotationInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Annotation &apos;{0}&apos; cannot be used in a &apos;{1}&apos;..
+        /// </summary>
+        public static string InvalidAnnotationInspection_IncompatibleComponentType {
+            get {
+                return ResourceManager.GetString("InvalidAnnotationInspection_IncompatibleComponentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Annotation &apos;{0}&apos; is used in a &apos;{1}&apos;, but is only valid in a &apos;{2}&apos;..
+        /// </summary>
+        public static string InvalidAnnotationInspection_NotInRequiredComponentType {
+            get {
+                return ResourceManager.GetString("InvalidAnnotationInspection_NotInRequiredComponentType", resourceCulture);
             }
         }
         
@@ -817,7 +844,7 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; is never used..
+        ///   Looks up a localized string similar to Parameter &apos;{0}&apos; is not used..
         /// </summary>
         public static string ParameterNotUsedInspection {
             get {
@@ -849,6 +876,42 @@ namespace Rubberduck.Resources.Inspections {
         public static string ProcedureShouldBeFunctionInspection {
             get {
                 return ResourceManager.GetString("ProcedureShouldBeFunctionInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Control &apos;{0}.{1}&apos; is being accessed from outside its parent form..
+        /// </summary>
+        public static string PublicControlFieldAccessInspection {
+            get {
+                return ResourceManager.GetString("PublicControlFieldAccessInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The public enumeration &apos;{0}&apos; should be declared within a Standard or Class module.
+        /// </summary>
+        public static string PublicEnumerationDeclaredInWorksheetInspection {
+            get {
+                return ResourceManager.GetString("PublicEnumerationDeclaredInWorksheetInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Member &apos;{0}&apos; should be Private.
+        /// </summary>
+        public static string PublicImplementationShouldBePrivateInspection {
+            get {
+                return ResourceManager.GetString("PublicImplementationShouldBePrivateInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attempt to assign Read-Only Property &apos;{0}&apos;.
+        /// </summary>
+        public static string ReadOnlyPropertyAssignmentInspection {
+            get {
+                return ResourceManager.GetString("ReadOnlyPropertyAssignmentInspection", resourceCulture);
             }
         }
         
@@ -952,6 +1015,15 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Identifier &apos;{0}&apos; in &apos;{1}&apos; is suspiciously referring to the default instance of that class type..
+        /// </summary>
+        public static string SuspiciousPredeclaredInstanceAccessInspection {
+            get {
+                return ResourceManager.GetString("SuspiciousPredeclaredInstanceAccessInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}
         ///Andrew &quot;ThunderFrame&quot; Jackson would be proud! 
         ///You&apos;re seeing this inspection result because there&apos;s no way that&apos;s real code and you&apos;re just pushing the limits of Rubberduck&apos;s parsing and resolving capabilities, right? ...RIGHT? 
@@ -1050,6 +1122,15 @@ namespace Rubberduck.Resources.Inspections {
         public static string UnreachableCaseInspection_Unreachable {
             get {
                 return ResourceManager.GetString("UnreachableCaseInspection_Unreachable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; is not a recognized Rubberduck annotation (yet?).
+        /// </summary>
+        public static string UnrecognizedAnnotationInspection {
+            get {
+                return ResourceManager.GetString("UnrecognizedAnnotationInspection", resourceCulture);
             }
         }
         

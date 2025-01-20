@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Title>Rubberduck.Resources</Title>
     <Product>Rubberduck.Resources</Product>
-    <Copyright>Copyright © 2018-2019</Copyright>
+    <Copyright>Copyright © 2018-2023</Copyright>
     <ProjectGuid>{1B84B387-F7C4-4876-9BDF-C644C365359A}</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -27,7 +27,49 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="CodeExplorer\CodeExplorerUI.Designer.cs">
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="Inspections\InspectionInfo.Designer.cs">
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="Inspections\InspectionNames.Designer.cs">
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="Inspections\InspectionResults.Designer.cs">
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="Inspections\QuickFixes.Designer.cs">
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="Menus\RubberduckMenus.Designer.cs">
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="Refactorings\Refactorings.Designer.cs">
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Update="RubberduckUI.Designer.cs">
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="Settings\AutoCompletesPage.Designer.cs">
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="Settings\SettingsUI.Designer.cs">
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="Settings\ToDoExplorerPage.Designer.cs">
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="Settings\UnitTestingPage.Designer.cs">
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="Templates.Designer.cs">
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="ToDoExplorer\ToDoExplorerUI.Designer.cs">
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Update="UnitTesting\TestExplorer.Designer.cs">
       <DesignTime>True</DesignTime>
     </Compile>
   </ItemGroup>
