@@ -862,6 +862,15 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parameterless &apos;Range.Cells&apos; call is redundant..
+        /// </summary>
+        public static string ParameterlessCellsInspection {
+            get {
+                return ResourceManager.GetString("ParameterlessCellsInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parameter &apos;{0}&apos; is not used..
         /// </summary>
         public static string ParameterNotUsedInspection {

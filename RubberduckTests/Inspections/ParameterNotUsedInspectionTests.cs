@@ -1,10 +1,10 @@
-using System.Linq;
 using NUnit.Framework;
 using Rubberduck.CodeAnalysis.Inspections;
 using Rubberduck.CodeAnalysis.Inspections.Concrete;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.VBEditor.SafeComWrappers;
 using RubberduckTests.Mocks;
+using System.Linq;
 
 namespace RubberduckTests.Inspections
 {
@@ -78,12 +78,12 @@ End Sub";
         //See issue #4496 at https://github.com/rubberduck-vba/Rubberduck/issues/4496
         public void ParameterNotUsed_RecursiveDefaultMemberAccess_ReturnsNoResult()
         {
-            const string inputCode = 
+            const string inputCode =
                 @"Public Sub Test(rst As ADODB.Recordset)
     Debug.Print rst(""Field"")
 End Sub";
 
-            var modules = new(string, string, ComponentType)[]
+            var modules = new (string, string, ComponentType)[]
             {
                 ("Module1", inputCode, ComponentType.StandardModule),
             };
@@ -104,7 +104,7 @@ End Sub";
 Private Sub IClass1_DoSomething(ByVal a As Integer)
 End Sub";
 
-            var modules = new(string, string, ComponentType)[]
+            var modules = new (string, string, ComponentType)[]
            {
                 ("IClass1", inputCode1, ComponentType.ClassModule),
                 ("Class1", inputCode2, ComponentType.ClassModule),

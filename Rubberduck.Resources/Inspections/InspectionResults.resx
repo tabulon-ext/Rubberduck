@@ -566,4 +566,7 @@ In memoriam, 1972-2018</value>
   <data name="InconsistentParamArrayBaseInspection" xml:space="preserve">
     <value>ParamArray '{0}' is inconsistently zero-based</value>
   </data>
+  <data name="ParameterlessCellsInspection" xml:space="preserve">
+    <value>Parameterless 'Range.Cells' call is redundant.</value>
+  </data>
 </root>
