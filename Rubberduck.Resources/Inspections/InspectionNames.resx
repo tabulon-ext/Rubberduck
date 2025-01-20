@@ -484,4 +484,7 @@
   <data name="InconsistentParamArrayBaseInspection" xml:space="preserve">
     <value>Inconsistently zero-based parameter array</value>
   </data>
+  <data name="ParameterlessCellsInspection" xml:space="preserve">
+    <value>Parameterless call to 'Range.Cells' is redundant</value>
+  </data>
 </root>

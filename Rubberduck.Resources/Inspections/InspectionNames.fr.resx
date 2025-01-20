@@ -444,4 +444,7 @@
   <data name="InconsistentParamArrayBaseInspection" xml:space="preserve">
     <value>ParamArray a zéro pour base</value>
   </data>
+  <data name="ParameterlessCellsInspection" xml:space="preserve">
+    <value>L'appel non paramétré à 'Range.Cells' est redondant</value>
+  </data>
 </root>

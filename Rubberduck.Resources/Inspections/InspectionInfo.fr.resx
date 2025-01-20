@@ -463,4 +463,7 @@ Si le paramètre peut être nul, ignorer ce résultat; passer une valeur nulle �
   <data name="InconsistentParamArrayBaseInspection" xml:space="preserve">
     <value>Tout tableau créé avec 'ParamArray' aura toujours zéro pour base, en dépit de Option Base 1.</value>
   </data>
+  <data name="ParameterlessCellsInspection" xml:space="preserve">
+    <value>La propriété en lecture seule 'Range.Cells' accepte deux paramètres optionnels, mais si aucun n'est spécifié alors une référence à l'objet 'Range' parent est retournée, ce qui rend l'appel entièrement superflu.</value>
+  </data>
 </root>

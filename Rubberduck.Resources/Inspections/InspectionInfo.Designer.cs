@@ -826,6 +826,15 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Get-only property &apos;Range.Cells&apos; accepts two optional parameters, but if none is supplied then it simply yields a reference to the parent &apos;Range&apos; object, which makes it entirely redundant..
+        /// </summary>
+        public static string ParameterlessCellsInspection {
+            get {
+                return ResourceManager.GetString("ParameterlessCellsInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A parameter is passed into a member that does not use it. Consider removing that parameter..
         /// </summary>
         public static string ParameterNotUsedInspection {
