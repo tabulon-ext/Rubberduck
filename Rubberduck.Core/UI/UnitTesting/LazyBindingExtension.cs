@@ -1,27 +1,26 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
-using System.Windows;
 
 namespace Rubberduck.UI.UnitTesting
 {
+
+    // Source: https://stackoverflow.com/a/48202247/1419315
     [MarkupExtensionReturnType(typeof(object))]
     public class LazyBindingExtension : MarkupExtension
     {
-        private Binding binding;
-        private UIElement bindingTarget;
-        private DependencyProperty bindingTargetProperty;
-
         public LazyBindingExtension()
-        {
-        }
+        { }
 
         public LazyBindingExtension(PropertyPath path) : this()
         {
             Path = path;
         }
+
+        #region Properties
 
         public IValueConverter Converter { get; set; }
         [TypeConverter(typeof(CultureInfoIetfLanguageTagConverter))]
@@ -37,28 +36,35 @@ namespace Rubberduck.UI.UnitTesting
         public bool ValidatesOnExceptions { get; set; }
         public bool ValidatesOnNotifyDataErrors { get; set; }
 
+        private Binding binding;
+        private UIElement bindingTarget;
+        private DependencyProperty bindingTargetProperty;
+
+        #endregion
+
+        #region Init
+
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var valueProvider = serviceProvider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
             if (valueProvider == null)
+            {
                 return null;
-
+            }
             bindingTarget = valueProvider.TargetObject as UIElement;
+
             if (bindingTarget == null)
+            {
                 throw new NotSupportedException($"The target must be a UIElement, '{valueProvider.TargetObject}' is not valid.");
+            }
 
             bindingTargetProperty = valueProvider.TargetProperty as DependencyProperty;
+
             if (bindingTargetProperty == null)
+            {
                 throw new NotSupportedException($"The target property must be a DependencyProperty, '{valueProvider.TargetProperty}' is not valid.");
+            }
 
-            InitializeBinding();
-            SetVisibilityHandler();
-
-            return this;
-        }
-
-        private void InitializeBinding()
-        {
             binding = new Binding
             {
                 Path = Path,
@@ -67,30 +73,51 @@ namespace Rubberduck.UI.UnitTesting
                 ConverterParameter = ConverterParameter
             };
 
-            if (!string.IsNullOrEmpty(ElementName))
+            if (ElementName != null)
+            {
                 binding.ElementName = ElementName;
+            }
 
             if (RelativeSource != null)
+            {
                 binding.RelativeSource = RelativeSource;
+            }
 
             if (Source != null)
+            {
                 binding.Source = Source;
+            }
 
             binding.UpdateSourceTrigger = UpdateSourceTrigger;
             binding.ValidatesOnDataErrors = ValidatesOnDataErrors;
             binding.ValidatesOnExceptions = ValidatesOnExceptions;
             binding.ValidatesOnNotifyDataErrors = ValidatesOnNotifyDataErrors;
-        }
 
-        private void SetVisibilityHandler()
+            return SetBinding();
+        }
+        
+
+        public object SetBinding()
         {
-            bindingTarget.IsVisibleChanged += OnIsVisibleChanged;
+            bindingTarget.IsVisibleChanged += UiElement_IsVisibleChanged;
+
+            UpdateBinding();
+
+            return bindingTarget.GetValue(bindingTargetProperty);
         }
 
-        private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        #endregion
+
+        #region Event Handlers
+
+        private void UiElement_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             UpdateBinding();
         }
+
+        #endregion
+
+        #region Update Binding
 
         private void UpdateBinding()
         {
@@ -116,5 +143,7 @@ namespace Rubberduck.UI.UnitTesting
             if (IsBindingActive())
                 BindingOperations.ClearBinding(bindingTarget, bindingTargetProperty);
         }
+
+        #endregion
     }
 }
