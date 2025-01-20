@@ -48,6 +48,8 @@
     &lt;CodeInspection Name="ImplicitRecursiveDefaultMemberAccessInspection" Severity="Suggestion" InspectionType="CodeQualityIssues" /&gt;
     &lt;CodeInspection Name="ImplicitUnboundDefaultMemberAccessInspection" Severity="Warning" InspectionType="CodeQualityIssues" /&gt;
     &lt;CodeInspection Name="ImplicitVariantReturnTypeInspection" Severity="Warning" InspectionType="NamingAndConventionsIssues" /&gt;
+    &lt;CodeInspection Name="InconsistentArrayBaseInspection" Severity="Hint" InspectionType="CodeQualityIssues" /&gt;
+    &lt;CodeInspection Name="InconsistentParamArrayBaseInspection" Severity="Hint" InspectionType="CodeQualityIssues" /&gt;
     &lt;CodeInspection Name="IndexedDefaultMemberAccessInspection" Severity="Hint" InspectionType="NamingAndConventionsIssues" /&gt;
     &lt;CodeInspection Name="IndexedRecursiveDefaultMemberAccessInspection" Severity="Suggestion" InspectionType="NamingAndConventionsIssues" /&gt;
     &lt;CodeInspection Name="IndexedUnboundDefaultMemberAccessInspection" Severity="Warning" InspectionType="NamingAndConventionsIssues" /&gt;
@@ -88,6 +90,7 @@
     &lt;CodeInspection Name="OptionBaseInspection" Severity="Hint" InspectionType="NamingAndConventionsIssues" /&gt;
     &lt;CodeInspection Name="OptionExplicitInspection" Severity="Error" InspectionType="NamingAndConventionsIssues" /&gt;
     &lt;CodeInspection Name="ParameterCanBeByValInspection" Severity="Suggestion" InspectionType="LanguageOpportunities" /&gt;
+    &lt;CodeInspection Name="ParameteressCellsInspection" Severity="Suggestion" InspectionType="CodeQualityIssues" /&gt;
     &lt;CodeInspection Name="ParameterNotUsedInspection" Severity="Suggestion" InspectionType="CodeQualityIssues" /&gt;
     &lt;CodeInspection Name="ProcedureCanBeWrittenAsFunctionInspection" Severity="Suggestion" InspectionType="LanguageOpportunities" /&gt;
     &lt;CodeInspection Name="ProcedureNotUsedInspection" Severity="Suggestion" InspectionType="CodeQualityIssues" /&gt;
@@ -127,6 +130,7 @@
   &lt;/CodeInspections&gt;
   &lt;WhitelistedIdentifiers /&gt;
   &lt;RunInspectionsOnSuccessfulParse&gt;true&lt;/RunInspectionsOnSuccessfulParse&gt;
+  &lt;IgnoreFormControlsHungarianNotation&gt;true&lt;/IgnoreFormControlsHungarianNotation&gt;
 &lt;/CodeInspectionSettings&gt;</Value>
     </Setting>
   </Settings>
