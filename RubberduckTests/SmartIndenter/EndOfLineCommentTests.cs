@@ -1,7 +1,7 @@
-using System.Linq;
 using NUnit.Framework;
 using Rubberduck.SmartIndenter;
 using RubberduckTests.Settings;
+using System.Linq;
 
 namespace RubberduckTests.SmartIndenter
 {
@@ -220,7 +220,7 @@ namespace RubberduckTests.SmartIndenter
             {
                 "#Const Foo = Bar                                 'Comment",
                 "",
-                "Private Sub Test()",                
+                "Private Sub Test()",
                 "End Sub"
             };
 

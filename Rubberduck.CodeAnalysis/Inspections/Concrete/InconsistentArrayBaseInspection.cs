@@ -56,8 +56,10 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override bool IsResultReference(IdentifierReference reference, DeclarationFinder finder)
         {
-            var parentModule = finder.ModuleDeclaration(reference.QualifiedModuleName);
-            var hasOptionBase1 = parentModule.Context.GetDescendent<VBAParser.OptionBaseStmtContext>()?.numberLiteral()?.GetText() == "1";
+            var hasOptionBase1 = reference.Context
+                .GetAncestor<VBAParser.ModuleContext>()
+                .GetDescendent<VBAParser.OptionBaseStmtContext>()?
+                .numberLiteral()?.GetText() == "1";
 
             if (hasOptionBase1 && reference.Declaration.ProjectName == "VBA" && reference.Declaration.IdentifierName == "Array")
             {

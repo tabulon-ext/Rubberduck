@@ -64,8 +64,11 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
-            var parentModule = finder.ModuleDeclaration(declaration.QualifiedModuleName);
-            var hasOptionBase1 = parentModule.Context.GetDescendent<VBAParser.OptionBaseStmtContext>()?.numberLiteral()?.GetText() == "1";
+            var hasOptionBase1 = declaration.Context
+                .GetAncestor<VBAParser.ModuleContext>()
+                .GetDescendent<VBAParser.OptionBaseStmtContext>()?
+                .numberLiteral()?.GetText() == "1";
+
 
             if (hasOptionBase1 && declaration is ParameterDeclaration parameter)
             {
