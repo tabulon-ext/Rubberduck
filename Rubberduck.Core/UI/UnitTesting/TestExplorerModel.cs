@@ -83,6 +83,7 @@ namespace Rubberduck.UI.UnitTesting
             {
                 _isBusy = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(IsBusyOrRefreshing));
             }
         }
 
@@ -94,8 +95,11 @@ namespace Rubberduck.UI.UnitTesting
             {
                 _isRefreshing = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(IsBusyOrRefreshing));
             }
         }
+
+        public bool IsBusyOrRefreshing => IsBusy || IsRefreshing;
 
         public string LastTestRunSummary =>
             string.Format(Resources.UnitTesting.TestExplorer.TestOutcome_RunSummaryFormat, CurrentRunTestCount, Tests.Count, TimeSpan.FromMilliseconds(TotalDuration));

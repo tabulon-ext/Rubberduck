@@ -8,6 +8,7 @@
              xmlns:controls="clr-namespace:Rubberduck.UI.Controls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:converters="clr-namespace:Rubberduck.UI.Converters"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              Language="{UICulture}"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="800"
@@ -334,17 +335,18 @@
         <Border Grid.Row="3" Padding="2">
             <Grid>
                 <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
-		            <controls:GroupingGrid x:Name="TestGrid"
-	                                       ItemsSource="{Binding Tests}"
+                    <controls:GroupingGrid x:Name="TestGrid"
+	                                       ItemsSource="{local:LazyBinding Tests}"
 	                                       SelectionMode="Extended"
 	                                       ShowGroupingItemCount="True"
 	                                       InitialExpandedState="True"
 	                                       VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                                            RequestBringIntoView="TestGrid_RequestBringIntoView"
-	                                       ScrollViewer.CanContentScroll="False" 
+	                                       ScrollViewer.CanContentScroll="True" 
+                                           Visibility="{Binding Model.IsBusyOrRefreshing, Converter={StaticResource BoolToHiddenVisibility}}"
 	                                       ScrollViewer.VerticalScrollBarVisibility="Auto"
 	                                       ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-	                    <DataGrid.Columns>
+                        <DataGrid.Columns>
 	                        <DataGridTemplateColumn Header="{Resx ResxName=Rubberduck.Resources.UnitTesting.TestExplorer, Key=TestExplorer_Outcome}">
 	                            <DataGridTemplateColumn.CellTemplate>
 	                                <DataTemplate DataType="vm:TestMethodViewModel">
@@ -480,6 +482,6 @@
 				</ScrollViewer>
 			</Grid>
         </Border>
-        <controls:BusyIndicator Grid.Row="3" Width="120" Height="120" Visibility="{Binding Model.IsRefreshing, Converter={StaticResource BoolToVisibility}}" />
+        <controls:BusyIndicator Grid.Row="3" Width="120" Height="120" Visibility="{Binding Model.IsBusyOrRefreshing, Converter={StaticResource BoolToVisibility}}" />
     </Grid>
 </UserControl>
