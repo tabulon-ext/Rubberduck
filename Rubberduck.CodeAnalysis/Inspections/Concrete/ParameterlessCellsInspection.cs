@@ -80,9 +80,9 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override bool IsResultReference(IdentifierReference reference, DeclarationFinder finder)
         {
             var memberAccess = reference.Context.GetAncestor<VBAParser.MemberAccessExprContext>();
-            var memberArgs = memberAccess?.GetAncestor<VBAParser.IndexExprContext>()?.argumentList()?.argument();
+            var memberArgs = memberAccess?.GetAncestor<VBAParser.IndexExprContext>()?.argumentList();
 
-            return memberAccess is VBAParser.MemberAccessExprContext && (memberArgs?.Length ?? 0) == 0;
+            return memberAccess != null && !memberArgs.GetDescendents<VBAParser.ArgumentExpressionContext>().Any();
         }
 
         protected override string ResultDescription(IdentifierReference reference)
