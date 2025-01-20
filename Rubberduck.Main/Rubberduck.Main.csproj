@@ -35,6 +35,12 @@
     <Content Include="Ducky.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="CustomMarshalers" />
+    <Reference Include="extensibility">
+      <HintPath>$(MSBuildProgramFiles32)\Common Files\microsoft shared\MSEnv\PublicAssemblies\extensibility.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <Aliases>VBEXT</Aliases>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System.Windows.Forms" />
@@ -71,6 +77,8 @@
       <Version>2.7.6684</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Interop" Version="17.0.31723.112" />
+    <PackageReference Include="ExpressiveReflection" Version="2.0.1" />
+    <PackageReference Include="Moq" Version="4.8.0" />
     <PackageReference Include="NLog">
       <Version>4.5.10</Version>
     </PackageReference>

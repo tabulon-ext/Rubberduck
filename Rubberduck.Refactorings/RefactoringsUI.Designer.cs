@@ -648,7 +648,7 @@ namespace Rubberduck.Refactorings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Selection covers move than a single procedure.
+        ///   Looks up a localized string similar to Selection covers more than a single procedure.
         /// </summary>
         public static string ExtractMethod_InvalidMessageSelectionMoreThanSingleProcedure {
             get {
