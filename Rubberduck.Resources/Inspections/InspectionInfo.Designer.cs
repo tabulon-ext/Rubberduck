@@ -439,11 +439,20 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Arrays created with ParamArray or VBA.Array (explicitly qualified with &apos;VBA&apos;) are always zero-based, regardless of Option Base 1..
+        ///   Looks up a localized string similar to Arrays created with a VBA.Array function call explicitly qualified with the &apos;VBA&apos; library are always zero-based, regardless of Option Base 1..
         /// </summary>
         public static string InconsistentArrayBaseInspection {
             get {
                 return ResourceManager.GetString("InconsistentArrayBaseInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arrays created with ParamArray are always zero-based, regardless of Option Base 1..
+        /// </summary>
+        public static string InconsistentParamArrayBaseInspection {
+            get {
+                return ResourceManager.GetString("InconsistentParamArrayBaseInspection", resourceCulture);
             }
         }
         

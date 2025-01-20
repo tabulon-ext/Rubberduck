@@ -458,6 +458,9 @@ Si le paramètre peut être nul, ignorer ce résultat; passer une valeur nulle �
     <value>Un commentaire correspond à la syntaxe pour une annotation valide, mais ne correspond à aucunne annotation supportée.</value>
   </data>
   <data name="InconsistentArrayBaseInspection" xml:space="preserve">
-    <value>Tout tableau créé avec 'ParamArray' ou un appel à la fonction 'VBA.Array' (explicitement qualifié avec 'VBA.') aura toujours zéro pour base, en dépit de Option Base 1.</value>
+    <value>Tout tableau créé avec un appel à la fonction VBA.Array explicitement qualifié avec la librairie VBA aura toujours zéro pour base, en dépit de Option Base 1.</value>
+  </data>
+  <data name="InconsistentParamArrayBaseInspection" xml:space="preserve">
+    <value>Tout tableau créé avec 'ParamArray' aura toujours zéro pour base, en dépit de Option Base 1.</value>
   </data>
 </root>

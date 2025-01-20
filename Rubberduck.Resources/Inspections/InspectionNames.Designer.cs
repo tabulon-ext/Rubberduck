@@ -439,11 +439,20 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Array &apos;{0}&apos; is zero-based.
+        ///   Looks up a localized string similar to Inconsistently zero-based array.
         /// </summary>
         public static string InconsistentArrayBaseInspection {
             get {
                 return ResourceManager.GetString("InconsistentArrayBaseInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inconsistently zero-based parameter array.
+        /// </summary>
+        public static string InconsistentParamArrayBaseInspection {
+            get {
+                return ResourceManager.GetString("InconsistentParamArrayBaseInspection", resourceCulture);
             }
         }
         

@@ -479,6 +479,9 @@
     <value>Implementations of interfaces and event handlers should be Private</value>
   </data>
   <data name="InconsistentArrayBaseInspection" xml:space="preserve">
-    <value>Array '{0}' is zero-based</value>
+    <value>Inconsistently zero-based array</value>
+  </data>
+  <data name="InconsistentParamArrayBaseInspection" xml:space="preserve">
+    <value>Inconsistently zero-based parameter array</value>
   </data>
 </root>

@@ -48,7 +48,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<ParserRuleContext> context)
         {
-            return InspectionResults.ResourceManager.GetString("EmptyIfBlockInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(EmptyIfBlockInspection), CultureInfo.CurrentUICulture);
         }
 
         protected override IInspectionListener<ParserRuleContext> ContextListener { get; }

@@ -54,7 +54,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.ResourceManager.GetString("AssignedByValParameterInspection", CultureInfo.CurrentUICulture), declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(AssignedByValParameterInspection), CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 }

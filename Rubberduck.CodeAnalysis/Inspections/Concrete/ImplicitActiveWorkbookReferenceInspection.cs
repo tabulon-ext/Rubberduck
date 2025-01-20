@@ -81,7 +81,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(IdentifierReference reference)
         {
             var referenceText = reference.Context.GetText();
-            return string.Format(InspectionResults.ResourceManager.GetString("ImplicitActiveWorkbookReferenceInspection", CultureInfo.CurrentUICulture), referenceText);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ImplicitActiveWorkbookReferenceInspection), CultureInfo.CurrentUICulture), referenceText);
         }
     }
 }

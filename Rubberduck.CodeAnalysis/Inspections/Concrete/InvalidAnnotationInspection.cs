@@ -48,7 +48,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         { }
 
         protected override string ResultDescription(IParseTreeAnnotation pta) =>
-            string.Format(InspectionResults.ResourceManager.GetString("InvalidAnnotationInspection", CultureInfo.CurrentUICulture), pta.Annotation.Name);
+            string.Format(InspectionResults.ResourceManager.GetString(nameof(InvalidAnnotationInspection), CultureInfo.CurrentUICulture), pta.Annotation.Name);
 
         protected override IEnumerable<IParseTreeAnnotation> GetInvalidAnnotations(
             IEnumerable<IParseTreeAnnotation> annotations,

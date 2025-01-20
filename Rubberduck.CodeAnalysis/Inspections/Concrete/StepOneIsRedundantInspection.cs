@@ -51,7 +51,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.StepStmtContext> context)
         {
-            return InspectionResults.ResourceManager.GetString("StepOneIsRedundantInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(StepOneIsRedundantInspection), CultureInfo.CurrentUICulture);
         }
 
         private class StepOneIsRedundantListener : InspectionListenerBase<VBAParser.StepStmtContext>

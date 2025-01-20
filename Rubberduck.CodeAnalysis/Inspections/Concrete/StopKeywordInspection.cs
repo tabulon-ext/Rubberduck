@@ -48,7 +48,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.StopStmtContext> context)
         {
-            return InspectionResults.ResourceManager.GetString("StopKeywordInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(StopKeywordInspection), CultureInfo.CurrentUICulture);
         }
 
         private class StopKeywordListener : InspectionListenerBase<VBAParser.StopStmtContext>

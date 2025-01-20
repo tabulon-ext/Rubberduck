@@ -142,7 +142,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var lhsExpression = lhsReference.IdentifierName;
             var rhsExpression = rhsReference.IdentifierName;
-            return string.Format(InspectionResults.ResourceManager.GetString("SuspiciousLetAssignmentInspection", CultureInfo.CurrentUICulture), lhsExpression, rhsExpression);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(SuspiciousLetAssignmentInspection), CultureInfo.CurrentUICulture), lhsExpression, rhsExpression);
         }
 
         private IEnumerable<IInspectionResult> UnboundLhsInspectionResults(QualifiedModuleName module, DeclarationFinder finder)

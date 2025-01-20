@@ -43,7 +43,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.RemCommentContext> context)
         {
-            return InspectionResults.ResourceManager.GetString("ObsoleteCommentSyntaxInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(ObsoleteCommentSyntaxInspection), CultureInfo.CurrentUICulture);
         }
 
         private class ObsoleteCommentSyntaxListener : InspectionListenerBase<VBAParser.RemCommentContext>

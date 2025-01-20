@@ -120,7 +120,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(Declaration declaration)
         {
             return string.Format(
-                InspectionResults.ResourceManager.GetString("ProcedureCanBeWrittenAsFunctionInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(ProcedureCanBeWrittenAsFunctionInspection), CultureInfo.CurrentUICulture),
                 declaration.IdentifierName);
         }
     }

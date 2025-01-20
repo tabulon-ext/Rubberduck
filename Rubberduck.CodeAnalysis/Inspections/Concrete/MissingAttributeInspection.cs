@@ -61,7 +61,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         }
 
         protected override string ResultDescription(Declaration declaration, IParseTreeAnnotation pta) =>
-            string.Format(InspectionResults.ResourceManager.GetString("MissingAttributeInspection", CultureInfo.CurrentUICulture), declaration.IdentifierName, pta.Annotation.Name);
+            string.Format(InspectionResults.ResourceManager.GetString(nameof(MissingAttributeInspection), CultureInfo.CurrentUICulture), declaration.IdentifierName, pta.Annotation.Name);
 
 
         private static bool MissesCorrespondingAttribute(Declaration declaration, IParseTreeAnnotation annotationInstance)

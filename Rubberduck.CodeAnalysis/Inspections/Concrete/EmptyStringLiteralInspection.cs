@@ -54,7 +54,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.LiteralExpressionContext> context)
         {
-            return InspectionResults.ResourceManager.GetString("EmptyStringLiteralInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(EmptyStringLiteralInspection), CultureInfo.CurrentUICulture);
         }
 
         private class EmptyStringLiteralListener : InspectionListenerBase<VBAParser.LiteralExpressionContext>

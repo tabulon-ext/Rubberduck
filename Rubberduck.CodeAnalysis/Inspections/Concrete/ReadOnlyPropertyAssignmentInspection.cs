@@ -93,7 +93,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal sealed class ReadOnlyPropertyAssignmentInspection : IdentifierReferenceInspectionBase
+    internal sealed class ReadOnlyPropertyAssignmentInspection : DeclarationInspectionBase
     {
         public ReadOnlyPropertyAssignmentInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
@@ -130,7 +130,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var identifierName = reference.IdentifierName;
             return string.Format(
-                InspectionResults.ResourceManager.GetString("ReadOnlyPropertyAssignmentInspection", CultureInfo.CurrentUICulture), identifierName);
+                InspectionResults.ResourceManager.GetString(nameof(ReadOnlyPropertyAssignmentInspection), CultureInfo.CurrentUICulture), identifierName);
         }
     }
 }

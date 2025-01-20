@@ -653,7 +653,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var shadowedDeclarationType = shadowedDeclaration.DeclarationType.ToLocalizedString();
             var shadowedDeclarationName = shadowedDeclaration.QualifiedName.ToString();
             return string.Format(
-                Resources.Inspections.InspectionResults.ResourceManager.GetString("ShadowedDeclarationInspection", CultureInfo.CurrentUICulture),
+                Resources.Inspections.InspectionResults.ResourceManager.GetString(nameof(ShadowedDeclarationInspection), CultureInfo.CurrentUICulture),
                 declarationType,
                 declarationName,
                 shadowedDeclarationType,

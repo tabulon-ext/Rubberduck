@@ -63,7 +63,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal sealed class UseOfBangNotationInspection : IdentifierReferenceInspectionBase
+    internal sealed class UseOfBangNotationInspection : DeclarationInspectionBase
     {
         public UseOfBangNotationInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
@@ -81,7 +81,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(IdentifierReference reference)
         {
             var expression = reference.IdentifierName;
-            return string.Format(InspectionResults.ResourceManager.GetString("UseOfBangNotationInspection", CultureInfo.CurrentUICulture), expression);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(UseOfBangNotationInspection), CultureInfo.CurrentUICulture), expression);
         }
     }
 }

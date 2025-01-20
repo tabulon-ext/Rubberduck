@@ -49,6 +49,6 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         }
 
         protected override string ResultDescription(IParseTreeAnnotation pta) =>
-            string.Format(InspectionResults.ResourceManager.GetString("UnrecognizedAnnotationInspection", CultureInfo.CurrentUICulture), pta.Context.GetText());
+            string.Format(InspectionResults.ResourceManager.GetString(nameof(UnrecognizedAnnotationInspection), CultureInfo.CurrentUICulture), pta.Context.GetText());
     }
 }

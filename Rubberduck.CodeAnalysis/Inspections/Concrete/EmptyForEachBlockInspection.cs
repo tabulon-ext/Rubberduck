@@ -50,7 +50,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.ForEachStmtContext> context)
         {
-            return InspectionResults.ResourceManager.GetString("EmptyForEachBlockInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(EmptyForEachBlockInspection), CultureInfo.CurrentUICulture);
         }
 
         private class EmptyForEachBlockListener : EmptyBlockInspectionListenerBase

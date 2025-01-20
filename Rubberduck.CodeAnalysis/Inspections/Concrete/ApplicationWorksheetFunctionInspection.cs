@@ -92,7 +92,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(IdentifierReference reference)
         {
-            return string.Format(InspectionResults.ResourceManager.GetString("ApplicationWorksheetFunctionInspection", CultureInfo.CurrentUICulture), reference.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ApplicationWorksheetFunctionInspection), CultureInfo.CurrentUICulture), reference.IdentifierName);
         }
     }
 }

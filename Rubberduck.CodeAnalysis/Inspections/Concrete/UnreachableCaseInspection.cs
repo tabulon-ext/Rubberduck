@@ -195,15 +195,15 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             switch (resultType)
             {
                 case CaseInspectionResultType.Unreachable:
-                    return InspectionResults.ResourceManager.GetString("UnreachableCaseInspection_Unreachable", CultureInfo.CurrentUICulture);
+                    return InspectionResults.ResourceManager.GetString(nameof(InspectionResults.UnreachableCaseInspection_Unreachable), CultureInfo.CurrentUICulture);
                 case CaseInspectionResultType.InherentlyUnreachable:
-                    return InspectionResults.ResourceManager.GetString("UnreachableCaseInspection_InherentlyUnreachable", CultureInfo.CurrentUICulture);
+                    return InspectionResults.ResourceManager.GetString(nameof(InspectionResults.UnreachableCaseInspection_InherentlyUnreachable), CultureInfo.CurrentUICulture);
                 case CaseInspectionResultType.MismatchType:
-                    return InspectionResults.ResourceManager.GetString("UnreachableCaseInspection_TypeMismatch", CultureInfo.CurrentUICulture);
+                    return InspectionResults.ResourceManager.GetString(nameof(InspectionResults.UnreachableCaseInspection_TypeMismatch), CultureInfo.CurrentUICulture);
                 case CaseInspectionResultType.Overflow:
-                    return InspectionResults.ResourceManager.GetString("UnreachableCaseInspection_Overflow", CultureInfo.CurrentUICulture);
+                    return InspectionResults.ResourceManager.GetString(nameof(InspectionResults.UnreachableCaseInspection_Overflow), CultureInfo.CurrentUICulture);
                 case CaseInspectionResultType.CaseElse:
-                    return InspectionResults.ResourceManager.GetString("UnreachableCaseInspection_CaseElse", CultureInfo.CurrentUICulture);
+                    return InspectionResults.ResourceManager.GetString(nameof(InspectionResults.UnreachableCaseInspection_CaseElse), CultureInfo.CurrentUICulture);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(resultType), resultType, null);
             }

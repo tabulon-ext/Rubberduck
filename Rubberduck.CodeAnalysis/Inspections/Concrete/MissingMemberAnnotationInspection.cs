@@ -88,7 +88,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(Declaration declaration, (string AttributeName, IReadOnlyList<string> AttriguteValues) properties)
         {
             var (attributeBaseName, attributeValues) = properties;
-            return string.Format(InspectionResults.ResourceManager.GetString("MissingMemberAnnotationInspection", CultureInfo.CurrentUICulture),
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(MissingMemberAnnotationInspection), CultureInfo.CurrentUICulture),
                 declaration.IdentifierName,
                 attributeBaseName,
                 string.Join(", ", attributeValues));

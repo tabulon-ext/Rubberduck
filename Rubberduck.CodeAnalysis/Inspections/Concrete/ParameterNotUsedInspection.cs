@@ -143,7 +143,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.ResourceManager.GetString("ParameterNotUsedInspection", CultureInfo.CurrentUICulture), declaration.IdentifierName).Capitalize();
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ParameterNotUsedInspection), CultureInfo.CurrentUICulture), declaration.IdentifierName).Capitalize();
         }
     }
 }

@@ -268,4 +268,7 @@
   <data name="CodeInspectionSettingsPage_Misc_IgnoreFormControlHungarianNotation" xml:space="preserve">
     <value>Ignore Hungarian Notation for UserForm controls</value>
   </data>
+  <data name="InconsistentArrayBaseInspection_ParamArray" xml:space="preserve">
+    <value>Parameter array '{0}' is zero-based.</value>
+  </data>
 </root>

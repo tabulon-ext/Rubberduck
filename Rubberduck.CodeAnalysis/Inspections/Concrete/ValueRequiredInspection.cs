@@ -55,7 +55,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal class ValueRequiredInspection : IdentifierReferenceInspectionBase
+    internal class ValueRequiredInspection : DeclarationInspectionBase
     {
         public ValueRequiredInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
@@ -78,7 +78,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var expression = failedLetCoercion.IdentifierName;
             var typeName = failedLetCoercion.Declaration?.FullAsTypeName;
-            return string.Format(InspectionResults.ResourceManager.GetString("ValueRequiredInspection", CultureInfo.CurrentUICulture), expression, typeName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ValueRequiredInspection), CultureInfo.CurrentUICulture), expression, typeName);
         }
     }
 }

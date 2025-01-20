@@ -55,7 +55,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var declarationType = declaration.DeclarationType.ToLocalizedString();
             var declarationName = declaration.IdentifierName;
             return string.Format(
-                InspectionResults.ResourceManager.GetString("ImplicitVariantDeclarationInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(ImplicitVariantDeclarationInspection), CultureInfo.CurrentUICulture),
                 declarationType,
                 declarationName);
         }

@@ -55,7 +55,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration, IAnnotation annotation)
         {
-            return string.Format(InspectionResults.ResourceManager.GetString("DuplicatedAnnotationInspection", CultureInfo.CurrentUICulture), annotation);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(DuplicatedAnnotationInspection), CultureInfo.CurrentUICulture), annotation);
         }
     }
 }

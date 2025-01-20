@@ -51,7 +51,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.ForNextStmtContext> context)
         {
-            return InspectionResults.ResourceManager.GetString("StepIsNotSpecifiedInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(StepIsNotSpecifiedInspection), CultureInfo.CurrentUICulture);
         }
 
         private class StepIsNotSpecifiedListener : InspectionListenerBase<VBAParser.ForNextStmtContext>

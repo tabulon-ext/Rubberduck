@@ -33,6 +33,7 @@
     <ProjectReference Include="..\Rubberduck.VBEEditor\Rubberduck.VBEditor.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Antlr4.Runtime" Version="4.6.6" />
     <PackageReference Include="EasyHook" Version="2.7.6684">
       <CopyToOutputDirectory>content/net40/*</CopyToOutputDirectory>
     </PackageReference>

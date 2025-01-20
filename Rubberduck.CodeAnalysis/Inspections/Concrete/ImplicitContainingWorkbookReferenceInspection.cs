@@ -68,7 +68,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var referenceText = reference.Context.GetText();
             return string.Format(
-                InspectionResults.ResourceManager.GetString("ImplicitContainingWorkbookReferenceInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(ImplicitContainingWorkbookReferenceInspection), CultureInfo.CurrentUICulture),
                 referenceText);
         }
     }

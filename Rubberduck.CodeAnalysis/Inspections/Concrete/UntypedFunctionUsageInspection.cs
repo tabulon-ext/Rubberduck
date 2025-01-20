@@ -86,7 +86,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var declarationName = reference.Declaration.IdentifierName;
             return string.Format(
-                InspectionResults.ResourceManager.GetString("UntypedFunctionUsageInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(UntypedFunctionUsageInspection), CultureInfo.CurrentUICulture),
                 declarationName);
         }
 

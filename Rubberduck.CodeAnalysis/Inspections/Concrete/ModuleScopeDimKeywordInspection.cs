@@ -47,7 +47,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var identifierName = context.Context.identifier().GetText();
             return string.Format(
-                InspectionResults.ResourceManager.GetString("ModuleScopeDimKeywordInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(ModuleScopeDimKeywordInspection), CultureInfo.CurrentUICulture),
                 identifierName);
         }
 

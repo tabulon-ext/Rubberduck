@@ -48,7 +48,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.WhileWendStmtContext> context)
         {
-            return InspectionResults.ResourceManager.GetString("EmptyWhileWendBlockInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(EmptyWhileWendBlockInspection), CultureInfo.CurrentUICulture);
         }
 
         private class EmptyWhileWendBlockListener : EmptyBlockInspectionListenerBase

@@ -166,7 +166,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var declarationName = reference.Declaration.IdentifierName;
             var variableTypeName = reference.Declaration.FullAsTypeName;
-            return string.Format(InspectionResults.ResourceManager.GetString("SetAssignmentWithIncompatibleObjectTypeInspection", CultureInfo.CurrentUICulture), declarationName, variableTypeName, assignedTypeName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(SetAssignmentWithIncompatibleObjectTypeInspection), CultureInfo.CurrentUICulture), declarationName, variableTypeName, assignedTypeName);
         }
     }
 }

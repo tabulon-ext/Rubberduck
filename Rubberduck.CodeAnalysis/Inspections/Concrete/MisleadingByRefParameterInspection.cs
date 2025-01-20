@@ -66,7 +66,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(Declaration declaration)
         {
             return string.Format(
-                InspectionResults.ResourceManager.GetString("MisleadingByRefParameterInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(MisleadingByRefParameterInspection), CultureInfo.CurrentUICulture),
                 declaration.IdentifierName, declaration.ParentDeclaration.QualifiedName.MemberName);
         }
     }

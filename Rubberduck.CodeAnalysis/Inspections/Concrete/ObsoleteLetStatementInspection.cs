@@ -45,7 +45,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.LetStmtContext> context)
         {
-            return InspectionResults.ResourceManager.GetString("ObsoleteLetStatementInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(ObsoleteLetStatementInspection), CultureInfo.CurrentUICulture);
         }
 
         private class ObsoleteLetStatementListener : InspectionListenerBase<VBAParser.LetStmtContext>

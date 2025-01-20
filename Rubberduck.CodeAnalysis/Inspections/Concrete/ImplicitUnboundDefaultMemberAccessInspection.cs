@@ -58,7 +58,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal sealed class ImplicitUnboundDefaultMemberAccessInspection : IdentifierReferenceInspectionBase
+    internal sealed class ImplicitUnboundDefaultMemberAccessInspection : DeclarationInspectionBase
     {
         public ImplicitUnboundDefaultMemberAccessInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
@@ -82,7 +82,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(IdentifierReference reference)
         {
             var expression = reference.IdentifierName;
-            return string.Format(InspectionResults.ResourceManager.GetString("ImplicitUnboundDefaultMemberAccessInspection", CultureInfo.CurrentUICulture), expression);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ImplicitUnboundDefaultMemberAccessInspection), CultureInfo.CurrentUICulture), expression);
         }
     }
 }

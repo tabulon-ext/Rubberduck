@@ -51,7 +51,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal sealed class ObsoleteMemberUsageInspection : IdentifierReferenceInspectionBase
+    internal sealed class ObsoleteMemberUsageInspection : DeclarationInspectionBase
     {
         public ObsoleteMemberUsageInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
@@ -73,7 +73,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                                                .AnnotationArguments
                                                .FirstOrDefault() ?? string.Empty;
             return string.Format(
-                InspectionResults.ResourceManager.GetString("ObsoleteMemberUsageInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(ObsoleteMemberUsageInspection), CultureInfo.CurrentUICulture),
                 reference.IdentifierName,
                 replacementDocumentation);
         }

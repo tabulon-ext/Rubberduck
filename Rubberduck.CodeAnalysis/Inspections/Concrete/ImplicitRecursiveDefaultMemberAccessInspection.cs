@@ -67,7 +67,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal sealed class ImplicitRecursiveDefaultMemberAccessInspection : IdentifierReferenceInspectionBase
+    internal sealed class ImplicitRecursiveDefaultMemberAccessInspection : DeclarationInspectionBase
     {
         public ImplicitRecursiveDefaultMemberAccessInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
@@ -88,7 +88,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var expression = reference.IdentifierName;
             var defaultMember = reference.Declaration.QualifiedName.ToString();
-            return string.Format(InspectionResults.ResourceManager.GetString("ImplicitRecursiveDefaultMemberAccessInspection", CultureInfo.CurrentUICulture), expression, defaultMember);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ImplicitRecursiveDefaultMemberAccessInspection), CultureInfo.CurrentUICulture), expression, defaultMember);
         }
     }
 }

@@ -102,7 +102,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var (pta, attributeName, attributeValues) = properties;
             var annotationName = pta.Annotation.Name;
-            return string.Format(InspectionResults.ResourceManager.GetString("AttributeValueOutOfSyncInspection", CultureInfo.CurrentUICulture),
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(AttributeValueOutOfSyncInspection), CultureInfo.CurrentUICulture),
                 attributeName,
                 string.Join(", ", attributeValues),
                 annotationName);

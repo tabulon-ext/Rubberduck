@@ -80,7 +80,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var identifierName = declaration.IdentifierName;
 
             return string.Format(
-                InspectionResults.ResourceManager.GetString("ImplementedInterfaceMemberInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(ImplementedInterfaceMemberInspection), CultureInfo.CurrentUICulture),
                 qualifiedName,
                 declarationType,
                 identifierName);

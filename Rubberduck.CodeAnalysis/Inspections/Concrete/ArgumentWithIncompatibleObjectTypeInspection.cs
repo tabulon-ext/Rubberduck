@@ -164,7 +164,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var parameterName = reference.Declaration.IdentifierName;
             var parameterTypeName = reference.Declaration.FullAsTypeName;
             var argumentExpression = reference.Context.GetText();
-            return string.Format(InspectionResults.ResourceManager.GetString("SetAssignmentWithIncompatibleObjectTypeInspection", CultureInfo.CurrentUICulture), parameterName, parameterTypeName, argumentExpression, argumentTypeName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(SetAssignmentWithIncompatibleObjectTypeInspection), CultureInfo.CurrentUICulture), parameterName, parameterTypeName, argumentExpression, argumentTypeName);
         }
     }
 }

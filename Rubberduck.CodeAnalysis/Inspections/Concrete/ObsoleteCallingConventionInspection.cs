@@ -43,7 +43,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var identifierName = ((VBAParser.DeclareStmtContext)context.Context).identifier().GetText();
             return string.Format(
-                InspectionResults.ResourceManager.GetString("ObsoleteCallingConventionInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(ObsoleteCallingConventionInspection), CultureInfo.CurrentUICulture),
                 identifierName);
         }
 

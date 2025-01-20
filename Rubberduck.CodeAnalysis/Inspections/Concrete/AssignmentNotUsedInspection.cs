@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Antlr4.Runtime;
 using Rubberduck.CodeAnalysis.Inspections.Abstract;
 using Rubberduck.CodeAnalysis.Inspections.Extensions;
@@ -12,6 +10,8 @@ using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.VBEditor;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
@@ -60,7 +60,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal sealed class AssignmentNotUsedInspection : IdentifierReferenceInspectionBase
+    internal sealed class AssignmentNotUsedInspection : DeclarationInspectionBase
     {
         private readonly Walker _walker;
 
@@ -187,7 +187,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                 || JumpStmtPotentiallyUsesVariable<VBAParser.ResumeStmtContext>(resultCandidate, labelIdLineNumberPairs);
         }
 
-        private static bool JumpStmtPotentiallyUsesVariable<T>(IdentifierReference resultCandidate, Dictionary<string,int> labelIdLineNumberPairs) where T: ParserRuleContext
+        private static bool JumpStmtPotentiallyUsesVariable<T>(IdentifierReference resultCandidate, Dictionary<string, int> labelIdLineNumberPairs) where T : ParserRuleContext
         {
             if (TryGetRelevantJumpContext<T>(resultCandidate, out var jumpStmt))
             {

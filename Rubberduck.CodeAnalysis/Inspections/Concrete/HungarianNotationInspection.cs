@@ -92,10 +92,10 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder, List<string> whitelistedNames)
         {
-            return (_configuration.IgnoreFormControlsHungarianNotation || declaration.DeclarationType == DeclarationType.Control)
-                && !whitelistedNames.Contains(declaration.IdentifierName)
+            return (_configuration.IgnoreFormControlsHungarianNotation && declaration.DeclarationType == DeclarationType.Control) ||
+                (!whitelistedNames.Contains(declaration.IdentifierName)
                 && !IgnoredProcedureTypes.Contains(declaration.ParentDeclaration.DeclarationType)
-                && declaration.IdentifierName.TryMatchHungarianNotationCriteria(out _);
+                && declaration.IdentifierName.TryMatchHungarianNotationCriteria(out _));
         }
 
         protected override string ResultDescription(Declaration declaration)
@@ -103,7 +103,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var declarationType = declaration.DeclarationType.ToLocalizedString();
             var declarationName = declaration.IdentifierName;
             return string.Format(
-                Resources.Inspections.InspectionResults.ResourceManager.GetString("IdentifierNameInspection", CultureInfo.CurrentUICulture),
+                Resources.Inspections.InspectionResults.ResourceManager.GetString(nameof(Resources.Inspections.InspectionResults.IdentifierNameInspection), CultureInfo.CurrentUICulture),
                 declarationType,
                 declarationName);
         }

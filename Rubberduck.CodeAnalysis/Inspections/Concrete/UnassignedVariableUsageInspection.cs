@@ -147,7 +147,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var identifierName = reference.IdentifierName;
             return string.Format(
-                InspectionResults.ResourceManager.GetString("UnassignedVariableUsageInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(UnassignedVariableUsageInspection), CultureInfo.CurrentUICulture),
                 identifierName);
         }
 

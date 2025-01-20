@@ -78,6 +78,6 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                 .Where(member => ExcelMembers.Contains((member.ComponentName, member.IdentifierName)));
         }
 
-        public override string ResultTemplate => InspectionResults.ResourceManager.GetString("ExcelMemberMayReturnNothingInspection", CultureInfo.CurrentUICulture);
+        public override string ResultTemplate => InspectionResults.ResourceManager.GetString(nameof(ExcelMemberMayReturnNothingInspection), CultureInfo.CurrentUICulture);
     }
 }

@@ -95,7 +95,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var memberName = declaration.IdentifierName;
             var typeName = typeDeclaration?.IdentifierName ?? string.Empty;
             return string.Format(
-                InspectionResults.ResourceManager.GetString("MemberNotOnInterfaceInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(MemberNotOnInterfaceInspection), CultureInfo.CurrentUICulture),
                 memberName,
                 typeName);
         }

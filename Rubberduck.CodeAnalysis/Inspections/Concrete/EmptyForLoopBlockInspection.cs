@@ -50,7 +50,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.ForNextStmtContext> context)
         {
-            return InspectionResults.ResourceManager.GetString("EmptyForLoopBlockInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(EmptyForLoopBlockInspection), CultureInfo.CurrentUICulture);
         }
 
         private class EmptyForLoopBlockListener : EmptyBlockInspectionListenerBase

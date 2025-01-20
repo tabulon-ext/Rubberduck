@@ -44,7 +44,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var defStmtText = context.Context.start.Text;
 
             return string.Format(
-                InspectionResults.ResourceManager.GetString("DefTypeStatementInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(DefTypeStatementInspection), CultureInfo.CurrentUICulture),
                 typeName,
                 defStmtText);
         }

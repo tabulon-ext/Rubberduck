@@ -53,7 +53,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var declarationType = member.DeclarationType.ToLocalizedString();
 
             return string.Format(
-                InspectionResults.ResourceManager.GetString("EmptyMethodInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(EmptyMethodInspection), CultureInfo.CurrentUICulture),
                 declarationType,
                 identifierName);
         }

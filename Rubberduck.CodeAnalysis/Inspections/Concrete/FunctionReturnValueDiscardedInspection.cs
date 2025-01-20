@@ -43,7 +43,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal sealed class FunctionReturnValueDiscardedInspection : IdentifierReferenceInspectionBase
+    internal sealed class FunctionReturnValueDiscardedInspection : DeclarationInspectionBase
     {
         public FunctionReturnValueDiscardedInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
@@ -105,7 +105,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(IdentifierReference reference)
         {
             var functionName = reference.Declaration.QualifiedName.ToString();
-            return string.Format(InspectionResults.ResourceManager.GetString("FunctionReturnValueDiscardedInspection", CultureInfo.CurrentUICulture), functionName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(FunctionReturnValueDiscardedInspection), CultureInfo.CurrentUICulture), functionName);
         }
     }
 }

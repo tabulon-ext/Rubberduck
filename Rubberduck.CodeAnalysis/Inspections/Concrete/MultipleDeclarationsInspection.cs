@@ -51,7 +51,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<ParserRuleContext> context)
         {
-            return InspectionResults.ResourceManager.GetString("MultipleDeclarationsInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(MultipleDeclarationsInspection), CultureInfo.CurrentUICulture);
         }
 
         private class ParameterListListener : InspectionListenerBase<ParserRuleContext>

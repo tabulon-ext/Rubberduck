@@ -50,7 +50,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(IdentifierReference reference, ParameterDeclaration properties)
         {
-            return InspectionResults.ResourceManager.GetString("IsMissingWithNonArgumentParameterInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(IsMissingWithNonArgumentParameterInspection), CultureInfo.CurrentUICulture);
         }
     }
 }

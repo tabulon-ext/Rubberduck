@@ -54,7 +54,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(IdentifierReference reference)
         {
             return string.Format(
-                InspectionResults.ResourceManager.GetString("ImplicitContainingWorksheetReferenceInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(ImplicitContainingWorksheetReferenceInspection), CultureInfo.CurrentUICulture),
                 reference.Declaration.IdentifierName);
         }
     }

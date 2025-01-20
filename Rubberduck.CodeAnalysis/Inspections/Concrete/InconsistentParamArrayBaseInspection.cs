@@ -9,17 +9,17 @@ using System.Globalization;
 
 namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 {
+
     /// <summary>
-    /// Warns about inconsistent implicit lower bounds of VBA.Array arrays when 'Option Base 1' is specified.
+    /// Warns about inconsistent implicit lower bounds of ParamArray arrays when 'Option Base 1' is specified.
     /// </summary>
     /// <why>
-    /// The base of an array obtained from a qualified 'VBA.Array' function call is always zero, regardless of any 'Option Base' setting.
+    /// The base of a ParamArray is always zero, regardless of any 'Option Base' setting.
     /// </why>
     /// <example hasResult="true">
     /// <module name="MyModule" type="Standard Module">
     /// <![CDATA[
     /// Option Base 1 '<~ Implicit array lower bound is 1
-    /// 
     /// Public Sub DoSomething()
     ///     Dim Values As Variant
     ///     
@@ -31,11 +31,19 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// End Sub
     /// ]]>
     /// </module>
+    /// <example hasResult="true">
+    /// <module name="MyModule" type="Standard Module">
+    /// <![CDATA[
+    /// Option Base 1 '<~ Implicit array lower bound is 1
+    /// Public Sub DoSomething(ParamArray Values) '<<< inspection result here
+    ///     Debug.Print LBound(Values) '<~ not 1
+    /// End Sub
+    /// ]]>
+    /// </module>
+    /// </example>
     /// <example hasResult="false">
     /// <module name="MyModule" type="Standard Module">
     /// <![CDATA[
-    /// 'implicit: Option Base 0
-    /// 
     /// Public Sub DoSomething()
     ///     Dim Values As Variant
     ///     
@@ -47,35 +55,30 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// End Sub
     /// ]]>
     /// </module>
-    internal class InconsistentArrayBaseInspection : IdentifierReferenceInspectionBase
+    internal sealed class InconsistentParamArrayBaseInspection : DeclarationInspectionBase
     {
-        public InconsistentArrayBaseInspection(IDeclarationFinderProvider declarationFinderProvider)
+        public InconsistentParamArrayBaseInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
         {
         }
 
-        protected override bool IsResultReference(IdentifierReference reference, DeclarationFinder finder)
+        protected override bool IsResultDeclaration(Declaration declaration, DeclarationFinder finder)
         {
-            var parentModule = finder.ModuleDeclaration(reference.QualifiedModuleName);
+            var parentModule = finder.ModuleDeclaration(declaration.QualifiedModuleName);
             var hasOptionBase1 = parentModule.Context.GetDescendent<VBAParser.OptionBaseStmtContext>()?.numberLiteral()?.GetText() == "1";
 
-            if (hasOptionBase1 && reference.Declaration.ProjectName == "VBA" && reference.Declaration.IdentifierName == "Array")
+            if (hasOptionBase1 && declaration is ParameterDeclaration parameter)
             {
-                if (reference.QualifyingReference?.Declaration.IdentifierName == "VBA")
-                {
-                    return true;
-                }
+                return parameter.IsParamArray;
             }
 
             return false;
         }
 
-        protected override string ResultDescription(IdentifierReference reference)
+        protected override string ResultDescription(Declaration declaration)
         {
-            // reference.Declaration is the VBA.Array function
-            // we could inspect the context to find a possible LHS variable being assigned, but VBA.Array could also be an argument
-            // so it's not a given that there's a relevant identifier to call out, so the resource string does not have any placeholders.
-            return InspectionResults.ResourceManager.GetString(nameof(InconsistentArrayBaseInspection), CultureInfo.CurrentUICulture);
+            // declaration is the ParamArray parameter
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(InconsistentParamArrayBaseInspection), CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 }

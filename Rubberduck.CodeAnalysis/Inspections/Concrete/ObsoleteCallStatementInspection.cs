@@ -52,7 +52,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.CallStmtContext> context)
         {
-            return InspectionResults.ResourceManager.GetString("ObsoleteCallStatementInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(ObsoleteCallStatementInspection), CultureInfo.CurrentUICulture);
         }
 
         protected override bool IsResultContext(QualifiedContext<VBAParser.CallStmtContext> context, DeclarationFinder finder)

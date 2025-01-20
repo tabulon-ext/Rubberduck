@@ -52,7 +52,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.OnErrorStmtContext> context)
         {
-            return InspectionResults.ResourceManager.GetString("OnLocalErrorInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(OnLocalErrorInspection), CultureInfo.CurrentUICulture);
         }
 
         private class OnLocalErrorListener : InspectionListenerBase<VBAParser.OnErrorStmtContext>

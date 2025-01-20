@@ -43,7 +43,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal sealed class ObjectVariableNotSetInspection : IdentifierReferenceInspectionBase
+    internal sealed class ObjectVariableNotSetInspection : DeclarationInspectionBase
     {
         public ObjectVariableNotSetInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
@@ -105,7 +105,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(IdentifierReference reference)
         {
-            return string.Format(InspectionResults.ResourceManager.GetString("ObjectVariableNotSetInspection", CultureInfo.CurrentUICulture), reference.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ObjectVariableNotSetInspection), CultureInfo.CurrentUICulture), reference.IdentifierName);
         }
     }
 }

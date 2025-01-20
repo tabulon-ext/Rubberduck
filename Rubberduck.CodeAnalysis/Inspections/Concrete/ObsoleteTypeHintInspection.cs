@@ -108,8 +108,8 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var declarationTypeName = reference.Declaration.DeclarationType.ToLocalizedString();
             var identifierName = reference.IdentifierName;
-            return string.Format(InspectionResults.ResourceManager.GetString("ObsoleteTypeHintInspection", CultureInfo.CurrentUICulture),
-                InspectionsUI.ResourceManager.GetString("Inspections_Usage", CultureInfo.CurrentUICulture),
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ObsoleteTypeHintInspection), CultureInfo.CurrentUICulture),
+                InspectionsUI.ResourceManager.GetString(nameof(InspectionsUI.Inspections_Usage), CultureInfo.CurrentUICulture),
                 declarationTypeName,
                 identifierName);
         }

@@ -81,7 +81,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         private static string ResultDescription(IParseTreeAnnotation pta)
         {
             return string.Format(
-                InspectionResults.ResourceManager.GetString("SuperfluousAnnotationArgumentInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(SuperfluousAnnotationArgumentInspection), CultureInfo.CurrentUICulture),
                 pta.Annotation.Name);
         }
     }

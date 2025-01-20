@@ -53,7 +53,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal class DefaultMemberRequiredInspection : IdentifierReferenceInspectionBase
+    internal class DefaultMemberRequiredInspection : DeclarationInspectionBase
     {
         public DefaultMemberRequiredInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
@@ -76,7 +76,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var expression = failedIndexedDefaultMemberAccess.IdentifierName;
             var typeName = failedIndexedDefaultMemberAccess.Declaration?.FullAsTypeName;
-            return string.Format(InspectionResults.ResourceManager.GetString("DefaultMemberRequiredInspection", CultureInfo.CurrentUICulture), expression, typeName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(DefaultMemberRequiredInspection), CultureInfo.CurrentUICulture), expression, typeName);
         }
     }
 }

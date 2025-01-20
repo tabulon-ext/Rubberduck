@@ -59,7 +59,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(IdentifierReference reference)
         {
             return string.Format(
-                InspectionResults.ResourceManager.GetString("ImplicitActiveSheetReferenceInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(ImplicitActiveSheetReferenceInspection), CultureInfo.CurrentUICulture),
                 reference.Declaration.IdentifierName);
         }
     }

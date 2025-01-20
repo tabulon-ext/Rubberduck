@@ -439,6 +439,9 @@
     <value>Annotation inconnue</value>
   </data>
   <data name="InconsistentArrayBaseInspection" xml:space="preserve">
-    <value>Le tableau '{0}' a zéro pour base</value>
+    <value>Tableau a zéro pour base</value>
+  </data>
+  <data name="InconsistentParamArrayBaseInspection" xml:space="preserve">
+    <value>ParamArray a zéro pour base</value>
   </data>
 </root>

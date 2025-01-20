@@ -53,7 +53,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.CaseClauseContext> context)
         {
-            return InspectionResults.ResourceManager.GetString("EmptyCaseBlockInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(EmptyCaseBlockInspection), CultureInfo.CurrentUICulture);
         }
 
         private class EmptyCaseBlockListener : EmptyBlockInspectionListenerBase

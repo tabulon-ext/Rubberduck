@@ -54,7 +54,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var moduleName = context.ModuleName.ComponentName;
             return string.Format(
-                InspectionResults.ResourceManager.GetString("OptionBaseInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(OptionBaseInspection), CultureInfo.CurrentUICulture),
                 moduleName);
         }
 

@@ -43,7 +43,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.ErrorStmtContext> context)
         {
-            return InspectionResults.ResourceManager.GetString("ObsoleteErrorSyntaxInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(ObsoleteErrorSyntaxInspection), CultureInfo.CurrentUICulture);
         }
 
         private class ObsoleteErrorSyntaxListener : InspectionListenerBase<VBAParser.ErrorStmtContext>

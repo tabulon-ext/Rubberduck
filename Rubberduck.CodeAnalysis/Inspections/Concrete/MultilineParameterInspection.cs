@@ -48,8 +48,8 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var parameterText = context.Context.unrestrictedIdentifier().GetText();
             return string.Format(
                 context.Context.GetSelection().LineCount > 3
-                    ? CodeAnalysisUI.ResourceManager.GetString("EasterEgg_Continuator", CultureInfo.CurrentUICulture)
-                    : Resources.Inspections.InspectionResults.ResourceManager.GetString("MultilineParameterInspection", CultureInfo.CurrentUICulture),
+                    ? CodeAnalysisUI.ResourceManager.GetString(nameof(CodeAnalysisUI.EasterEgg_Continuator), CultureInfo.CurrentUICulture)
+                    : Resources.Inspections.InspectionResults.ResourceManager.GetString(nameof(MultilineParameterInspection), CultureInfo.CurrentUICulture),
                 parameterText);
         }
 

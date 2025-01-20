@@ -230,6 +230,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             return null;
         }
 
-        protected override string ResultDescription(IdentifierReference reference, string codeName) => InspectionResults.ResourceManager.GetString("SheetAccessedUsingStringInspection", CultureInfo.CurrentUICulture);
+        protected override string ResultDescription(IdentifierReference reference, string codeName) =>
+            InspectionResults.ResourceManager.GetString(nameof(SheetAccessedUsingStringInspection), CultureInfo.CurrentUICulture);
     }
 }

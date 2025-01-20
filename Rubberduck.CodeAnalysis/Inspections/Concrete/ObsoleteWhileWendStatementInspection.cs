@@ -48,7 +48,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.WhileWendStmtContext> context)
         {
-            return InspectionResults.ResourceManager.GetString("ObsoleteWhileWendStatementInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(ObsoleteWhileWendStatementInspection), CultureInfo.CurrentUICulture);
         }
 
         private class ObsoleteWhileWendStatementListener : InspectionListenerBase<VBAParser.WhileWendStmtContext>

@@ -83,7 +83,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
             var declarationType = declaration.DeclarationType.ToLocalizedString();
             var declarationName = declaration.IdentifierName;
             return string.Format(
-                Resources.Inspections.InspectionResults.ResourceManager.GetString("IntegerDataTypeInspection", CultureInfo.CurrentUICulture),
+                Resources.Inspections.InspectionResults.ResourceManager.GetString(nameof(IntegerDataTypeInspection), CultureInfo.CurrentUICulture),
                 declarationType,
                 declarationName);
         }

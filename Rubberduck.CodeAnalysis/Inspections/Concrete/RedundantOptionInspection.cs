@@ -49,7 +49,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<ParserRuleContext> context)
         {
-            return string.Format(InspectionResults.ResourceManager.GetString("RedundantOptionInspection", CultureInfo.CurrentUICulture), context.Context.GetText());
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(RedundantOptionInspection), CultureInfo.CurrentUICulture), context.Context.GetText());
         }
 
         private class RedundantModuleOptionListener : InspectionListenerBase<ParserRuleContext>

@@ -502,5 +502,14 @@ namespace Rubberduck.CodeAnalysis {
                 return ResourceManager.GetString("GroupingGrid_Filter", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parameter array &apos;{0}&apos; is zero-based..
+        /// </summary>
+        public static string InconsistentArrayBaseInspection_ParamArray {
+            get {
+                return ResourceManager.GetString("InconsistentArrayBaseInspection_ParamArray", resourceCulture);
+            }
+        }
     }
 }

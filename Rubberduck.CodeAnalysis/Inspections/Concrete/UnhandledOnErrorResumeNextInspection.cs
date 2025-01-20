@@ -52,7 +52,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.OnErrorStmtContext> context, IReadOnlyList<VBAParser.OnErrorStmtContext> properties)
         {
-            return InspectionResults.ResourceManager.GetString("UnhandledOnErrorResumeNextInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(UnhandledOnErrorResumeNextInspection), CultureInfo.CurrentUICulture);
         }
 
         protected override (bool isResult, IReadOnlyList<VBAParser.OnErrorStmtContext> properties) IsResultContextWithAdditionalProperties(QualifiedContext<VBAParser.OnErrorStmtContext> context, DeclarationFinder finder)

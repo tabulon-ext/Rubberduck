@@ -74,7 +74,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// ]]>
     /// </module>
     /// </example>
-    internal sealed class SuspiciousPredeclaredInstanceAccessInspection : IdentifierReferenceInspectionBase
+    internal sealed class SuspiciousPredeclaredInstanceAccessInspection : DeclarationInspectionBase
     {
         public SuspiciousPredeclaredInstanceAccessInspection(IDeclarationFinderProvider declarationFinderProvider)
             : base(declarationFinderProvider)
@@ -94,7 +94,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(IdentifierReference reference)
         {
             reference.Context.TryGetAncestor<VBAParser.MemberAccessExprContext>(out var expression);
-            return string.Format(InspectionResults.ResourceManager.GetString("SuspiciousPredeclaredInstanceAccessInspection", CultureInfo.CurrentUICulture), reference.IdentifierName, expression.GetText());
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(SuspiciousPredeclaredInstanceAccessInspection), CultureInfo.CurrentUICulture), reference.IdentifierName, expression.GetText());
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.ResourceManager.GetString("ImplicitlyTypedConstInspection", CultureInfo.CurrentUICulture), declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ImplicitlyTypedConstInspection), CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 }

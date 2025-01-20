@@ -102,7 +102,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// </module>
     /// </example>
 
-    internal sealed class IIfSideEffectInspection : IdentifierReferenceInspectionBase
+    internal sealed class IIfSideEffectInspection : DeclarationInspectionBase
     {
         private readonly IDeclarationFinderProvider _declarationFinderProvider;
 
@@ -191,7 +191,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(IdentifierReference reference)
         {
-            return string.Format(InspectionResults.ResourceManager.GetString("IIfSideEffectInspection", CultureInfo.CurrentUICulture), reference.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(IIfSideEffectInspection), CultureInfo.CurrentUICulture), reference.IdentifierName);
         }
 
         /// <summary>

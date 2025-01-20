@@ -78,7 +78,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(Declaration declaration)
         {
             return string.Format(
-                InspectionResults.ResourceManager.GetString("ImplicitByRefModifierInspection", CultureInfo.CurrentUICulture),
+                InspectionResults.ResourceManager.GetString(nameof(ImplicitByRefModifierInspection), CultureInfo.CurrentUICulture),
                 declaration.IdentifierName);
         }
     }

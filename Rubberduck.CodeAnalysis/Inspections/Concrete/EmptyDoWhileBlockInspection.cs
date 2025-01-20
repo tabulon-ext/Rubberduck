@@ -48,7 +48,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(QualifiedContext<VBAParser.DoLoopStmtContext> context)
         {
-            return InspectionResults.ResourceManager.GetString("EmptyDoWhileBlockInspection", CultureInfo.CurrentUICulture);
+            return InspectionResults.ResourceManager.GetString(nameof(EmptyDoWhileBlockInspection), CultureInfo.CurrentUICulture);
         }
 
         private class EmptyDoWhileBlockListener : EmptyBlockInspectionListenerBase

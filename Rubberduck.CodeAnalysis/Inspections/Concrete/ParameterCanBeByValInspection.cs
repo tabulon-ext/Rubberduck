@@ -266,7 +266,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(InspectionResults.ResourceManager.GetString("ParameterCanBeByValInspection", CultureInfo.CurrentUICulture), declaration.IdentifierName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ParameterCanBeByValInspection), CultureInfo.CurrentUICulture), declaration.IdentifierName);
         }
     }
 }

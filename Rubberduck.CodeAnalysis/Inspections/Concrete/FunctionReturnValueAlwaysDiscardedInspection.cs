@@ -169,7 +169,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         protected override string ResultDescription(Declaration declaration)
         {
             var functionName = declaration.QualifiedName.ToString();
-            return string.Format(InspectionResults.ResourceManager.GetString("FunctionReturnValueAlwaysDiscardedInspection", CultureInfo.CurrentUICulture), functionName);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(FunctionReturnValueAlwaysDiscardedInspection), CultureInfo.CurrentUICulture), functionName);
         }
     }
 }

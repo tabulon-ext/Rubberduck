@@ -102,7 +102,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var expression = reference.IdentifierName;
             var defaultMember = reference.Declaration.QualifiedName.ToString();
-            return string.Format(InspectionResults.ResourceManager.GetString("ObjectWhereProcedureIsRequiredInspection", CultureInfo.CurrentUICulture), expression, defaultMember);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(ObjectWhereProcedureIsRequiredInspection), CultureInfo.CurrentUICulture), expression, defaultMember);
         }
 
         private IEnumerable<IInspectionResult> UnboundInspectionResults(QualifiedModuleName module, DeclarationFinder finder)

@@ -58,7 +58,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
                 .lExpression()
                 .GetText()
                 .Trim();
-            return string.Format(InspectionResults.ResourceManager.GetString("BooleanAssignedInIfElseInspection", CultureInfo.CurrentUICulture), literalText);
+            return string.Format(InspectionResults.ResourceManager.GetString(nameof(BooleanAssignedInIfElseInspection), CultureInfo.CurrentUICulture), literalText);
         }
 
         private class BooleanAssignedInIfElseListener : InspectionListenerBase<VBAParser.IfStmtContext>

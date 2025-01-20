@@ -121,7 +121,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
 
         protected override string ResultDescription(Declaration declaration)
         {
-            return string.Format(Resources.Inspections.InspectionResults.ResourceManager.GetString("PublicImplementationShouldBePrivateInspection", CultureInfo.CurrentUICulture),
+            return string.Format(Resources.Inspections.InspectionResults.ResourceManager.GetString(nameof(PublicImplementationShouldBePrivateInspection), CultureInfo.CurrentUICulture),
                 declaration.IdentifierName);
         }
 
