@@ -60,7 +60,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         private static IEnumerable<IdentifierReference> FailedLetResolutionAssignments(QualifiedModuleName module, DeclarationFinder finder)
         {
             return finder.FailedLetCoercions(module)
-                .Where(reference => reference.IsAssignment && !reference.Declaration.IsArray);
+                .Where(reference => reference.IsAssignment);
         }
 
         private static IEnumerable<IdentifierReference> PossiblyObjectLhsLetAssignmentsWithNonValueOnRhs(QualifiedModuleName module, DeclarationFinder finder)
@@ -89,12 +89,11 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
         {
             var assignments = finder.IdentifierReferences(module)
                 .Where(reference => reference.IsAssignment
-                                    && !reference.Declaration.IsArray
                                     && !reference.IsSetAssignment
                                     && (reference.IsNonIndexedDefaultMemberAccess
                                         || Tokens.Variant.Equals(reference.Declaration.AsTypeName, StringComparison.InvariantCultureIgnoreCase)));
             var unboundAssignments = finder.UnboundDefaultMemberAccesses(module)
-                .Where(reference => reference.IsAssignment && !reference.Declaration.IsArray);
+                .Where(reference => reference.IsAssignment);
 
             return assignments.Concat(unboundAssignments);
         }

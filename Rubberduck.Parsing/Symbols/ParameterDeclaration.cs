@@ -1,3 +1,6 @@
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using Antlr4.Runtime;
 using Rubberduck.Parsing.Annotations;
 using Rubberduck.Parsing.Binding;
@@ -5,9 +8,6 @@ using Rubberduck.Parsing.ComReflection;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.VBA.Extensions;
 using Rubberduck.VBEditor;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Rubberduck.Parsing.Symbols
 {
@@ -39,7 +39,7 @@ namespace Rubberduck.Parsing.Symbols
                   null,
                   null,
                   Selection.Home,
-                  isArray || isParamArray,
+                  isArray,
                   asTypeContext,
                   false)
         {
@@ -78,7 +78,7 @@ namespace Rubberduck.Parsing.Symbols
                   context,
                   null,
                   selection,
-                  isArray || isParamArray,
+                  isArray,
                   asTypeContext,
                   isUserDefined)
         {

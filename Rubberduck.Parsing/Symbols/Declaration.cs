@@ -1,6 +1,5 @@
 ﻿using Antlr4.Runtime;
 using Rubberduck.Parsing.Annotations;
-using Rubberduck.Parsing.Annotations.Concrete;
 using Rubberduck.Parsing.ComReflection;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.VBEditor;
@@ -9,6 +8,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Rubberduck.Parsing.Annotations.Concrete;
 
 namespace Rubberduck.Parsing.Symbols
 {
@@ -117,7 +117,7 @@ namespace Rubberduck.Parsing.Symbols
             IEnumerable<IParseTreeAnnotation> annotations = null,
             Attributes attributes = null)
         {
-            QualifiedName = qualifiedName;
+            QualifiedName = qualifiedName;            
             ParentDeclaration = parentDeclaration;
             ParentScopeDeclaration = ParentDeclaration;
             ParentScope = parentScope ?? string.Empty;
@@ -145,7 +145,7 @@ namespace Rubberduck.Parsing.Symbols
                 ProjectName = IdentifierName;
             }
 
-            IsArray = isArray || AsTypeName != null && (AsTypeNameWithoutArrayDesignator.Length == AsTypeName.Length - "()".Length);
+            IsArray = isArray;
             AsTypeContext = asTypeContext;
             TypeHint = typeHint;
         }
@@ -168,8 +168,7 @@ namespace Rubberduck.Parsing.Symbols
             null,
             false,
             null,
-            new Attributes())
-        { }
+            new Attributes()) { }
 
         public Declaration(ComStruct structure, Declaration parent, QualifiedModuleName module)
             : this(
@@ -189,8 +188,7 @@ namespace Rubberduck.Parsing.Symbols
                 null,
                 false,
                 null,
-                new Attributes())
-        { }
+                new Attributes()) { }
 
         public Declaration(ComEnumerationMember member, Declaration parent, QualifiedModuleName module) : this(
                 module.QualifyMemberName(member.Name),
@@ -209,8 +207,7 @@ namespace Rubberduck.Parsing.Symbols
                 null,
                 false,
                 null,
-                new Attributes())
-        { }
+                new Attributes()) { }
 
         public Declaration(ComField field, Declaration parent, QualifiedModuleName module)
             : this(
@@ -230,8 +227,7 @@ namespace Rubberduck.Parsing.Symbols
                 null,
                 false,
                 null,
-                new Attributes())
-        { }
+                new Attributes()) { }
 
         public static Declaration GetModuleParent(Declaration declaration)
         {
@@ -293,8 +289,8 @@ namespace Rubberduck.Parsing.Symbols
             {
                 string literalDescription;
 
-                var memberAttribute = Attributes.SingleOrDefault(a =>
-                    a.Name == Attributes.MemberAttributeName("VB_Description", IdentifierName) ||
+                var memberAttribute = Attributes.SingleOrDefault(a => 
+                    a.Name == Attributes.MemberAttributeName("VB_Description", IdentifierName) || 
                     a.Name == Attributes.MemberAttributeName("VB_VarDescription", IdentifierName));
 
                 if (memberAttribute != null)
@@ -327,10 +323,10 @@ namespace Rubberduck.Parsing.Symbols
 
         private static string CorrectlyFormatedDescription(string literalDescription)
         {
-            if (string.IsNullOrEmpty(literalDescription)
-                || literalDescription.Length < 2
+            if (string.IsNullOrEmpty(literalDescription) 
+                || literalDescription.Length < 2 
                 || literalDescription[0] != '"'
-                || literalDescription[literalDescription.Length - 1] != '"')
+                || literalDescription[literalDescription.Length -1] != '"')
             {
                 return literalDescription;
             }
@@ -354,7 +350,7 @@ namespace Rubberduck.Parsing.Symbols
         {
             get
             {
-                if (AsTypeName == Tokens.Object
+                if (AsTypeName == Tokens.Object 
                     || (AsTypeDeclaration?.DeclarationType.HasFlag(DeclarationType.ClassModule) ?? false))
                 {
                     return true;

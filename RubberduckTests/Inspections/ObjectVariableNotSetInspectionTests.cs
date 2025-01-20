@@ -1,3 +1,4 @@
+using System.Linq;
 using NUnit.Framework;
 using Rubberduck.CodeAnalysis.Inspections;
 using Rubberduck.CodeAnalysis.Inspections.Concrete;
@@ -5,7 +6,6 @@ using Rubberduck.Parsing.VBA;
 using Rubberduck.VBEditor;
 using Rubberduck.VBEditor.SafeComWrappers;
 using RubberduckTests.Mocks;
-using System.Linq;
 
 namespace RubberduckTests.Inspections
 {
@@ -207,37 +207,6 @@ Private Sub Workbook_Open()
     Dim target As Variant
     target = ""A1""
 End Sub";
-            AssertInputCodeYieldsExpectedInspectionResultCount(input, expectResultCount);
-        }
-
-        [Test]
-        [Category("Inspections")]
-        public void ObjectVariableNotSet_GivenObjectArray_ReturnsNoResult()
-        {
-            var expectResultCount = 0;
-            var input =
-@"
-Private myObjectArray() As Object
-
-Public Property Get ObjectArray() As Object()
-    ObjectArray = myObjectArray
-End Property
-
-
-Public Sub Test()
-
-    Dim oArr1(0) As Object
-    Set oArr1(0) = New Something
-
-    myObjectArray = oArr1
-
-    Dim oArr2() As Object
-    oArr2 = ObjectArray
-
-    Debug.Print oArr2(0).Name
-
-End Sub
-";
             AssertInputCodeYieldsExpectedInspectionResultCount(input, expectResultCount);
         }
 

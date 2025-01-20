@@ -1,16 +1,17 @@
-using NUnit.Framework;
-using Rubberduck.InternalApi.Extensions;
-using Rubberduck.Parsing.Annotations.Concrete;
-using Rubberduck.Parsing.Symbols;
-using Rubberduck.Parsing.VBA;
-using Rubberduck.VBEditor;
-using Rubberduck.VBEditor.SafeComWrappers;
-using Rubberduck.VBEditor.SafeComWrappers.Abstract;
-using RubberduckTests.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using NUnit.Framework;
+using Rubberduck.InternalApi.Extensions;
+using Rubberduck.Parsing.Symbols;
+using Rubberduck.Parsing.VBA;
+using RubberduckTests.Mocks;
+using Rubberduck.Parsing.Annotations;
+using Rubberduck.Parsing.Annotations.Concrete;
+using Rubberduck.VBEditor;
+using Rubberduck.VBEditor.SafeComWrappers;
+using Rubberduck.VBEditor.SafeComWrappers.Abstract;
 
 namespace RubberduckTests.Grammar
 {
@@ -115,23 +116,6 @@ End Sub
             using (var state = Resolve(code))
             {
                 var declaration = state.AllUserDeclarations.Single(item => item.DeclarationType == DeclarationType.Variable && item.IdentifierName == "varTemp");
-                Assert.IsTrue(declaration.IsArray);
-            }
-        }
-
-        [Category("Resolver")]
-        [Test]
-        public void ParamArrayParameter_IsArray()
-        {
-            var code = @"Option Explicit
-
-Public Sub Test(ParamArray Values)
-End Sub
-";
-            using (var state = Resolve(code))
-            {
-                var declaration = state.AllUserDeclarations.Single(item => item.DeclarationType == DeclarationType.Parameter && item.IdentifierName == "Values") as ParameterDeclaration;
-                Assert.IsTrue(declaration.IsParamArray);
                 Assert.IsTrue(declaration.IsArray);
             }
         }
@@ -1033,7 +1017,7 @@ End Sub
                     item.DeclarationType == DeclarationType.Variable
                     && item.IdentifierName == "foo");
 
-                Assert.AreEqual(1, declaration.References.Count(item =>
+                Assert.AreEqual(1,declaration.References.Count(item =>
                     item.ParentScoping.DeclarationType == DeclarationType.Procedure
                     && item.ParentScoping.IdentifierName == "DoSomething"
                     && item.IsAssignment));
@@ -2294,7 +2278,7 @@ End Sub
                 var printReference = printDeclaration.References.Single();
 
                 var module = state.DeclarationFinder.AllModules.Single(qmn => qmn.ComponentType == ComponentType.ClassModule);
-                var expectedPrintSelection = new QualifiedSelection(module, new Selection(4, 5, 4, 10));
+                var expectedPrintSelection = new QualifiedSelection(module, new Selection(4, 5,4, 10));
                 var actualPrintSelection = new QualifiedSelection(printReference.QualifiedModuleName, printReference.Selection);
 
                 Assert.AreEqual(4, referencedDeclaration.References.Count());
@@ -3648,7 +3632,7 @@ End Function
 
                 Assert.AreEqual(expectedReferencedDeclarationName, actualReferencedDeclarationName);
                 Assert.IsTrue(reference.IsIndexedDefaultMemberAccess);
-                Assert.AreEqual(2, reference.DefaultMemberRecursionDepth);
+                Assert.AreEqual(2,reference.DefaultMemberRecursionDepth);
             }
         }
 
@@ -3848,7 +3832,7 @@ End Function
             {
                 var module = state.DeclarationFinder.AllModules.First(qmn => qmn.ComponentName == "Module1");
                 var defaultMemberAccess = state.DeclarationFinder.UnboundDefaultMemberAccesses(module).First();
-
+                
                 var expectedReferencedSelection = new QualifiedSelection(module, selection);
                 var actualReferencedSelection = new QualifiedSelection(defaultMemberAccess.QualifiedModuleName, defaultMemberAccess.Selection);
 
@@ -5719,7 +5703,7 @@ End Function
                     .Single(param => param.IdentifierName.Equals("furtherArgs"));
                 var argumentReferences = parameter.ArgumentReferences;
 
-                var expectedExpressionTexts = new HashSet<string> { "4", "5", "6" };
+                var expectedExpressionTexts = new HashSet<string>{"4", "5", "6"};
                 var actualExpressionTexts = argumentReferences.Select(reference => reference.Context.GetText()).ToList();
 
                 var expectedCount = expectedExpressionTexts.Count;
@@ -7350,7 +7334,7 @@ End Sub
                 var undeclared = finder.Members(module.QualifiedModuleName)
                     .Where(declaration => declaration.IsUndeclared)
                     .ToList();
-
+                
                 Assert.AreEqual(4, undeclared.Count);
             }
         }
@@ -7418,7 +7402,7 @@ End Sub
             using (var state = Resolve(vbe.Object))
             {
                 var finder = state.DeclarationFinder;
-
+                
                 var classModule = finder.UserDeclarations(DeclarationType.ClassModule).Single();
                 var barDeclaration = finder.Members(classModule.QualifiedModuleName, DeclarationType.Function).Single();
                 var barReference = barDeclaration.References.Single();
