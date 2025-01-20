@@ -1,31 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Path = System.IO.Path;
 using System.Runtime.InteropServices.ComTypes;
-using Rubberduck.UI.AddRemoveReferences;
+using Path = System.IO.Path;
 
-namespace Rubberduck.AddRemoveReferences
+namespace Rubberduck.Parsing.ComReflection.TypeLibReflection
 {
-    public struct RegisteredLibraryKey
-    {
-        public Guid Guid { get; }
-        public int Major { get; }
-        public int Minor { get; }
-
-        public RegisteredLibraryKey(Guid guid, int major, int minor)
-        {
-            Guid = guid;
-            Major = major;
-            Minor = minor;
-        }
-    }
-
     public class RegisteredLibraryInfo
     {
         private static readonly Dictionary<int, string> NativeLocaleNames = new Dictionary<int, string>
         {
-            { 0, AddRemoveReferencesUI.DefaultLocale }
+            { 0, "en-US" }
         };
 
         public RegisteredLibraryKey UniqueId { get; }
@@ -55,8 +40,8 @@ namespace Rubberduck.AddRemoveReferences
                 }
                 catch
                 {
-                    NativeLocaleNames.Add(LocaleId, AddRemoveReferencesUI.DefaultLocale);
-                    return AddRemoveReferencesUI.DefaultLocale;
+                    NativeLocaleNames.Add(LocaleId, "en-US");
+                    return "en-US";
                 }
             }
         }
