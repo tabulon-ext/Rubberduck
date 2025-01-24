@@ -20,21 +20,6 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// <module name="MyModule" type="Standard Module">
     /// <![CDATA[
     /// Option Base 1 '<~ Implicit array lower bound is 1
-    /// Public Sub DoSomething()
-    ///     Dim Values As Variant
-    ///     
-    ///     Values = Array(42)
-    ///     Debug.Print LBound(Values) '<~ 1 as per Option Base
-    ///     
-    ///     Values = VBA.Array(42) '<<< inspection result here
-    ///     Debug.Print LBound(Values) '<~ not 1
-    /// End Sub
-    /// ]]>
-    /// </module>
-    /// <example hasResult="true">
-    /// <module name="MyModule" type="Standard Module">
-    /// <![CDATA[
-    /// Option Base 1 '<~ Implicit array lower bound is 1
     /// Public Sub DoSomething(ParamArray Values) '<<< inspection result here
     ///     Debug.Print LBound(Values) '<~ not 1
     /// End Sub
@@ -55,6 +40,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// End Sub
     /// ]]>
     /// </module>
+    /// </example>
     internal sealed class InconsistentParamArrayBaseInspection : DeclarationInspectionBase
     {
         public InconsistentParamArrayBaseInspection(IDeclarationFinderProvider declarationFinderProvider)

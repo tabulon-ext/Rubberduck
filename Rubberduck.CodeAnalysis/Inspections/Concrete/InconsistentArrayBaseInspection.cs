@@ -31,6 +31,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// End Sub
     /// ]]>
     /// </module>
+    /// </example>
     /// <example hasResult="false">
     /// <module name="MyModule" type="Standard Module">
     /// <![CDATA[
@@ -47,6 +48,7 @@ namespace Rubberduck.CodeAnalysis.Inspections.Concrete
     /// End Sub
     /// ]]>
     /// </module>
+    /// </example>
     internal class InconsistentArrayBaseInspection : IdentifierReferenceInspectionBase
     {
         public InconsistentArrayBaseInspection(IDeclarationFinderProvider declarationFinderProvider)
