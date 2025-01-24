@@ -489,7 +489,4 @@ In memoriam, 1972-2018</value>
   <data name="InconsistentParamArrayBaseInspection" xml:space="preserve">
     <value>Le paramètre ParamArray '{0}' est indexé à partir de zéro</value>
   </data>
-  <data name="ParameterlessCellsInspection" xml:space="preserve">
-    <value>L'appel non paramétré à 'Range.Cells' est redondant.</value>
-  </data>
 </root>
