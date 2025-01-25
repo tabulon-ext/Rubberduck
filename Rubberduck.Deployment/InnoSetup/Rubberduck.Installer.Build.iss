@@ -62,8 +62,8 @@ OutputBaseFilename=Rubberduck.Setup
 Compression=lzma
 SolidCompression=yes
 
-ArchitecturesAllowed=x86 x64
-ArchitecturesInstallIn64BitMode=x64
+ArchitecturesAllowed=x86 x64 arm64
+ArchitecturesInstallIn64BitMode=x64 arm64
 
 SetupLogging=yes
 PrivilegesRequired=lowest
