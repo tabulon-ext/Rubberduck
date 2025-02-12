@@ -38,6 +38,7 @@
                      Height="22"
                      VerticalAlignment="Top"
                      VerticalContentAlignment="Center"
+                     ToolTipService.InitialShowDelay="0"
                      HorizontalAlignment="Stretch" />
         </Grid>
         <Grid Grid.Row="2" Background="{x:Static SystemColors.ControlDarkBrush}" Grid.IsSharedSizeScope="True">
