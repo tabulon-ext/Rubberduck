@@ -43,7 +43,7 @@ $@"Public {originalFieldName} As String";
             const string expectedCode =
                 @"Private fizz As Collection
 
-Public Property Get Name() As Collection
+Private Property Get Name() As Collection
     Set Name = fizz
 End Property
 ";
@@ -257,7 +257,7 @@ Private rati|onal As NumberTypes
 
             var presenterAction = Support.UserAcceptsDefaults();
             var actualCode = Support.RefactoredCode(inputCode.ToCodeString(), presenterAction);
-            StringAssert.Contains("Public Property Get Rational() As NumberTypes", actualCode);
+            StringAssert.Contains("Private Property Get Rational() As NumberTypes", actualCode);
             StringAssert.Contains("Rational = rational2", actualCode);
         }
 
@@ -279,7 +279,7 @@ Private whe|els As Integer
 
             var presenterAction = Support.UserAcceptsDefaults();
             var actualCode = Support.RefactoredCode(inputCode.ToCodeString(), presenterAction);
-            StringAssert.Contains("Public Property Get Wheels()", actualCode);
+            StringAssert.Contains("Private Property Get Wheels()", actualCode);
             StringAssert.Contains("Wheels = wheels1", actualCode);
         }
 

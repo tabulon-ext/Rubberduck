@@ -167,8 +167,8 @@ Private mFizz
             StringAssert.Contains($"Public Property Get Bar(", actualCode);
             StringAssert.Contains($"Public Property Let Bar(", actualCode);
             StringAssert.Contains($"Private mFizz As Variant", actualCode);
-            StringAssert.Contains($"Public Property Get Fizz() As Variant", actualCode);
-            StringAssert.Contains($"Public Property Let Fizz(", actualCode);
+            StringAssert.Contains($"Private Property Get Fizz() As Variant", actualCode);
+            StringAssert.Contains($"Private Property Let Fizz(", actualCode);
         }
 
         [TestCase("Public")]
@@ -359,7 +359,7 @@ End Sub
             StringAssert.Contains($"Private mTheClass As Class1", actualCode);
             StringAssert.Contains($"Set mTheClass = {Support.RHSIdentifier}", actualCode);
             StringAssert.Contains($"Set TheClass = mTheClass", actualCode);
-            StringAssert.Contains($"Public Property Set TheClass", actualCode);
+            StringAssert.Contains($"{accessibility} Property Set TheClass", actualCode);
         }
 
         [Test]

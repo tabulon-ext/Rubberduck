@@ -43,7 +43,7 @@ namespace RubberduckTests.Refactoring.EncapsulateField
 
 Private {expectedArrayDeclaration}
 
-Public Property Get MyArray() As Variant
+{visibility} Property Get MyArray() As Variant
     MyArray = mArray
 End Property
 ";
