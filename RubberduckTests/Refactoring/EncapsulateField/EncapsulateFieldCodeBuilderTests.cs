@@ -9,11 +9,12 @@ namespace RubberduckTests.Refactoring.EncapsulateField
     [TestFixture]
     public class EncapsulateFieldCodeBuilderTests
     {
-        [Test]
+        [TestCase("Public")]
+        [TestCase("Private")]
         [Category("Refactorings")]
         [Category("Encapsulate Field")]
         [Category(nameof(EncapsulateFieldCodeBuilder))]
-        public void BuildPropertyBlock_VariantGet()
+        public void BuildPropertyBlock_VariantGet(string accessibility)
         {
             var attrSet = new PropertyAttributeSet()
             {
@@ -22,11 +23,11 @@ namespace RubberduckTests.Refactoring.EncapsulateField
                 AsTypeName = "Variant",
             };
 
-            var results = GeneratePropertyBlocks("Public xxx As Variant", "xxx", attrSet);
+            var results = GeneratePropertyBlocks($"{accessibility} xxx As Variant", "xxx", attrSet);
             var actualLines = results.Get.Split(new string[] { Environment.NewLine }, StringSplitOptions.None).ToList();
 
             Assert.AreEqual(7, actualLines.Count);
-            Assert.AreEqual(actualLines[0].Trim(), $"Public Property Get {attrSet.PropertyName}() As {attrSet.AsTypeName}");
+            Assert.AreEqual(actualLines[0].Trim(), $"{accessibility} Property Get {attrSet.PropertyName}() As {attrSet.AsTypeName}");
             Assert.AreEqual(actualLines[1].Trim(), $"If IsObject({attrSet.BackingField}) Then");
             Assert.AreEqual(actualLines[2].Trim(), $"Set {attrSet.PropertyName} = {attrSet.BackingField}");
             Assert.AreEqual(actualLines[3].Trim(), "Else");
@@ -35,13 +36,16 @@ namespace RubberduckTests.Refactoring.EncapsulateField
             Assert.AreEqual(actualLines[6].Trim(), "End Property");
         }
 
-        [TestCase("Variant")]
-        [TestCase("Long")]
-        [TestCase("String")]
+        [TestCase("Variant", "Public")]
+        [TestCase("Long", "Public")]
+        [TestCase("String", "Public")]
+        [TestCase("Variant", "Private")]
+        [TestCase("Long", "Private")]
+        [TestCase("String", "Private")]
         [Category("Refactorings")]
         [Category("Encapsulate Field")]
         [Category(nameof(EncapsulateFieldCodeBuilder))]
-        public void BuildPropertyBlock_Let(string asTypeName)
+        public void BuildPropertyBlock_Let(string asTypeName, string accessibility)
         {
             var attrSet = new PropertyAttributeSet()
             {
@@ -52,22 +56,25 @@ namespace RubberduckTests.Refactoring.EncapsulateField
                 AsTypeName = asTypeName,
             };
 
-            var results = GeneratePropertyBlocks($"Public xxx As {asTypeName}", "xxx", attrSet);
+            var results = GeneratePropertyBlocks($"{accessibility} xxx As {asTypeName}", "xxx", attrSet);
             var actualLines = results.Let.Split(new string[] { Environment.NewLine }, StringSplitOptions.None).ToList();
 
             Assert.AreEqual(3, actualLines.Count);
-            Assert.AreEqual(actualLines[0].Trim(), $"Public Property Let {attrSet.PropertyName}(ByVal {attrSet.RHSParameterIdentifier} As {asTypeName})");
+            Assert.AreEqual(actualLines[0].Trim(), $"{accessibility} Property Let {attrSet.PropertyName}(ByVal {attrSet.RHSParameterIdentifier} As {asTypeName})");
             Assert.AreEqual(actualLines[1].Trim(), $"{attrSet.BackingField} = {attrSet.RHSParameterIdentifier}");
             Assert.AreEqual(actualLines[2].Trim(), "End Property");
         }
 
-        [TestCase("Variant")]
-        [TestCase("Long")]
-        [TestCase("String")]
+        [TestCase("Variant", "Public")]
+        [TestCase("Long", "Public")]
+        [TestCase("String", "Public")]
+        [TestCase("Variant", "Private")]
+        [TestCase("Long", "Private")]
+        [TestCase("String", "Private")]
         [Category("Refactorings")]
         [Category("Encapsulate Field")]
         [Category(nameof(EncapsulateFieldCodeBuilder))]
-        public void BuildPropertyBlock_Set(string asTypeName)
+        public void BuildPropertyBlock_Set(string asTypeName, string accessibility)
         {
             var attrSet = new PropertyAttributeSet()
             {
@@ -78,11 +85,11 @@ namespace RubberduckTests.Refactoring.EncapsulateField
                 AsTypeName = asTypeName,
             };
 
-            var results = GeneratePropertyBlocks($"Public xxx As {asTypeName}", "xxx", attrSet);
+            var results = GeneratePropertyBlocks($"{accessibility} xxx As {asTypeName}", "xxx", attrSet);
             var actualLines = results.Set.Split(new string[] { Environment.NewLine }, StringSplitOptions.None).ToList();
 
             Assert.AreEqual(3, actualLines.Count);
-            Assert.AreEqual(actualLines[0].Trim(), $"Public Property Set {attrSet.PropertyName}(ByVal {attrSet.RHSParameterIdentifier} As {asTypeName})");
+            Assert.AreEqual(actualLines[0].Trim(), $"{accessibility} Property Set {attrSet.PropertyName}(ByVal {attrSet.RHSParameterIdentifier} As {asTypeName})");
             Assert.AreEqual(actualLines[1].Trim(), $"Set {attrSet.BackingField} = {attrSet.RHSParameterIdentifier}");
             Assert.AreEqual(actualLines[2].Trim(), "End Property");
         }

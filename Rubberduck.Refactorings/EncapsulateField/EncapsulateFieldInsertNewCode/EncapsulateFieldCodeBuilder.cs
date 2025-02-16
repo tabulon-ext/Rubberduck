@@ -38,15 +38,16 @@ namespace Rubberduck.Refactorings.EncapsulateField
             (string Get, string Let, string Set) blocks = (string.Empty, string.Empty, string.Empty);
 
             var mutatorBody = $"{propertyAttributes.BackingField} = {propertyAttributes.RHSParameterIdentifier}";
+            var accessibility = propertyAttributes.Declaration.Accessibility;
 
             if (propertyAttributes.GeneratePropertyLet)
             {
-                _codeBuilder.TryBuildPropertyLetCodeBlock(propertyAttributes.Declaration, propertyAttributes.PropertyName, out blocks.Let, content: mutatorBody);
+                _codeBuilder.TryBuildPropertyLetCodeBlock(propertyAttributes.Declaration, propertyAttributes.PropertyName, out blocks.Let, accessibility, content: mutatorBody);
             }
 
             if (propertyAttributes.GeneratePropertySet)
             {
-                _codeBuilder.TryBuildPropertySetCodeBlock(propertyAttributes.Declaration, propertyAttributes.PropertyName, out blocks.Set, content: $"{Tokens.Set} {mutatorBody}");
+                _codeBuilder.TryBuildPropertySetCodeBlock(propertyAttributes.Declaration, propertyAttributes.PropertyName, out blocks.Set, accessibility, content: $"{Tokens.Set} {mutatorBody}");
             }
 
             var propertyGetBody = propertyAttributes.UsesSetAssignment
@@ -63,7 +64,7 @@ namespace Rubberduck.Refactorings.EncapsulateField
                     $"{Tokens.End} {Tokens.If}");
             }
 
-            _codeBuilder.TryBuildPropertyGetCodeBlock(propertyAttributes.Declaration, propertyAttributes.PropertyName, out blocks.Get, content: propertyGetBody);
+            _codeBuilder.TryBuildPropertyGetCodeBlock(propertyAttributes.Declaration, propertyAttributes.PropertyName, out blocks.Get, accessibility, content: propertyGetBody);
 
             return (blocks.Get, blocks.Let, blocks.Set);
         }
