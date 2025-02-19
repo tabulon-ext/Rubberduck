@@ -44,6 +44,8 @@ namespace Rubberduck.UI.Settings
                 }));
             ImportButtonCommand = new DelegateCommand(LogManager.GetCurrentClassLogger(), _ => ImportSettings());
 
+            _allResultsFilter = InspectionsUI.ResourceManager.GetString("CodeInspectionSeverity_All", CultureInfo.CurrentUICulture);
+            SelectedSeverityFilter = _allResultsFilter;
             SeverityFilters = new ObservableCollection<string>(
                 new[] { InspectionsUI.ResourceManager.GetString("CodeInspectionSeverity_All", CultureInfo.CurrentUICulture) }
                     .Concat(Enum.GetNames(typeof(CodeInspectionSeverity)).Select(s => InspectionsUI.ResourceManager.GetString("CodeInspectionSeverity_" + s, CultureInfo.CurrentUICulture))));
@@ -79,14 +81,14 @@ namespace Rubberduck.UI.Settings
 
         public ObservableCollection<string> SeverityFilters { get; }
 
-        private static readonly string _allResultsFilter = InspectionsUI.ResourceManager.GetString("CodeInspectionSeverity_All", CultureInfo.CurrentUICulture);
-        private string _selectedSeverityFilter = _allResultsFilter;
+        private readonly string _allResultsFilter;
+        private string _selectedSeverityFilter;
         public string SelectedSeverityFilter
         {
             get => _selectedSeverityFilter;
             set
             {
-                if (!_selectedSeverityFilter.Equals(value))
+                if (_selectedSeverityFilter == null || !_selectedSeverityFilter.Equals(value))
                 {
                     _selectedSeverityFilter = value.Replace(" ", string.Empty);
                     OnPropertyChanged();
@@ -99,9 +101,11 @@ namespace Rubberduck.UI.Settings
         private bool FilterResults(object setting)
         {
             var cis = setting as CodeInspectionSetting;
+            var localizedSeverity = InspectionsUI.ResourceManager.GetString("CodeInspectionSeverity_" + cis.Severity, CultureInfo.CurrentUICulture)
+                .Replace(" ", string.Empty);
 
             return cis.Description.ToUpper().Contains(_inspectionSettingsDescriptionFilter.ToUpper())
-                && (_selectedSeverityFilter.Equals(_allResultsFilter) || cis.Severity.ToString().Equals(_selectedSeverityFilter));
+                && (_selectedSeverityFilter.Equals(_allResultsFilter) || localizedSeverity.Equals(_selectedSeverityFilter));
         }
 
         private ListCollectionView _inspectionSettings;
