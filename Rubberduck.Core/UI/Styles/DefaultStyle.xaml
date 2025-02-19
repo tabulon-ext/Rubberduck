@@ -135,6 +135,9 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="ToolTipService.InitialShowDelay">
+            <Setter.Value>0</Setter.Value>
+        </Setter>
         <Style.Triggers>
             <Trigger Property="Validation.HasError"
                      Value="True">
