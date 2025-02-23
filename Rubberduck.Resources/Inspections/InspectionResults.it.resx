@@ -560,4 +560,10 @@ In memoriam, 1972-2018</value>
     <value>Il Membro {0} dovrebbe essere Private</value>
     <comment>{0} Identificatore del Membro</comment>
   </data>
+  <data name="InconsistentArrayBaseInspection" xml:space="preserve">
+    <value>Questo array è incoerentemente a base zero</value>
+  </data>
+  <data name="InconsistentParamArrayBaseInspection" xml:space="preserve">
+    <value>ParamArray '{0}' è incoerentemente a base zero</value>
+  </data>
 </root>

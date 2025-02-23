@@ -478,4 +478,13 @@ Se il parametro può essere nullo, ignorare questo risultato dell'ispezione; il 
   <data name="PublicImplementationShouldBePrivateInspection" xml:space="preserve">
     <value>L'interfaccia predefinita (Public) di un modulo di classe non dovrebbe esporre l'implementazione di altre interfacce o procedure di gestione degli eventi.</value>
   </data>
+  <data name="InconsistentArrayBaseInspection" xml:space="preserve">
+    <value>Gli array creati con una chiamata alla funzione VBA.Array esplicitamente qualificata con la libreria 'VBA' sono sempre a base zero, indipendentemente da Option Base 1.</value>
+  </data>
+  <data name="InconsistentParamArrayBaseInspection" xml:space="preserve">
+    <value>Gli array creati con ParamArray sono sempre a base zero, indipendentemente da Option Base 1.</value>
+  </data>
+  <data name="ParameterlessCellsInspection" xml:space="preserve">
+    <value>La proprietà di sola lettura 'Range.Cells' accetta due parametri facoltativi, ma se non ne viene fornito nessuno, restituisce semplicemente un riferimento all'oggetto padre 'Range', il che la rende del tutto ridondante.</value>
+  </data>
 </root>

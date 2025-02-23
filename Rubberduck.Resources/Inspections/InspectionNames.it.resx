@@ -474,4 +474,13 @@
   <data name="PublicImplementationShouldBePrivateInspection" xml:space="preserve">
     <value>Le implementazioni di interfacce e gestori di eventi dovrebbero essere Private</value>
   </data>
+  <data name="InconsistentArrayBaseInspection" xml:space="preserve">
+    <value>Array incoerentemente a base zero</value>
+  </data>
+  <data name="InconsistentParamArrayBaseInspection" xml:space="preserve">
+    <value>Parametro array incoerentemente a base zero</value>
+  </data>
+  <data name="ParameterlessCellsInspection" xml:space="preserve">
+    <value>La chiamata a 'Range.Cells' senza parametri è ridondante</value>
+  </data>
 </root>
