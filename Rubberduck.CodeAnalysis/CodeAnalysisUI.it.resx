@@ -263,4 +263,10 @@
   <data name="CodeInspectionSettingsPage_WhitelistedIdentifiersDescription" xml:space="preserve">
     <value>Questi identificatori saranno ignorati dall'ispezione 'Usa nomi significativi'.</value>
   </data>
+  <data name="CodeInspectionSettingsPage_Misc_IgnoreFormControlHungarianNotation" xml:space="preserve">
+    <value>Ignora la Notazione Ungherese per i controlli nella UserForm</value>
+  </data>
+  <data name="InconsistentArrayBaseInspection_ParamArray" xml:space="preserve">
+    <value>Il parametro array '{0}' è a base zero.</value>
+  </data>
 </root>
