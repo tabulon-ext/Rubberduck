@@ -9,6 +9,9 @@ using System.Linq;
 using Rubberduck.Refactorings.EncapsulateField;
 using System.Collections.Generic;
 using Rubberduck.SmartIndenter;
+using Antlr4.Runtime;
+using Rubberduck.Parsing.Grammar;
+using Rubberduck.Parsing;
 
 namespace Rubberduck.Refactorings.EncapsulateFieldInsertNewCode
 {
@@ -106,17 +109,33 @@ namespace Rubberduck.Refactorings.EncapsulateFieldInsertNewCode
 
             var rewriter = rewriteSession.CheckOutModuleRewriter(model.QualifiedModuleName);
 
-            var codeSectionStartIndex = _declarationFinderProvider.DeclarationFinder
-                .Members(model.QualifiedModuleName).Where(m => m.IsMember())
+            var firstMember = _declarationFinderProvider.DeclarationFinder
+                .Members(model.QualifiedModuleName)
+                .Where(m => m.IsMember())
                 .OrderBy(c => c.Selection)
-                .FirstOrDefault()?.Context.Start.TokenIndex;
+                .FirstOrDefault();
 
-            if (codeSectionStartIndex.HasValue)
+            var codeSectionStartIndex = firstMember?.Context.Start.TokenIndex;
+
+            var firstAnnotationContext = firstMember?.Annotations?
+                .OrderBy(c => c.QualifiedSelection)
+                .FirstOrDefault()?.Context;
+
+            if (firstAnnotationContext != null)
+            {
+                codeSectionStartIndex = firstAnnotationContext
+                    .GetAncestor<VBAParser.CommentOrAnnotationContext>().start.TokenIndex;
+            }
+
+            if (codeSectionStartIndex != null)
             {
                 rewriter.InsertBefore(codeSectionStartIndex.Value, $"{formattedContent}{NewLines.DOUBLE_SPACE}");
-                return;
             }
-            rewriter.InsertBefore(rewriter.TokenStream.Size - 1, $"{NewLines.DOUBLE_SPACE}{formattedContent}");
+            else
+            {
+                var insertIndex = rewriter.TokenStream.Size - 1;
+                rewriter.InsertBefore(insertIndex, $"{NewLines.DOUBLE_SPACE}{formattedContent}");
+            }
         }
     }
 }
