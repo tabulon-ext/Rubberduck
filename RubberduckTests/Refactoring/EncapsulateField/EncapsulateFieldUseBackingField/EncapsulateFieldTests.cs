@@ -236,6 +236,34 @@ End Property";
             Assert.Less(actualCode.IndexOf($"fizz = {Support.RHSIdentifier}"), actualCode.IndexOf("Get Foo"));
         }
 
+        [Test]
+        [Category("Refactorings")]
+        [Category("Encapsulate Field")]
+        public void EncapsulatePublicField_AnnotatedPropertiesInClass()
+        {
+            var inputCode =
+                @"|Public fizz As Integer
+
+'@Description (""Description of Foo"")
+Property Get Foo() As Variant
+    Foo = True
+End Property
+
+Property Let Foo(ByVal vall As Variant)
+End Property
+
+Property Set Foo(ByVal vall As Variant)
+End Property";
+
+            var presenterAction = Support.SetParametersForSingleTarget("fizz", "Name");
+
+            var actualCode = Support.RefactoredCode(inputCode.ToCodeString(), presenterAction);
+
+            var lineOfAnnotation = actualCode.Substring(0, actualCode.IndexOf("Description of Foo")).Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            var lineOfProperty = actualCode.Substring(0, actualCode.IndexOf("Property Get Foo()")).Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            Assert.AreEqual(lineOfAnnotation.Length, lineOfProperty.Length - 1);
+        }
+
         [TestCase("|Public fizz As Integer\r\nPublic buzz As Boolean", "Private fizz As Integer\r\nPublic buzz As Boolean")]
         [TestCase("Public buzz As Boolean\r\n|Public fizz As Integer", "Public buzz As Boolean\r\nPrivate fizz As Integer")]
         [Category("Refactorings")]
